@@ -8,12 +8,12 @@ public class Pathfinding : MonoBehaviour
 {
 
     PathRequestManager requestManager;
-    Grid grid;
+    WorldGrid grid;
 
     void Awake()
     {
         requestManager = GetComponent<PathRequestManager>();
-        grid = GetComponent<Grid>();
+        grid = GetComponent<WorldGrid>();
     }
 
 
@@ -75,6 +75,7 @@ public class Pathfinding : MonoBehaviour
                             openSet.UpdateItem(neighbour);
                     }
                 }
+
             }
         }
         yield return null;

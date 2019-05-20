@@ -114,13 +114,13 @@ public class Inventory : MonoBehaviour
                     Weapon weaponItem = (Weapon)selectedItem;
                     if (itemSlots[selectedIndex].equiped)
                     {
-                        equipmentHolder.equipedWeapon = null;
+                        equipmentHolder.UnEquipWeapon();
                         itemSlots[selectedIndex].equiped = false;
 
                     }
                     else
                     {
-                        equipmentHolder.equipedWeapon = weaponItem;
+                        equipmentHolder.EquipWeapon(weaponItem);
                         itemSlots[selectedIndex].equiped = true;
 
                     }

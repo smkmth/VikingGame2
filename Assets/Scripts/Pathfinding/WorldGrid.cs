@@ -2,7 +2,7 @@
 using System.Collections;
 using System.Collections.Generic;
 
-public class Grid : MonoBehaviour
+public class WorldGrid : MonoBehaviour
 {
 
     public bool displayGridGizmos;
@@ -13,6 +13,7 @@ public class Grid : MonoBehaviour
     public int obstacleProximityPenalty = 10;
     Dictionary<int, int> walkableRegionsDictionary = new Dictionary<int, int>();
     LayerMask walkableMask;
+    public GameObject tree;
 
     Node[,] grid;
 
@@ -56,7 +57,7 @@ public class Grid : MonoBehaviour
             {
                 Vector3 worldPoint = worldBottomLeft + Vector3.right * (x * nodeDiameter + nodeRadius) + Vector3.forward * (y * nodeDiameter + nodeRadius);
                 bool walkable = !(Physics.CheckSphere(worldPoint, nodeRadius, unwalkableMask));
-
+              
                 int movementPenalty = 0;
 
 
@@ -65,12 +66,29 @@ public class Grid : MonoBehaviour
                 if (Physics.Raycast(ray, out hit, 100, walkableMask))
                 {
                     walkableRegionsDictionary.TryGetValue(hit.collider.gameObject.layer, out movementPenalty);
+
                 }
+
+                if (movementPenalty > 40)
+                {
+
+                    if (Random.Range(1.0f, 100.0f) > 99.0f)
+                    {
+
+                        Quaternion rot = Quaternion.Euler(0, Random.Range(0,360), 0);
+                        Vector3 height = new Vector3(0, Random.Range(2.0f, 5.0f), 0);
+                        Instantiate(tree, worldPoint - height, rot);
+
+                    }
+                }
+
 
                 if (!walkable)
                 {
                     movementPenalty += obstacleProximityPenalty;
                 }
+
+           
 
 
                 grid[x, y] = new Node(walkable, worldPoint, x, y, movementPenalty);

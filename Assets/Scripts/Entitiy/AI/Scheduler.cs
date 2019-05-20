@@ -7,8 +7,7 @@ public class Scheduler : MonoBehaviour
     private TimeManager timeManager;
     private PathMover pathMover;
     public List<Timeslot> timeSlots;
-    private int hoursInDay = 24;
-
+    public bool followingSchedule;
     // Start is called before the first frame update
     void Start()
     {
@@ -19,10 +18,13 @@ public class Scheduler : MonoBehaviour
 
     public void UpdateNextHour()
     {
-       if (timeSlots[timeManager.currentHour].usingThisTimeslot)
+        if (followingSchedule)
         {
-            pathMover.target = timeSlots[timeManager.currentHour].placeToGo.position;
+            if (timeSlots[timeManager.currentHour].usingThisTimeslot)
+            {
+                pathMover.target = timeSlots[timeManager.currentHour].placeToGo;
 
+            }
         }
         
     }

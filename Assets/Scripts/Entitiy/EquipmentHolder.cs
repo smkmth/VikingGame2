@@ -48,6 +48,13 @@ public class EquipmentHolder : MonoBehaviour
         equipedWeapon = weapon;
         MeshSlots[weapon.equipmentSlot].mesh = weapon.mesh;
     }
+
+    public void UnEquipWeapon()
+    {
+        equipedWeapon = null;
+        MeshSlots[equipmentSlotType.Weapon].mesh = null;
+
+    }
 }
 
 

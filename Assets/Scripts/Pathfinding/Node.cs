@@ -22,6 +22,8 @@ public class Node : IHeapItem<Node>
         gridX = _gridX;
         gridY = _gridY;
         movementPenalty = _penalty;
+
+
     }
 
     public int fCost

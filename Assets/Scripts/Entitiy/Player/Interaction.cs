@@ -4,8 +4,11 @@ using UnityEngine;
 
 public class Interaction : MonoBehaviour
 {
+    private Rigidbody rb; 
     private DialogueDisplayer dialogueDisplay;
     public LayerMask EnemyLayerMask;
+    public LayerMask GroundLayerMask;
+    public LayerMask BlockingLayerMask;
     public float AttackDistance;
     private Inventory inventory;
     public EquipmentHolder equipmentHolder;
@@ -30,15 +33,21 @@ public class Interaction : MonoBehaviour
 
     public float MovementSpeed;
     public float DistanceToGround;
-
-
-    private Vector3 movepos;
+    public bool onGround;
+    public float playerHeight;
+    public float gravity;
+    public float slopeAngle;
+    public bool onSlope =false;
+    public float interactRange;
 
     private float currentMoveSpeed;
+
+    public Animator animator;
 
     private void Start()
     {
         inventory = GetComponent<Inventory>();
+        rb = GetComponent<Rigidbody>();
         equipmentHolder = GetComponent<EquipmentHolder>();
         dialogueDisplay = GetComponent<DialogueDisplayer>();
         Cursor.visible = false;
@@ -59,6 +68,7 @@ public class Interaction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
+       
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -71,22 +81,28 @@ public class Interaction : MonoBehaviour
         }
         switch (currentInteractionState) 
         {
+
             case interactionState.Normal :
 
                 if (FreeMove)
                 {
-                    if (Input.GetAxis("Vertical") != 0)
+                    Vector3 forwardMovement = transform.forward * Input.GetAxis("Vertical");
+                    Vector3 sidewaysMovement = transform.right * Input.GetAxis("Horizontal");
+
+
+                    Vector3 nextMovePos = (forwardMovement + sidewaysMovement) * Time.deltaTime * MovementSpeed;
+
+                    if (nextMovePos.x != 0 && nextMovePos.z != 0)
                     {
-
-                        transform.position += movepos + transform.forward * Input.GetAxis("Vertical") * MovementSpeed * Time.deltaTime;
-
+                        animator.SetBool("Run", true);
                     }
-                    if (Input.GetAxis("Horizontal") != 0)
+                    else
                     {
-
-                        transform.position += movepos + transform.right * Input.GetAxis("Horizontal") * MovementSpeed * Time.deltaTime;
-
+                        animator.SetBool("Run", false);
                     }
+                
+                    transform.position += nextMovePos;
+                      
                 }
 
                 if (FreeLook)
@@ -104,7 +120,7 @@ public class Interaction : MonoBehaviour
                 {
                     RaycastHit hit;
                     Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 100.0f, Color.yellow);
-                    if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, Mathf.Infinity))
+                    if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, interactRange))
                     {
 
                         if (hit.transform.gameObject.tag == "NPC")
@@ -113,6 +129,19 @@ public class Interaction : MonoBehaviour
                             currentInteractionState = interactionState.DialogueMode;
                             dialogueIndex = 0;
                             return;
+                        }
+                        if (hit.transform.gameObject.tag == "Item")
+                        {
+                            ItemContainer item = hit.transform.gameObject.GetComponent<ItemContainer>();
+                            if(item.hitsToHarvest ==0)
+                            {
+                                inventory.AddItem(item.containedItem);
+                                Destroy(hit.transform.gameObject);
+                            }
+                            else
+                            {
+                                item.hitsToHarvest -= 1;
+                            }
                         }
                         if (hit.transform.gameObject.tag == "Enemy")
                         {

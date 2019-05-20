@@ -14,14 +14,18 @@ public class ItemContainer : MonoBehaviour
     
     public ContainerType containerType;
 
+    public float harvestCost;
+    public int hitsToHarvest;
+
     public bool openable = true;
 
     private void OnTriggerEnter(Collider other)
     {
         if (other.gameObject.name == "Player")
         {
-            if (openable)
+            if (containerType == ContainerType.Pickup)
             {
+
                 other.gameObject.GetComponent<Inventory>().AddItem(containedItem);
                 Destroy(gameObject);
             }

@@ -1,0 +1,225 @@
+fileFormatVersion: 2
+guid: 7c96a3d9d687ed94393b08dc89334e87
+ModelImporter:
+  serializedVersion: 23
+  fileIDToRecycleName:
+    100000: Base.008
+    100002: //RootNode
+    100004: DEF-breast.L
+    100006: DEF-breast.L_end
+    100008: DEF-breast.R
+    100010: DEF-breast.R_end
+    100012: DEF-foot.L
+    100014: DEF-foot.R
+    100016: DEF-forearm.L
+    100018: DEF-forearm.L.001
+    100020: DEF-forearm.R
+    100022: DEF-forearm.R.001
+    100024: DEF-hand.L
+    100026: DEF-hand.L_end
+    100028: DEF-hand.R
+    100030: DEF-hand.R_end
+    100032: DEF-pelvis.L
+    100034: DEF-pelvis.L_end
+    100036: DEF-pelvis.R
+    100038: DEF-pelvis.R_end
+    100040: DEF-shin.L
+    100042: DEF-shin.L.001
+    100044: DEF-shin.R
+    100046: DEF-shin.R.001
+    100048: DEF-shoulder.L
+    100050: DEF-shoulder.L_end
+    100052: DEF-shoulder.R
+    100054: DEF-shoulder.R_end
+    100056: DEF-spine
+    100058: DEF-spine.001
+    100060: DEF-spine.002
+    100062: DEF-spine.003
+    100064: DEF-spine.004
+    100066: DEF-spine.005
+    100068: DEF-spine.006
+    100070: DEF-spine.006_end
+    100072: DEF-thigh.L
+    100074: DEF-thigh.L.001
+    100076: DEF-thigh.R
+    100078: DEF-thigh.R.001
+    100080: DEF-toe.L
+    100082: DEF-toe.L_end
+    100084: DEF-toe.R
+    100086: DEF-toe.R_end
+    100088: DEF-upper_arm.L
+    100090: DEF-upper_arm.L.001
+    100092: DEF-upper_arm.R
+    100094: DEF-upper_arm.R.001
+    100096: MCH-spine
+    100098: MCH-spine.001
+    100100: MCH-spine.002
+    100102: MCH-spine.003
+    100104: ORG-breast.L
+    100106: ORG-breast.R
+    100108: ORG-pelvis.L
+    100110: ORG-pelvis.R
+    100112: ORG-shoulder.L
+    100114: ORG-shoulder.R
+    100116: ORG-spine
+    100118: ORG-spine.003
+    100120: rig
+    100122: root
+    100124: torso
+    100126: tweak_spine
+    100128: tweak_spine.003
+    400000: Base.008
+    400002: //RootNode
+    400004: DEF-breast.L
+    400006: DEF-breast.L_end
+    400008: DEF-breast.R
+    400010: DEF-breast.R_end
+    400012: DEF-foot.L
+    400014: DEF-foot.R
+    400016: DEF-forearm.L
+    400018: DEF-forearm.L.001
+    400020: DEF-forearm.R
+    400022: DEF-forearm.R.001
+    400024: DEF-hand.L
+    400026: DEF-hand.L_end
+    400028: DEF-hand.R
+    400030: DEF-hand.R_end
+    400032: DEF-pelvis.L
+    400034: DEF-pelvis.L_end
+    400036: DEF-pelvis.R
+    400038: DEF-pelvis.R_end
+    400040: DEF-shin.L
+    400042: DEF-shin.L.001
+    400044: DEF-shin.R
+    400046: DEF-shin.R.001
+    400048: DEF-shoulder.L
+    400050: DEF-shoulder.L_end
+    400052: DEF-shoulder.R
+    400054: DEF-shoulder.R_end
+    400056: DEF-spine
+    400058: DEF-spine.001
+    400060: DEF-spine.002
+    400062: DEF-spine.003
+    400064: DEF-spine.004
+    400066: DEF-spine.005
+    400068: DEF-spine.006
+    400070: DEF-spine.006_end
+    400072: DEF-thigh.L
+    400074: DEF-thigh.L.001
+    400076: DEF-thigh.R
+    400078: DEF-thigh.R.001
+    400080: DEF-toe.L
+    400082: DEF-toe.L_end
+    400084: DEF-toe.R
+    400086: DEF-toe.R_end
+    400088: DEF-upper_arm.L
+    400090: DEF-upper_arm.L.001
+    400092: DEF-upper_arm.R
+    400094: DEF-upper_arm.R.001
+    400096: MCH-spine
+    400098: MCH-spine.001
+    400100: MCH-spine.002
+    400102: MCH-spine.003
+    400104: ORG-breast.L
+    400106: ORG-breast.R
+    400108: ORG-pelvis.L
+    400110: ORG-pelvis.R
+    400112: ORG-shoulder.L
+    400114: ORG-shoulder.R
+    400116: ORG-spine
+    400118: ORG-spine.003
+    400120: rig
+    400122: root
+    400124: torso
+    400126: tweak_spine
+    400128: tweak_spine.003
+    2100000: None
+    4300000: Base.008
+    7400000: rig|Idle
+    7400002: rig|RunCycle1
+    7400004: rig|WalkCycle1
+    9500000: //RootNode
+    13700000: Base.008
+  externalObjects: {}
+  materials:
+    importMaterials: 1
+    materialName: 0
+    materialSearch: 1
+    materialLocation: 1
+  animations:
+    legacyGenerateAnimations: 4
+    bakeSimulation: 0
+    resampleCurves: 1
+    optimizeGameObjects: 0
+    motionNodeName: 
+    rigImportErrors: 
+    rigImportWarnings: 
+    animationImportErrors: 
+    animationImportWarnings: 
+    animationRetargetingWarnings: 
+    animationDoRetargetingWarnings: 0
+    importAnimatedCustomProperties: 0
+    importConstraints: 0
+    animationCompression: 1
+    animationRotationError: 0.5
+    animationPositionError: 0.5
+    animationScaleError: 0.5
+    animationWrapMode: 0
+    extraExposedTransformPaths: []
+    extraUserProperties: []
+    clipAnimations: []
+    isReadable: 1
+  meshes:
+    lODScreenPercentages: []
+    globalScale: 1
+    meshCompression: 0
+    addColliders: 0
+    importVisibility: 1
+    importBlendShapes: 1
+    importCameras: 1
+    importLights: 1
+    swapUVChannels: 0
+    generateSecondaryUV: 0
+    useFileUnits: 1
+    optimizeMeshForGPU: 1
+    keepQuads: 0
+    weldVertices: 1
+    preserveHierarchy: 0
+    indexFormat: 0
+    secondaryUVAngleDistortion: 8
+    secondaryUVAreaDistortion: 15.000001
+    secondaryUVHardAngle: 88
+    secondaryUVPackMargin: 4
+    useFileScale: 1
+    previousCalculatedGlobalScale: 0.01
+    hasPreviousCalculatedGlobalScale: 1
+  tangentSpace:
+    normalSmoothAngle: 60
+    normalImportMode: 0
+    tangentImportMode: 3
+    normalCalculationMode: 4
+  importAnimation: 1
+  copyAvatar: 0
+  humanDescription:
+    serializedVersion: 2
+    human: []
+    skeleton: []
+    armTwist: 0.5
+    foreArmTwist: 0.5
+    upperLegTwist: 0.5
+    legTwist: 0.5
+    armStretch: 0.05
+    legStretch: 0.05
+    feetSpacing: 0
+    rootMotionBoneName: 
+    rootMotionBoneRotation: {x: 0, y: 0, z: 0, w: 1}
+    hasTranslationDoF: 0
+    hasExtraRoot: 0
+    skeletonHasParents: 1
+  lastHumanDescriptionAvatarSource: {instanceID: 0}
+  animationType: 2
+  humanoidOversampling: 1
+  additionalBone: 0
+  userData: 
+  assetBundleName: 
+  assetBundleVariant: 

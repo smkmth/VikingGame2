@@ -7,7 +7,7 @@ public class PathMover : MonoBehaviour
     const float minPathUpdateTime = .2f;
     const float pathUpdateMoveThreshold = .5f;
 
-    public Vector3 target;
+    public Transform target;
     public Transform transformTarget;
 
     public float speed = 20;
@@ -15,6 +15,7 @@ public class PathMover : MonoBehaviour
     public float turnDst = 5;
     public float stoppingDst = 10;
     public float repathRate = .3f;
+    public bool followingPath;
 
     Path path;
 
@@ -35,39 +36,42 @@ public class PathMover : MonoBehaviour
         }
     }
 
-    public void FinishedPath()
-    {
 
-    }
 
     IEnumerator UpdatePath()
     {
-
-        if (Time.timeSinceLevelLoad < repathRate)
+        if (target != null)
         {
-            yield return new WaitForSeconds(repathRate);
-        }
-        PathRequestManager.RequestPath(transform.position, target, OnPathFound);
-
-        float sqrMoveThreshold = pathUpdateMoveThreshold * pathUpdateMoveThreshold;
-        Vector3 targetPosOld = target;
-        while (true)
-        {
-            yield return new WaitForSeconds(minPathUpdateTime);
-            if ((target - targetPosOld).sqrMagnitude > sqrMoveThreshold)
+            if (Time.timeSinceLevelLoad < repathRate)
             {
-                PathRequestManager.RequestPath(transform.position, target, OnPathFound);
-                targetPosOld = target;
+                yield return new WaitForSeconds(repathRate);
+            }
+            
+            PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+            
+            float sqrMoveThreshold = pathUpdateMoveThreshold * pathUpdateMoveThreshold;
+            Vector3 targetPosOld = target.position;
+            while (true)
+            {
+                yield return new WaitForSeconds(minPathUpdateTime);
+                if ((target.position - targetPosOld).sqrMagnitude > sqrMoveThreshold)
+                {
+                    PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+                    targetPosOld = target.position;
+                }
             }
         }
+
     }
 
     IEnumerator FollowPath()
     {
 
-        bool followingPath = true;
+
+        followingPath = true;
         int pathIndex = 0;
-        transform.LookAt(path.lookPoints[0]);
+       // transform.LookAt(path.lookPoints[0]);
+
 
         float speedPercent = 1;
 
@@ -79,7 +83,6 @@ public class PathMover : MonoBehaviour
                 if (pathIndex == path.finishLineIndex)
                 {
                     followingPath = false;
-                    //FinishedPath();
                     break;
                 }
                 else
@@ -97,7 +100,6 @@ public class PathMover : MonoBehaviour
                     if (speedPercent < 0.01f)
                     {
                         followingPath = false;
-                        //FinishedPath();
                     }
                 }
 
@@ -109,6 +111,7 @@ public class PathMover : MonoBehaviour
             yield return null;
 
         }
+
     }
 
     public void OnDrawGizmos()

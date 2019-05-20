@@ -37,7 +37,7 @@ public class BaseSceneManager : MonoBehaviour
         //grid tests
 
         //GRID TESTING
-        if (!GameObject.Find("Pathfinder").GetComponent<Grid>())
+        if (!GameObject.Find("Pathfinder").GetComponent<WorldGrid>())
         {
             Debug.LogError("No Grid script found; You need to attach a 'Grid' script to the gameobject called Pathfinder if you " +
                 "wish to generate a grid of nodes");
@@ -45,23 +45,23 @@ public class BaseSceneManager : MonoBehaviour
         else
         {
 
-            if (GameObject.Find("Pathfinder").GetComponent<Grid>().gridWorldSize.x <= 0)
+            if (GameObject.Find("Pathfinder").GetComponent<WorldGrid>().gridWorldSize.x <= 0)
             {
                 Debug.LogWarning("The gridsize x is set to 0 or less, so no nodes will be generated!");
             }
-            if (GameObject.Find("Pathfinder").GetComponent<Grid>().gridWorldSize.y <= 0)
+            if (GameObject.Find("Pathfinder").GetComponent<WorldGrid>().gridWorldSize.y <= 0)
             {
                 Debug.LogWarning("The gridsize y is set to 0 or less, so no nodes will be generated!");
             }
-            if (GameObject.Find("Pathfinder").GetComponent<Grid>().nodeRadius <= 0)
+            if (GameObject.Find("Pathfinder").GetComponent<WorldGrid>().nodeRadius <= 0)
             {
                 Debug.LogWarning("The node rad is set to 0 or less, so no nodes will be generated!");
             }
-            if (GameObject.Find("Pathfinder").GetComponent<Grid>().walkableRegions.Length <= 0)
+            if (GameObject.Find("Pathfinder").GetComponent<WorldGrid>().walkableRegions.Length <= 0)
             {
                 Debug.LogWarning("There are no walkable regions set!");
             }
-            if (GameObject.Find("Pathfinder").GetComponent<Grid>().obstacleProximityPenalty <= 0)
+            if (GameObject.Find("Pathfinder").GetComponent<WorldGrid>().obstacleProximityPenalty <= 0)
             {
                 Debug.LogWarning("There is no penalty to obsticals!");
             }
