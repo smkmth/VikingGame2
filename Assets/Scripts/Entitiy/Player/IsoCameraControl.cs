@@ -7,11 +7,12 @@ public class IsoCameraControl : MonoBehaviour {
     public Transform player;
     public float turnSpeed;
     public bool mouseControlsCamera;
-    private Vector3 offset;  
-
+    private Vector3 offset;
+    private Camera cam;
     // Use this for initialization
     void Start()
     {
+        cam = GetComponent<Camera>();
 
         //offset = new Vector3(player.position.x, player.position.y + 8.0f, player.position.z + 7.0f);
         offset = transform.position - player.transform.position;
@@ -43,7 +44,10 @@ public class IsoCameraControl : MonoBehaviour {
 
         }
 
- 
+         cam.orthographicSize += Input.mouseScrollDelta.y;
+
+
+
         transform.position = player.position + offset;
         transform.LookAt(player.position);
     }

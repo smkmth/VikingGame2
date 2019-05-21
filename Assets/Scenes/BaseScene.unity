@@ -2054,7 +2054,7 @@ Prefab:
     - target: {fileID: 114265537707588472, guid: 9cd9884b73d532a4396d92fd1fd3f804,
         type: 2}
       propertyPath: mouseTurn
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 9cd9884b73d532a4396d92fd1fd3f804, type: 2}
