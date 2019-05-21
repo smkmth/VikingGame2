@@ -7,7 +7,7 @@ public class IsoCameraControl : MonoBehaviour {
     public Transform player;
     public float turnSpeed;
     public bool mouseControlsCamera;
-    private Vector3 offset;
+    private Vector3 offset =Vector3.zero;
     private Camera cam;
     public float camHeight;
     public float maxCamHeight;
@@ -67,7 +67,6 @@ public class IsoCameraControl : MonoBehaviour {
                 oldpos = transform.position;
 
             }
-            // offset = Quaternion.AngleAxis(Input.GetAxisRaw("CameraRot") * turnSpeed, Vector3.up) * offset;
 
         }
 
@@ -82,7 +81,6 @@ public class IsoCameraControl : MonoBehaviour {
         else
         {
             cam.orthographicSize -= Input.mouseScrollDelta.y * Time.deltaTime * zoomSpeed;
-
         }
 
         if (zoomEffectsPan)
@@ -94,35 +92,25 @@ public class IsoCameraControl : MonoBehaviour {
             else if (camHeight > maxCamHeight)
             {
                 camHeight = maxCamHeight - adjust;
-
             }
             else
             {
                 camHeight += Input.mouseScrollDelta.y * Time.deltaTime * heightSpeed;
                 heightOffset.y -= Input.mouseScrollDelta.y * Time.deltaTime * yoffsetSpeed;
-
-
             }
         }
-      //  transform.position = player.position + heightOffset + offset;
-
-       transform.LookAt(player.position + (Vector3.up * camHeight));
-    }
-
-    public void Update()
-    {
 
         if (transform.position != player.position + offset)
         {
-            //distmovd= t * s
             float distMoved = (Time.time - startTime) * rotSpeed;
             float fracJourney = distMoved / movedist;
-   
 
             Vector3 lerpoff = Vector3.Lerp(oldpos, offset + player.position, fracJourney);
             transform.position = lerpoff;
- 
-
         }
+
+        transform.LookAt(player.position + (Vector3.up * camHeight));
     }
+
+  
 }
