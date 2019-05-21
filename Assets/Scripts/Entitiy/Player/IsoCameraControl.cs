@@ -9,6 +9,19 @@ public class IsoCameraControl : MonoBehaviour {
     public bool mouseControlsCamera;
     private Vector3 offset;
     private Camera cam;
+    public float camHeight;
+    public float maxCamHeight;
+    public float minCamHeight;
+    public float maxOrthSize = 15.0f;
+    public float minOrthSize = 3.0f;
+    public float adjust =0.1f;
+    public float yoffsetSpeed =1.0f;
+    public float zoomSpeed;
+    public float heightSpeed;
+    public bool zoomEffectsPan;
+
+    private Vector3 heightOffset= Vector3.zero; 
+
     // Use this for initialization
     void Start()
     {
@@ -44,11 +57,43 @@ public class IsoCameraControl : MonoBehaviour {
 
         }
 
-         cam.orthographicSize += Input.mouseScrollDelta.y;
+        if (cam.orthographicSize <minOrthSize)
+        {
+            cam.orthographicSize = (minOrthSize + adjust);
+        }
+        else if(cam.orthographicSize > maxOrthSize)
+        {
+            cam.orthographicSize = (maxOrthSize - adjust);
+        }
+        else
+        {
+            cam.orthographicSize -= Input.mouseScrollDelta.y * Time.deltaTime * zoomSpeed;
+
+        }
+
+        if (zoomEffectsPan)
+        {
+            if (camHeight < minCamHeight)
+            {
+                camHeight = minCamHeight + adjust;
+            }
+            else if (camHeight > maxCamHeight)
+            {
+                camHeight = maxCamHeight - adjust;
+
+            }
+            else
+            {
+                camHeight += Input.mouseScrollDelta.y * Time.deltaTime * heightSpeed;
+                heightOffset.y -= Input.mouseScrollDelta.y * Time.deltaTime * yoffsetSpeed;
+
+
+            }
+        }
 
 
 
-        transform.position = player.position + offset;
-        transform.LookAt(player.position);
+        transform.position = player.position + offset + heightOffset;
+        transform.LookAt(player.position + (Vector3.up * camHeight));
     }
 }
