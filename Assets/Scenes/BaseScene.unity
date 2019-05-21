@@ -130,7 +130,7 @@ GameObject:
   - component: {fileID: 140164619}
   m_Layer: 0
   m_Name: Bandit
-  m_TagString: Untagged
+  m_TagString: Enemy
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -3034,7 +3034,7 @@ MonoBehaviour:
   currentTimeOfDay: 0.3
   currentHour: 0
   currentDay: 0
-  timeMultiplier: 1000
+  timeMultiplier: 100
   sunInitialIntensity: 1
   sunangle: 0
   sun: {fileID: 426516888}
@@ -5137,7 +5137,7 @@ GameObject:
   - component: {fileID: 1346818316}
   m_Layer: 12
   m_Name: AI
-  m_TagString: Enemy
+  m_TagString: NPC
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -5166,7 +5166,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 15214a31b2e09fc46a810c5607819095, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  dialogue: []
+  dialogue:
+  - {fileID: 11400000, guid: b248a701e837d0b418499153207231cb, type: 2}
 --- !u!114 &1346818317
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5518,7 +5519,7 @@ Prefab:
     - target: {fileID: 114888079697093178, guid: 968a216126774b1458ec2f9ef9b6c707,
         type: 2}
       propertyPath: camHeight
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 20585195076715366, guid: 968a216126774b1458ec2f9ef9b6c707,
         type: 2}
@@ -5559,6 +5560,11 @@ Prefab:
         type: 2}
       propertyPath: heightSpeed
       value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 114888079697093178, guid: 968a216126774b1458ec2f9ef9b6c707,
+        type: 2}
+      propertyPath: rotSpeed
+      value: 100
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 968a216126774b1458ec2f9ef9b6c707, type: 2}

@@ -146,20 +146,14 @@ public class Interaction : MonoBehaviour
                 }
 
                
-                if (Input.GetButtonDown("Fire1"))
+                if (Input.GetButtonDown("Attack"))
                 {
                     RaycastHit hit;
                     Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 100.0f, Color.yellow);
                     if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, interactRange))
                     {
 
-                        if (hit.transform.gameObject.tag == "NPC")
-                        {
-                            receivedDialogue = hit.transform.gameObject.GetComponent<DialogueContainer>().dialogue;
-                            currentInteractionState = interactionState.DialogueMode;
-                            dialogueIndex = 0;
-                            return;
-                        }
+
                         if (hit.transform.gameObject.tag == "Item")
                         {
                             ItemContainer item = hit.transform.gameObject.GetComponent<ItemContainer>();
@@ -179,7 +173,6 @@ public class Interaction : MonoBehaviour
                             {
                                 hit.transform.gameObject.GetComponent<Stats>().DoDamage(equipmentHolder.equipedWeapon.attackDamage);
 
-                                Debug.Log("ATTACK!");
                             }
                             else
                             {
@@ -189,6 +182,26 @@ public class Interaction : MonoBehaviour
 
                         }
 
+                    }
+
+                   
+                }
+
+                if (Input.GetButtonDown("Interact"))
+                {
+                    Debug.Log("here");
+                    RaycastHit interact;
+                    Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 100.0f, Color.yellow);
+                    if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out interact, interactRange))
+                    {
+                        if (interact.transform.gameObject.tag == "NPC")
+                        {
+                            Debug.Log("NPC");
+                            receivedDialogue = interact.transform.gameObject.GetComponent<DialogueContainer>().dialogue;
+                            currentInteractionState = interactionState.DialogueMode;
+                            dialogueIndex = 0;
+                            return;
+                        }
                     }
                 }
                 break;

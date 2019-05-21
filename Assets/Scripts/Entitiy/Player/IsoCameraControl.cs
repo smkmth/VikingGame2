@@ -19,8 +19,14 @@ public class IsoCameraControl : MonoBehaviour {
     public float zoomSpeed;
     public float heightSpeed;
     public bool zoomEffectsPan;
+    public float rotSpeed;
+
+    private float startTime;
+    private float movedist;
 
     private Vector3 heightOffset= Vector3.zero; 
+    private Vector3 oldpos = Vector3.zero;
+    private Vector3 desiredOffset;
 
     // Use this for initialization
     void Start()
@@ -34,7 +40,6 @@ public class IsoCameraControl : MonoBehaviour {
     // LateUpdate is called after Update each frame
     void LateUpdate()
     {
-        transform.position = player.transform.position + offset;
         if (mouseControlsCamera)
         {
             offset = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * turnSpeed, Vector3.up) * offset;
@@ -45,15 +50,24 @@ public class IsoCameraControl : MonoBehaviour {
 
             if (Input.GetButtonDown("PosCameraRot"))
             {
+             
                 offset = Quaternion.AngleAxis(turnSpeed, Vector3.up) * offset;
+                startTime = Time.time;
+                movedist = Vector3.Distance(transform.position, offset);
+                oldpos = transform.position;
+
+
 
             }
             else if (Input.GetButtonDown("NegCameraRot"))
             {
                 offset = Quaternion.AngleAxis(-turnSpeed, Vector3.up) * offset;
+                startTime = Time.time;
+                movedist = Vector3.Distance(transform.position, offset);
+                oldpos = transform.position;
 
             }
-           // offset = Quaternion.AngleAxis(Input.GetAxisRaw("CameraRot") * turnSpeed, Vector3.up) * offset;
+            // offset = Quaternion.AngleAxis(Input.GetAxisRaw("CameraRot") * turnSpeed, Vector3.up) * offset;
 
         }
 
@@ -90,10 +104,25 @@ public class IsoCameraControl : MonoBehaviour {
 
             }
         }
+      //  transform.position = player.position + heightOffset + offset;
 
+       transform.LookAt(player.position + (Vector3.up * camHeight));
+    }
 
+    public void Update()
+    {
 
-        transform.position = player.position + offset + heightOffset;
-        transform.LookAt(player.position + (Vector3.up * camHeight));
+        if (transform.position != player.position + offset)
+        {
+            //distmovd= t * s
+            float distMoved = (Time.time - startTime) * rotSpeed;
+            float fracJourney = distMoved / movedist;
+   
+
+            Vector3 lerpoff = Vector3.Lerp(oldpos, offset + player.position, fracJourney);
+            transform.position = lerpoff;
+ 
+
+        }
     }
 }
