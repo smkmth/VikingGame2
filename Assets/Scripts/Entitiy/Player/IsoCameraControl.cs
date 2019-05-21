@@ -7,7 +7,7 @@ public class IsoCameraControl : MonoBehaviour {
     public Transform player;
     public float turnSpeed;
     public bool mouseControlsCamera;
-    private Vector3 offset =Vector3.zero;
+    public Vector3 offset =Vector3.zero;
     private Camera cam;
     public float camHeight;
     public float maxCamHeight;
@@ -81,6 +81,8 @@ public class IsoCameraControl : MonoBehaviour {
         else
         {
             cam.orthographicSize -= Input.mouseScrollDelta.y * Time.deltaTime * zoomSpeed;
+            //cam.orthographicSize -= RsVertical * Time.deltaTime * zoomSpeed;
+
         }
 
         if (zoomEffectsPan)

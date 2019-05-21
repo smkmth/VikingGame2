@@ -13,6 +13,7 @@ public class Interaction : MonoBehaviour
     private Inventory inventory;
     public EquipmentHolder equipmentHolder;
     public bool canInteract=true;
+    public Camera cam;
     public enum interactionState
     {
         Normal,
@@ -39,9 +40,9 @@ public class Interaction : MonoBehaviour
     public float slopeAngle;
     public bool onSlope =false;
     public float interactRange;
-    public bool mouseTurn;
+    public bool stardewControls;
     private float currentMoveSpeed;
-
+    public bool controllerInput;
     public Animator animator;
 
     private void Start()
@@ -83,8 +84,36 @@ public class Interaction : MonoBehaviour
         {
 
             case interactionState.Normal :
-                if (mouseTurn)
+                if (!stardewControls)
                 {
+
+                    if (FreeLook)
+                    {
+                        if (controllerInput)
+                        {
+                            Vector3 lookDirection = new Vector3(Input.GetAxis("RightStickHorizontal"), 0, Input.GetAxis("RightStickVertical"));
+                            if (lookDirection != Vector3.zero)
+                            {
+                                Vector3 transformedLookDirection = cam.transform.TransformVector(lookDirection);
+                                transformedLookDirection.y = 0;
+                                transform.rotation = Quaternion.LookRotation(transformedLookDirection);
+
+                            }
+                        }
+                        else
+                        {
+
+                            if (Input.GetAxis("Mouse X") != 0 )
+                            {
+
+                                rot = Mathf.Lerp(StartRotateSpeed, MaxRotateSpeed, Step * Time.deltaTime);
+                            }
+                        }
+
+                         transform.Rotate(0, rot * Input.GetAxis("Mouse X"), 0);
+
+
+                    }
                     if (FreeMove)
                     {
                         Vector3 forwardMovement = transform.forward * Input.GetAxis("Vertical");
@@ -106,16 +135,7 @@ public class Interaction : MonoBehaviour
 
                     }
 
-                    if (FreeLook)
-                    {
-
-                        if (Input.GetAxis("Mouse X") != 0)
-                        {
-
-                            rot = Mathf.Lerp(StartRotateSpeed, MaxRotateSpeed, Step * Time.deltaTime);
-                        }
-                        transform.Rotate(0, rot * Input.GetAxis("Mouse X"), 0);
-                    }
+                    
                 }
                 else
                 {

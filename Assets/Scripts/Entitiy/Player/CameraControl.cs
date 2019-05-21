@@ -45,8 +45,8 @@ public class CameraControl : MonoBehaviour
     void LateUpdate()
     {
         rotateAround = target.eulerAngles.y - wierdNumber;
-        HorizontalAxis = Input.GetAxis("Mouse X");
-        VerticalAxis = Input.GetAxis("Mouse Y");
+        HorizontalAxis = Input.GetAxis("Mouse X") + Input.GetAxis("RightStickHorizontal");
+        VerticalAxis = Input.GetAxis("Mouse Y") + Input.GetAxis("RightStickVertical");
 
         //Offset of the targets transform (Since the pivot point is usually at the feet).
         Vector3 targetOffset = new Vector3(target.position.x, (target.position.y + 1f), target.position.z);
