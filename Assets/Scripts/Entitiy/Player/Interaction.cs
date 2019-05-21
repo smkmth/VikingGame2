@@ -39,7 +39,7 @@ public class Interaction : MonoBehaviour
     public float slopeAngle;
     public bool onSlope =false;
     public float interactRange;
-
+    public bool mouseTurn;
     private float currentMoveSpeed;
 
     public Animator animator;
@@ -83,16 +83,55 @@ public class Interaction : MonoBehaviour
         {
 
             case interactionState.Normal :
-
-                if (FreeMove)
+                if (mouseTurn)
                 {
-                    Vector3 forwardMovement = transform.forward * Input.GetAxis("Vertical");
-                    Vector3 sidewaysMovement = transform.right * Input.GetAxis("Horizontal");
+                    if (FreeMove)
+                    {
+                        Vector3 forwardMovement = transform.forward * Input.GetAxis("Vertical");
+                        Vector3 sidewaysMovement = transform.right * Input.GetAxis("Horizontal");
 
 
-                    Vector3 nextMovePos = (forwardMovement + sidewaysMovement) * Time.deltaTime * MovementSpeed;
+                        Vector3 nextMovePos = (forwardMovement + sidewaysMovement) * Time.deltaTime * MovementSpeed;
 
-                    if (nextMovePos.x != 0 && nextMovePos.z != 0)
+                        if (nextMovePos.x != 0 && nextMovePos.z != 0)
+                        {
+                            animator.SetBool("Run", true);
+                        }
+                        else
+                        {
+                            animator.SetBool("Run", false);
+                        }
+
+                        transform.position += nextMovePos;
+
+                    }
+
+                    if (FreeLook)
+                    {
+
+                        if (Input.GetAxis("Mouse X") != 0)
+                        {
+
+                            rot = Mathf.Lerp(StartRotateSpeed, MaxRotateSpeed, Step * Time.deltaTime);
+                        }
+                        transform.Rotate(0, rot * Input.GetAxis("Mouse X"), 0);
+                    }
+                }
+                else
+                {
+                    float hozMovement = Input.GetAxis("Horizontal");
+                    float vertMovement = Input.GetAxis("Vertical");
+                    float rawHozMovement = Input.GetAxisRaw("Horizontal");
+                    float rawVertMovement = Input.GetAxisRaw("Vertical");
+
+                    Vector3 movement = new Vector3(rawHozMovement, 0.0f, rawVertMovement);
+                    if (movement != Vector3.zero)
+                    {
+                        transform.rotation = Quaternion.LookRotation(movement);
+
+                    }
+
+                    if (rawHozMovement != 0 || rawVertMovement != 0)
                     {
                         animator.SetBool("Run", true);
                     }
@@ -100,19 +139,10 @@ public class Interaction : MonoBehaviour
                     {
                         animator.SetBool("Run", false);
                     }
-                
-                    transform.position += nextMovePos;
-                      
-                }
 
-                if (FreeLook)
-                {
-                    if (Input.GetAxis("Mouse X") != 0)
-                    {
 
-                        rot = Mathf.Lerp(StartRotateSpeed, MaxRotateSpeed, Step * Time.deltaTime);
-                    }
-                    transform.Rotate(0, rot * Input.GetAxis("Mouse X"), 0);
+
+                    transform.Translate(movement * MovementSpeed * Time.deltaTime, Space.World);
                 }
 
                
