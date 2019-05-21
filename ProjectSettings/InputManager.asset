@@ -486,17 +486,49 @@ InputManager:
     axis: 0
     joyNum: 0
   - serializedVersion: 3
-    m_Name: Inventory
+    m_Name: CameraRot
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: i
+    positiveButton: q
+    altNegativeButton: e
+    altPositiveButton: joystick button 3
+    gravity: 10000
+    dead: 0.0001
+    sensitivity: 10000
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: PosCameraRot
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: q
     altNegativeButton: 
     altPositiveButton: joystick button 3
     gravity: 10000
     dead: 0.0001
     sensitivity: 10000
-    snap: 0
+    snap: 1
+    invert: 0
+    type: 0
+    axis: 0
+    joyNum: 0
+  - serializedVersion: 3
+    m_Name: NegCameraRot
+    descriptiveName: 
+    descriptiveNegativeName: 
+    negativeButton: 
+    positiveButton: e
+    altNegativeButton: 
+    altPositiveButton: joystick button 3
+    gravity: 10000
+    dead: 0.0001
+    sensitivity: 10000
+    snap: 1
     invert: 0
     type: 0
     axis: 0

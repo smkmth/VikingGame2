@@ -6,7 +6,7 @@ public class IsoCameraControl : MonoBehaviour {
 
     public Transform player;
     public float turnSpeed;
-
+    public bool mouseControlsCamera;
     private Vector3 offset;  
 
     // Use this for initialization
@@ -21,8 +21,27 @@ public class IsoCameraControl : MonoBehaviour {
     void LateUpdate()
     {
         transform.position = player.transform.position + offset;
+        if (mouseControlsCamera)
+        {
+            offset = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * turnSpeed, Vector3.up) * offset;
+        }
+        else
+        {
+            float rot = Input.GetAxisRaw("CameraRot");
 
-        offset = Quaternion.AngleAxis(Input.GetAxis("Mouse X") * turnSpeed, Vector3.up) * offset;
+            if (Input.GetButtonDown("PosCameraRot"))
+            {
+                offset = Quaternion.AngleAxis(turnSpeed, Vector3.up) * offset;
+
+            }
+            else if (Input.GetButtonDown("NegCameraRot"))
+            {
+                offset = Quaternion.AngleAxis(-turnSpeed, Vector3.up) * offset;
+
+            }
+           // offset = Quaternion.AngleAxis(Input.GetAxisRaw("CameraRot") * turnSpeed, Vector3.up) * offset;
+
+        }
 
  
         transform.position = player.position + offset;
