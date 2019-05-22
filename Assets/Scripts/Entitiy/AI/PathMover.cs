@@ -78,8 +78,19 @@ public class PathMover : MonoBehaviour
         while (followingPath)
         {
             Vector2 pos2D = new Vector2(transform.position.x, transform.position.z);
-            while (path.turnBoundaries[pathIndex].HasCrossedLine(pos2D))
+
+            if (path.turnBoundaries.Length == 0)
             {
+                break;
+            }
+            if (pathIndex >= path.turnBoundaries.Length )
+            {
+                pathIndex = 0;
+
+            }
+            while ( path.turnBoundaries[pathIndex].HasCrossedLine(pos2D))
+            {
+                
                 if (pathIndex == path.finishLineIndex)
                 {
                     followingPath = false;
@@ -90,6 +101,7 @@ public class PathMover : MonoBehaviour
                     pathIndex++;
                 }
             }
+            
 
             if (followingPath)
             {

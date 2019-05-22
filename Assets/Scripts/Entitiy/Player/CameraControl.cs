@@ -29,6 +29,10 @@ public class CameraControl : MonoBehaviour
     Vector3 camPosition;
     Vector3 camMask;
     Vector3 followMask;
+
+
+    Vector3 targetOffset;
+    Vector3 hosMove;
     public float wierdNumber;
     private float HorizontalAxis;
     private float VerticalAxis;
@@ -37,6 +41,7 @@ public class CameraControl : MonoBehaviour
     void Start()
     {
         //the statement below automatically positions the camera behind the target.
+        //hosMove = transform.position - target.transform.position;
 
 
 
@@ -44,12 +49,13 @@ public class CameraControl : MonoBehaviour
 
     void LateUpdate()
     {
-        rotateAround = target.eulerAngles.y - wierdNumber;
+       // rotateAround = target.eulerAngles.y - wierdNumber;
         HorizontalAxis = Input.GetAxis("Mouse X") + Input.GetAxis("RightStickHorizontal");
         VerticalAxis = Input.GetAxis("Mouse Y") + Input.GetAxis("RightStickVertical");
 
         //Offset of the targets transform (Since the pivot point is usually at the feet).
         Vector3 targetOffset = new Vector3(target.position.x, (target.position.y + 1f), target.position.z);
+        //hosMove = Quaternion.AngleAxis(HorizontalAxis, Vector3.up) * targetOffset;
         Quaternion rotation = Quaternion.Euler(cameraHeight, rotateAround, cameraPan);
         Vector3 vectorMask = Vector3.one;
         Vector3 rotateVector = rotation * vectorMask;
@@ -58,6 +64,7 @@ public class CameraControl : MonoBehaviour
         camPosition = targetOffset + Vector3.up * DistanceUp - rotateVector * DistanceAway;
         camMask = targetOffset + Vector3.up * DistanceUp - rotateVector * DistanceAway;
 
+    
         OccludeRay(ref targetOffset);
         SmoothCamMethod();
 
@@ -75,7 +82,7 @@ public class CameraControl : MonoBehaviour
         #endregion
 
         rotateAround += HorizontalAxis * camRotateSpeed * Time.deltaTime;
-        //DistanceUp = Mathf.Clamp(DistanceUp += VerticalAxis, -0.79f, 2.3f);
+        DistanceUp = Mathf.Clamp(DistanceUp += VerticalAxis, -0.79f, 2.3f);
         DistanceAway = Mathf.Clamp(DistanceAway += VerticalAxis, minDistance, maxDistance);
 
     }

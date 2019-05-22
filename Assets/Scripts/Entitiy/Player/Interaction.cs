@@ -24,8 +24,7 @@ public class Interaction : MonoBehaviour
     public List<DialogueLine> receivedDialogue;
     public int dialogueIndex;
 
-    public float StartRotateSpeed;
-    public float MaxRotateSpeed;
+    public float rotationSpeed;
     public float Step;
     private float rot;
 
@@ -44,6 +43,7 @@ public class Interaction : MonoBehaviour
     private float currentMoveSpeed;
     public bool controllerInput;
     public Animator animator;
+    private Quaternion targetRotation;
 
     private void Start()
     {
@@ -91,26 +91,37 @@ public class Interaction : MonoBehaviour
                     {
                         if (controllerInput)
                         {
-                            Vector3 lookDirection = new Vector3(Input.GetAxis("RightStickHorizontal"), 0, Input.GetAxis("RightStickVertical"));
-                            if (lookDirection != Vector3.zero)
+
+                            // Vector3 lookDirection = new Vector3(Input.GetAxis("RightStickHorizontal"), 0, Input.GetAxis("RightStickVertical"));
+                            /*
+                               Vector3 transformedLookDirection = cam.transform.TransformVector(transform.forward);
+                               transformedLookDirection.y = 0;
+                               if (transformedLookDirection != transform.forward)
+                               {
+                                   transform.rotation = Quaternion.LookRotation(transformedLookDirection);
+
+                               }
+                               */
+
+                            //  only check on the X-Z plane:
+                            Vector3 cameraDirection = new Vector3(cam.transform.forward.x, 0f, cam.transform.forward.z);
+                            Vector3 playerDirection = new Vector3(transform.forward.x, 0f, transform.forward.z);
+                            if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
                             {
-                                Vector3 transformedLookDirection = cam.transform.TransformVector(lookDirection);
-                                transformedLookDirection.y = 0;
-                                transform.rotation = Quaternion.LookRotation(transformedLookDirection);
+                                if (Vector3.Angle(cameraDirection, playerDirection) > 15f)
+                                {
+                                    targetRotation = Quaternion.LookRotation(cameraDirection, transform.up);
+
+                                    transform.rotation = Quaternion.RotateTowards(transform.rotation,targetRotation, rotationSpeed * Time.deltaTime);
+                                    
+                                }
 
                             }
+
+
                         }
-                        else
-                        {
+                    
 
-                            if (Input.GetAxis("Mouse X") != 0 )
-                            {
-
-                                rot = Mathf.Lerp(StartRotateSpeed, MaxRotateSpeed, Step * Time.deltaTime);
-                            }
-                        }
-
-                         transform.Rotate(0, rot * Input.GetAxis("Mouse X"), 0);
 
 
                     }
