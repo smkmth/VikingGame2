@@ -6,12 +6,14 @@ public class PathToPlayer : MonoBehaviour {
 
     private PathMover pathMover;
     private GameObject target;
+    private Animator animator;
     public float attackDist = 5.0f;
 
 	// Use this for initialization
 	void Start () {
         target = GameObject.Find("Player");
         pathMover = GetComponent<PathMover>();
+        animator = GetComponent<Animator>();
         pathMover.target= target.transform;
     }
 
@@ -29,5 +31,9 @@ public class PathToPlayer : MonoBehaviour {
 
     void DoAttack()
     {
+        transform.LookAt(target.transform);
+        animator.SetTrigger("Attack");
+
+
     }
 }

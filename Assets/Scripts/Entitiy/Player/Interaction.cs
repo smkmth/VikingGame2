@@ -84,25 +84,10 @@ public class Interaction : MonoBehaviour
         {
 
             case interactionState.Normal :
-                if (!stardewControls)
-                {
-
                     if (FreeLook)
                     {
                         if (controllerInput)
                         {
-
-                            // Vector3 lookDirection = new Vector3(Input.GetAxis("RightStickHorizontal"), 0, Input.GetAxis("RightStickVertical"));
-                            /*
-                               Vector3 transformedLookDirection = cam.transform.TransformVector(transform.forward);
-                               transformedLookDirection.y = 0;
-                               if (transformedLookDirection != transform.forward)
-                               {
-                                   transform.rotation = Quaternion.LookRotation(transformedLookDirection);
-
-                               }
-                               */
-
                             //  only check on the X-Z plane:
                             Vector3 cameraDirection = new Vector3(cam.transform.forward.x, 0f, cam.transform.forward.z);
                             Vector3 playerDirection = new Vector3(transform.forward.x, 0f, transform.forward.z);
@@ -115,14 +100,8 @@ public class Interaction : MonoBehaviour
                                     transform.rotation = Quaternion.RotateTowards(transform.rotation,targetRotation, rotationSpeed * Time.deltaTime);
                                     
                                 }
-
                             }
-
-
                         }
-                    
-
-
 
                     }
                     if (FreeMove)
@@ -147,44 +126,29 @@ public class Interaction : MonoBehaviour
                     }
 
                     
-                }
-                else
-                {
-                    float hozMovement = Input.GetAxis("Horizontal");
-                    float vertMovement = Input.GetAxis("Vertical");
-                    float rawHozMovement = Input.GetAxisRaw("Horizontal");
-                    float rawVertMovement = Input.GetAxisRaw("Vertical");
-
-                    Vector3 movement = new Vector3(rawHozMovement, 0.0f, rawVertMovement);
-                    if (movement != Vector3.zero)
-                    {
-                        transform.rotation = Quaternion.LookRotation(movement);
-
-                    }
-
-                    if (rawHozMovement != 0 || rawVertMovement != 0)
-                    {
-                        animator.SetBool("Run", true);
-                    }
-                    else
-                    {
-                        animator.SetBool("Run", false);
-                    }
-
-
-
-                    transform.Translate(movement * MovementSpeed * Time.deltaTime, Space.World);
-                }
+                
+              
 
                
                 if (Input.GetButtonDown("Attack"))
                 {
+
+                    Debug.Log("attack");
+
+                    if (equipmentHolder.equipedWeapon != null)
+                    {
+
+                        animator.SetTrigger("Attack");
+                    }
+                    else
+                    {
+                        Debug.Log("No Weapon Equiped");
+                    }
+
                     RaycastHit hit;
                     Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 100.0f, Color.yellow);
                     if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, interactRange))
                     {
-
-
                         if (hit.transform.gameObject.tag == "Item")
                         {
                             ItemContainer item = hit.transform.gameObject.GetComponent<ItemContainer>();
@@ -198,17 +162,11 @@ public class Interaction : MonoBehaviour
                                 item.hitsToHarvest -= 1;
                             }
                         }
+
                         if (hit.transform.gameObject.tag == "Enemy")
                         {
-                            if (equipmentHolder.equipedWeapon != null)
-                            {
-                                hit.transform.gameObject.GetComponent<Stats>().DoDamage(equipmentHolder.equipedWeapon.attackDamage);
-
-                            }
-                            else
-                            {
-                                Debug.Log("No Weapon Equiped");
-                            }
+                          
+                            hit.transform.gameObject.GetComponent<Stats>().DoDamage(equipmentHolder.equipedWeapon.attackDamage);
 
 
                         }
@@ -220,14 +178,12 @@ public class Interaction : MonoBehaviour
 
                 if (Input.GetButtonDown("Interact"))
                 {
-                    Debug.Log("here");
                     RaycastHit interact;
                     Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 100.0f, Color.yellow);
                     if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out interact, interactRange))
                     {
                         if (interact.transform.gameObject.tag == "NPC")
                         {
-                            Debug.Log("NPC");
                             receivedDialogue = interact.transform.gameObject.GetComponent<DialogueContainer>().dialogue;
                             currentInteractionState = interactionState.DialogueMode;
                             dialogueIndex = 0;
@@ -238,9 +194,10 @@ public class Interaction : MonoBehaviour
                 break;
             case interactionState.DialogueMode:
                
+               
                 dialogueDisplay.DisplayDialogue(receivedDialogue[dialogueIndex]);
 
-                if (Input.GetButtonDown("Attack"))
+                if (Input.GetButtonDown("Interact"))
                 {
                     if (dialogueIndex + 1 < receivedDialogue.Count)
                     {
