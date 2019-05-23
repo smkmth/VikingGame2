@@ -17,7 +17,8 @@ public enum effectType
     poison,
     bleeding,
     instaKill,
-    slowed
+    slowed,
+    staggered
 }
 
 public enum equipmentSlotType

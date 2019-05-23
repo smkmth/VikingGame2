@@ -11,7 +11,7 @@ public class Inventory : MonoBehaviour
 {
     private Stats stats;
     private Stamina stamina;
-    private Interaction interaction;
+    private PlayerInteraction interaction;
 
     private EquipmentHolder equipmentHolder;
 
@@ -59,7 +59,7 @@ public class Inventory : MonoBehaviour
         equipmentHolder = GetComponent<EquipmentHolder>();
         stats = GetComponent<Stats>();     
         stamina = GetComponent<Stamina>();     
-        interaction = GetComponent<Interaction>();     
+        interaction = GetComponent<PlayerInteraction>();     
         DisplayInventory();
         inventoryUI.SetActive(false);
 
@@ -75,7 +75,7 @@ public class Inventory : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             Time.timeScale = 0;
-            interaction.currentInteractionState = Interaction.interactionState.InventoryMode;
+            interaction.currentInteractionState = PlayerInteraction.interactionState.InventoryMode;
 
         }
         else
@@ -84,7 +84,7 @@ public class Inventory : MonoBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             Time.timeScale = 1;
-            interaction.currentInteractionState = Interaction.interactionState.Normal;
+            interaction.currentInteractionState = PlayerInteraction.interactionState.Normal;
 
 
         }

@@ -6,6 +6,7 @@ public class WeaponHit : MonoBehaviour {
 
     public Weapon weaponData;
     public string target;
+    public bool doDamage;
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -14,10 +15,10 @@ public class WeaponHit : MonoBehaviour {
 
         if (collision.transform.gameObject.tag == target)
         {
-
-            collision.transform.gameObject.GetComponent<Stats>().DoDamage(weaponData.attackDamage, 3.0f);
-            Debug.Log("Daamge");
-
+            if (doDamage)
+            {
+                collision.transform.gameObject.GetComponent<Stats>().DoDamage(weaponData.attackDamage, 3.0f);
+            }
 
         }
 

@@ -10,18 +10,37 @@ public class Stats : MonoBehaviour
     private Rigidbody rb;
     public Vector3 startPos;
 
+    public float staggeredRecoveryTime;
+    private float staggerTimer;
+
+    private Actor actor;
     public effectType currentEffect = effectType.nothing;
 
-    
+
 
     private void Start()
     {
+
+
+        actor = GetComponent<Actor>();
         rb = GetComponent<Rigidbody>();
         Health = MaxHealth;
         startPos = transform.position;
 
     }
+    private void Stagger(bool staggered)
+    {
+        if (staggered)
+        {
+            actor.FreeCombat = false;
 
+        }
+        else
+        {
+            actor.FreeCombat = true;
+        }
+
+    }
     private void Update()
     {
         switch (currentEffect)
@@ -33,6 +52,23 @@ public class Stats : MonoBehaviour
             case effectType.poison:
                 break;
             case effectType.slowed:
+                break;
+            case effectType.staggered:
+                if (staggerTimer >= staggeredRecoveryTime)
+                {
+                    Stagger(false);
+                    currentEffect = effectType.nothing;
+                    Debug.Log("not staggered");
+                    staggerTimer = 0.0f;
+                }
+                else
+                {
+                    Stagger(true);
+
+                    Debug.Log("staggered");
+                    staggerTimer += Time.deltaTime;
+                
+                }
                 break;
 
         }
@@ -56,6 +92,8 @@ public class Stats : MonoBehaviour
         Health -= amount;
         rb.AddForce(-transform.forward * force, ForceMode.Impulse);
 
+        currentEffect = effectType.staggered;
+        staggerTimer = 0.0f;
         if (Health <= 0)
         {
             Destroy(gameObject);

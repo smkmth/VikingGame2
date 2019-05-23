@@ -36,54 +36,79 @@ public class CameraControl : MonoBehaviour
     public float wierdNumber;
     private float HorizontalAxis;
     private float VerticalAxis;
+    public bool lockedOn;
+    public Transform lockOnTarget;
+    public float followDistance;
+    public float followHeight;
+    public GameObject sceneManager;
+
 
     // Use this for initialization
     void Start()
     {
+        sceneManager = GameObject.Find("SceneManager");
         //the statement below automatically positions the camera behind the target.
         //hosMove = transform.position - target.transform.position;
 
 
 
     }
+    public void ToggleLockOn(bool lockOn)
+    {
+       if (lockOn)
+        {
+            transform.parent = target.transform;
+            lockedOn = true;
+        }
+       else
+        {
+            transform.parent = sceneManager.transform;
+            lockedOn = false;
 
+        }
+
+    }
     void LateUpdate()
     {
-       // rotateAround = target.eulerAngles.y - wierdNumber;
-        HorizontalAxis = Input.GetAxis("Mouse X") + Input.GetAxis("RightStickHorizontal");
-        VerticalAxis = Input.GetAxis("Mouse Y") + Input.GetAxis("RightStickVertical");
-
-        //Offset of the targets transform (Since the pivot point is usually at the feet).
-        Vector3 targetOffset = new Vector3(target.position.x, (target.position.y + 1f), target.position.z);
-        //hosMove = Quaternion.AngleAxis(HorizontalAxis, Vector3.up) * targetOffset;
-        Quaternion rotation = Quaternion.Euler(cameraHeight, rotateAround, cameraPan);
-        Vector3 vectorMask = Vector3.one;
-        Vector3 rotateVector = rotation * vectorMask;
-        //this determines where both the camera and it's mask will be.
-        //the camMask is for forcing the camera to push away from walls.
-        camPosition = targetOffset + Vector3.up * DistanceUp - rotateVector * DistanceAway;
-        camMask = targetOffset + Vector3.up * DistanceUp - rotateVector * DistanceAway;
-
-    
-        OccludeRay(ref targetOffset);
-        SmoothCamMethod();
-
-        transform.LookAt(target);
-
-        #region wrap the cam orbit rotation
-        if (rotateAround > 360)
+        if (!lockedOn)
         {
-            rotateAround = 0f;
-        }
-        else if (rotateAround < 0f)
-        {
-            rotateAround = (rotateAround + 360f);
-        }
-        #endregion
+            // rotateAround = target.eulerAngles.y - wierdNumber;
+            HorizontalAxis = Input.GetAxis("Mouse X") + Input.GetAxis("RightStickHorizontal");
+            VerticalAxis = Input.GetAxis("Mouse Y") + Input.GetAxis("RightStickVertical");
 
-        rotateAround += HorizontalAxis * camRotateSpeed * Time.deltaTime;
-        DistanceUp = Mathf.Clamp(DistanceUp += VerticalAxis, -0.79f, 2.3f);
-        DistanceAway = Mathf.Clamp(DistanceAway += VerticalAxis, minDistance, maxDistance);
+            //Offset of the targets transform (Since the pivot point is usually at the feet).
+            Vector3 targetOffset = new Vector3(target.position.x, (target.position.y + 1f), target.position.z);
+            //hosMove = Quaternion.AngleAxis(HorizontalAxis, Vector3.up) * targetOffset;
+            Quaternion rotation = Quaternion.Euler(cameraHeight, rotateAround, cameraPan);
+            Vector3 vectorMask = Vector3.one;
+            Vector3 rotateVector = rotation * vectorMask;
+            //this determines where both the camera and it's mask will be.
+            //the camMask is for forcing the camera to push away from walls.
+            camPosition = targetOffset + Vector3.up * DistanceUp - rotateVector * DistanceAway;
+            camMask = targetOffset + Vector3.up * DistanceUp - rotateVector * DistanceAway;
+
+
+            OccludeRay(ref targetOffset);
+            SmoothCamMethod();
+
+            transform.LookAt(target);
+
+            #region wrap the cam orbit rotation
+            if (rotateAround > 360)
+            {
+                rotateAround = 0f;
+            }
+            else if (rotateAround < 0f)
+            {
+                rotateAround = (rotateAround + 360f);
+            }
+            #endregion
+
+            rotateAround += HorizontalAxis * camRotateSpeed * Time.deltaTime;
+            DistanceUp = Mathf.Clamp(DistanceUp += VerticalAxis, -0.79f, 2.3f);
+            DistanceAway = Mathf.Clamp(DistanceAway += VerticalAxis, minDistance, maxDistance);
+        }
+
 
     }
     void SmoothCamMethod()

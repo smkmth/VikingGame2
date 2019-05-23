@@ -24,17 +24,6 @@ public class LockOn : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (IsLockedOn)
-        {
-            // transform.LookAt(target);
-
-            var lookPos = target.position - transform.position;
-            lookPos.y = 0;
-            
-            var rotation = Quaternion.LookRotation(lookPos);
-            transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * Damping);
-
-        }
-
+    
     }
 }

@@ -16,6 +16,7 @@ public class PathMover : MonoBehaviour
     public float stoppingDst = 10;
     public float repathRate = .3f;
     public bool followingPath;
+    public bool followingTarget;
 
     Path path;
 
@@ -23,6 +24,7 @@ public class PathMover : MonoBehaviour
     void Start()
     {
         StartCoroutine(UpdatePath());
+        followingTarget = true;
     }
 
     public void OnPathFound(Vector3[] waypoints, bool pathSuccessful)
@@ -40,27 +42,28 @@ public class PathMover : MonoBehaviour
 
     IEnumerator UpdatePath()
     {
-        if (target != null)
-        {
+       
             if (Time.timeSinceLevelLoad < repathRate)
             {
                 yield return new WaitForSeconds(repathRate);
             }
-            
-            PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
-            
-            float sqrMoveThreshold = pathUpdateMoveThreshold * pathUpdateMoveThreshold;
-            Vector3 targetPosOld = target.position;
-            while (true)
+            if (followingTarget == true)
             {
-                yield return new WaitForSeconds(minPathUpdateTime);
-                if ((target.position - targetPosOld).sqrMagnitude > sqrMoveThreshold)
+
+                PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+                float sqrMoveThreshold = pathUpdateMoveThreshold * pathUpdateMoveThreshold;
+                Vector3 targetPosOld = target.position;
+                while (true)
                 {
-                    PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
-                    targetPosOld = target.position;
+                    yield return new WaitForSeconds(minPathUpdateTime);
+                    if ((target.position - targetPosOld).sqrMagnitude > sqrMoveThreshold)
+                    {
+                        PathRequestManager.RequestPath(transform.position, target.position, OnPathFound);
+                        targetPosOld = target.position;
+                    }
                 }
-            }
         }
+        
 
     }
 
@@ -81,6 +84,7 @@ public class PathMover : MonoBehaviour
 
             if (path.turnBoundaries.Length == 0)
             {
+                followingPath = false;
                 break;
             }
             if (pathIndex >= path.turnBoundaries.Length )

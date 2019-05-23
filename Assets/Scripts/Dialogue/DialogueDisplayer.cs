@@ -18,7 +18,7 @@ public class DialogueDisplayer : MonoBehaviour
     private List<DialogueLine> dialogueToDisplay = new List<DialogueLine>();
     public int currentDialogueIndex =0;
 
-    public Interaction interaction;
+    public PlayerInteraction interaction;
 
 
 
@@ -26,7 +26,7 @@ public class DialogueDisplayer : MonoBehaviour
 
     public void Start()
     {
-        interaction = GetComponent<Interaction>();
+        interaction = GetComponent<PlayerInteraction>();
 
         dialogueContent = dialoguePanel.GetComponentInChildren<TextMeshProUGUI>();
         speakerName = speakerPanel.GetComponentInChildren<TextMeshProUGUI>();
