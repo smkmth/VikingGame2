@@ -112,16 +112,7 @@ public class BaseSceneManager : MonoBehaviour
 
             //stats testing
 
-            Stats[] stats = GameObject.FindObjectsOfType<Stats>();
-            foreach (Stats stat in stats)
-            {
-                if (stat.MaxHealth <= 0)
-                {
-                    Debug.LogWarning("Agent " + stat.name + " has no max health, so will instantly die!");
-
-                }
-
-            }
+     
             {
                 CameraControl playercam = GameObject.FindObjectOfType<CameraControl>();
                 if (!playercam)

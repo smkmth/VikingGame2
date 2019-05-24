@@ -7,17 +7,24 @@ public class WeaponHit : MonoBehaviour {
     public Weapon weaponData;
     public string target;
     public bool doDamage;
+    public Combat thisCombat;
+
+
+    public void Start()
+    {
+        thisCombat = GetComponentInParent<Combat>();
+
+    }
 
     private void OnTriggerEnter(Collider collision)
     {
-
-
-
         if (collision.transform.gameObject.tag == target)
         {
             if (doDamage)
             {
-                collision.transform.gameObject.GetComponent<Stats>().DoDamage(weaponData.attackDamage, 3.0f);
+                Combat combat = collision.transform.gameObject.GetComponent<Combat>();
+                combat.TakeDamage(weaponData.attackDamage, 3.0f, thisCombat );
+
             }
 
         }

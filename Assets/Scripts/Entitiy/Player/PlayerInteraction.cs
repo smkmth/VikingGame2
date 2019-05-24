@@ -2,9 +2,10 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class PlayerInteraction : Actor
+public class PlayerInteraction : MonoBehaviour
 {
-    private Rigidbody rb; 
+    private Rigidbody rb;
+    private Combat combat;
     private DialogueDisplayer dialogueDisplay;
     public LayerMask EnemyLayerMask;
     public LayerMask GroundLayerMask;
@@ -27,8 +28,9 @@ public class PlayerInteraction : Actor
     public float rotationSpeed;
     public float Step;
     private float rot;
+    public bool FreeMove;
+    public bool FreeLook;
 
-    public float MovementSpeed;
     public float DistanceToGround;
     public bool onGround;
     public float playerHeight;
@@ -50,17 +52,23 @@ public class PlayerInteraction : Actor
     Vector3 sidewaysMovement;
     public bool isLockedOn;
     public Transform target;
-    public float Damping; 
+    public float Damping;
+    private bool attacking;
+    public WeaponHit weapon;
+    public float anticipationTime;
+    public float attackTime;
 
     private void Start()
     {
         inventory = GetComponent<Inventory>();
+        combat = GetComponent<Combat>();
         rb = GetComponent<Rigidbody>();
+        combat = GetComponent<Combat>();
         equipmentHolder = GetComponent<EquipmentHolder>();
         dialogueDisplay = GetComponent<DialogueDisplayer>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
-        FreeCombat = true;
+
         FreeMove = true;
         FreeLook= true;
 
@@ -77,26 +85,13 @@ public class PlayerInteraction : Actor
         return Physics.Raycast(transform.position, -Vector3.up, DistanceToGround + 0.1f);
     }
 
-    public IEnumerator Dodge(Vector3 initialVector, Vector3 dodgeVector)
-    {
-        FreeMove = false;
-        dodging = true;
-        if (transform.position != dodgeVector)
-        {
-            transform.position = Vector3.Lerp(initialVector, dodgeVector, Time.deltaTime * 100.0f);
-        }
-        else
-        {
-            FreeMove = true;
-            dodging = false;
-            yield return null;
 
-        }
-    }
+
+
     // Update is called once per frame
     void Update()
     {
-       
+
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
@@ -130,8 +125,6 @@ public class PlayerInteraction : Actor
                 }
                 if (isLockedOn)
                 {
-                    // transform.LookAt(target);
-
                     var lookPos = target.position - transform.position;
                     lookPos.y = 0;
                     var rotation = Quaternion.LookRotation(lookPos);
@@ -165,7 +158,7 @@ public class PlayerInteraction : Actor
                     sidewaysMovement = transform.right * Input.GetAxis("Horizontal");
 
 
-                    Vector3 nextMovePos = (forwardMovement + sidewaysMovement) * Time.deltaTime * MovementSpeed;
+                    Vector3 nextMovePos = (forwardMovement + sidewaysMovement) * Time.deltaTime * combat.currentMovementSpeed;
 
                     if (nextMovePos.x != 0 && nextMovePos.z != 0)
                     {
@@ -182,92 +175,20 @@ public class PlayerInteraction : Actor
 
                 if (Input.GetButtonDown("Dodge"))
                 {
-                    
-                    if (!dodging)
-                    {
-                        Debug.Log("dodge");
-                        dodgePos = (forwardMovement + sidewaysMovement * dodgeDistance + transform.position);
-                        dodgeVect =forwardMovement + sidewaysMovement;
-                        dodging = true;
-       
-                    }
-                
-                    
+                    combat.Dodge(forwardMovement, sidewaysMovement);
                 }
-                if (FreeCombat)
+
+                if (Input.GetButtonDown("Attack"))
                 {
-                    if (dodging)
-                    {
-                        if (dodgeVect != Vector3.zero)
-                        {
-                            Debug.Log(transform.position + " " + dodgePos + " " + Mathf.Abs(Vector3.Distance(transform.position, dodgePos)));
-                            FreeMove = false;
-                            if (Mathf.Abs(Vector3.Distance(transform.position, dodgePos)) > dodgeDistance)
-                            {
-                                Debug.Log("stop!");
-                                dodging = false;
-                                FreeMove = true;
-                                dodgePos = Vector3.zero;
-                            }
-                            else
-                            {
-                                transform.position +=  dodgeVect * Time.deltaTime * dodgeSpeed;
-                            }
-
-                        }
-                        else
-                        {
-                            Debug.Log("stop!");
-                            dodging = false;
-                            FreeMove = true;
-                            dodgePos = Vector3.zero;
-
-                        }
-                    }
-                    if (Input.GetButtonDown("Attack"))
-                    {
-
-                        Debug.Log("attack");
-
-                        if (equipmentHolder.equipedWeapon != null)
-                        {
-
-                            animator.SetTrigger("Attack");
-                        }
-                        else
-                        {
-                            Debug.Log("No Weapon Equiped");
-                        }
-
-                        RaycastHit hit;
-                        Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 100.0f, Color.yellow);
-                        if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out hit, interactRange))
-                        {
-                            if (hit.transform.gameObject.tag == "Item")
-                            {
-                                ItemContainer item = hit.transform.gameObject.GetComponent<ItemContainer>();
-                                if (item.hitsToHarvest == 0)
-                                {
-                                    inventory.AddItem(item.containedItem);
-                                    Destroy(hit.transform.gameObject);
-                                }
-                                else
-                                {
-                                    item.hitsToHarvest -= 1;
-                                }
-                            }
-
-                            if (hit.transform.gameObject.tag == "Enemy")
-                            {
-
-                                hit.transform.gameObject.GetComponent<Stats>().DoDamage(equipmentHolder.equipedWeapon.attackDamage);
-
-
-                            }
-
-                        }
-                    }
-                   
+                    combat.Attack();
+                }
+                if (Input.GetButton("Block"))
+                {
+                    combat.Block(true);
+                }
+                else
+                {
+                    combat.Block(false);
                 }
 
                 if (Input.GetButtonDown("Interact"))
@@ -276,6 +197,21 @@ public class PlayerInteraction : Actor
                     Debug.DrawRay(transform.position, transform.TransformDirection(Vector3.forward) * 100.0f, Color.yellow);
                     if (Physics.Raycast(transform.position, transform.TransformDirection(Vector3.forward), out interact, interactRange))
                     {
+
+
+                        if (interact.transform.gameObject.tag == "Item")
+                        {
+                            ItemContainer item = interact.transform.gameObject.GetComponent<ItemContainer>();
+                            if (item.hitsToHarvest == 0)
+                            {
+                                inventory.AddItem(item.containedItem);
+                                Destroy(interact.transform.gameObject);
+                            }
+                            else
+                            {
+                                item.hitsToHarvest -= 1;
+                            }
+                        }
                         if (interact.transform.gameObject.tag == "NPC")
                         {
                             receivedDialogue = interact.transform.gameObject.GetComponent<DialogueContainer>().dialogue;

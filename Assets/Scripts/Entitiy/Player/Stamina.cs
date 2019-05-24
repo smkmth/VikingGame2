@@ -13,13 +13,13 @@ public class Stamina : MonoBehaviour
     public int timeToWakeUp;
     public GameObject fadeToBlackCanvas;
 
-    private Stats stats;
+    private Combat stats;
 
 
     // Start is called before the first frame update
     void Start()
     {
-        stats = GetComponent<Stats>();
+        stats = GetComponent<Combat>();
         currentStamina = MaxStamina;
 
     }

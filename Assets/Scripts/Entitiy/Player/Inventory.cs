@@ -9,7 +9,6 @@ using UnityEngine.UI;
 /// </summary>
 public class Inventory : MonoBehaviour
 {
-    private Stats stats;
     private Stamina stamina;
     private PlayerInteraction interaction;
 
@@ -57,7 +56,6 @@ public class Inventory : MonoBehaviour
 
         
         equipmentHolder = GetComponent<EquipmentHolder>();
-        stats = GetComponent<Stats>();     
         stamina = GetComponent<Stamina>();     
         interaction = GetComponent<PlayerInteraction>();     
         DisplayInventory();

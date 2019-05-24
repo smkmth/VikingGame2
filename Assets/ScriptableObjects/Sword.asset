@@ -15,7 +15,7 @@ MonoBehaviour:
   description: Its a basic sword
   icon: {fileID: 21300000, guid: 204ade3f0fa33e242a57c2beba51afbf, type: 3}
   type: 0
-  mesh: {fileID: 4300000, guid: 1f832311e6d9a754795ce2033d0fffa6, type: 3}
+  mesh: {fileID: 4300000, guid: 715c5af4adb9e0148a366ae11bf5cf4f, type: 3}
   equipmentSlot: 4
   attackDamage: 10
   effect: []

@@ -2,68 +2,119 @@
 using System.Collections.Generic;
 using UnityEngine;
 
-public class HostileAI : Actor
+public enum enemyBehaviour
+{
+    DirectEngagement,
+    Flank
+ 
+}
+
+public class HostileAI : MonoBehaviour
 {
 
     private PathMover pathMover;
     private GameObject target;
-    private Animator animator;
-    public WeaponHit weapon;
-    public float attackTime;
-    public float anticipationTime;
-    public float engageDistance = 5.0f;
-    private bool attacking;
+    private Combat combat;
     private bool inEngageRange;
-    public float attackDistance =1.0f;
+    public float attackDistance = 1.0f;
+    public float engageDistance = 5.0f;
+    public bool freeMove;
+    public enemyBehaviour thisBehaviour;
+    public float behaviourChangeTime;
+    private float behaviourTimer ;
 
     // Use this for initialization
     void Start () {
         target = GameObject.Find("Player");
         pathMover = GetComponent<PathMover>();
-        animator = GetComponent<Animator>();
+        combat = GetComponent<Combat>();
         pathMover.target= target.transform;
         inEngageRange = false;
-        FreeCombat = true;
-        FreeLook = true;
-        FreeMove = true;
+       
+
+        freeMove = true;
+    }
+
+    void DecideBehaviour()
+    {
+        if (Random.Range(1,30) < 5)
+        {
+            if (thisBehaviour == enemyBehaviour.DirectEngagement)
+            {
+                thisBehaviour = enemyBehaviour.Flank;
+            }
+            else
+            {
+                thisBehaviour = enemyBehaviour.DirectEngagement;
+
+            }
+
+        }
     }
 
     // Update is called once per frame
     void Update () {
-        if (FreeMove)
+        if (freeMove)
         {
 
             float dist = Mathf.Abs(Vector3.Distance(target.transform.position, transform.position));
             if (inEngageRange)
             {
-
-                transform.LookAt(target.transform);
-                if (!attacking)
+                switch (thisBehaviour)
                 {
-                    if (dist > attackDistance)
-                    {
-                        if(!attacking)
-                        {
-                            transform.position += transform.forward * Time.deltaTime * 2.0f;
+                    case enemyBehaviour.DirectEngagement:
+                        transform.LookAt(target.transform);
 
-                        }
-                    }
-                    else
-                    {
-                        if (FreeCombat)
+                        if (!combat.attacking)
                         {
-                            if (!attacking)
+                            if (dist > attackDistance)
                             {
-                            
+                                DecideBehaviour();
+                                if (!combat.attacking)
+                                {
+                                    transform.position += transform.forward * Time.deltaTime * combat.currentMovementSpeed;
+                                }
+                            }
+                            else
+                            {
+                                if (!combat.attacking)
+                                {
+                                    combat.Attack();
+                                }
+                            }
+                        }
+                        break;
+                    case enemyBehaviour.Flank:
+                        if (!combat.attacking)
+                        {
+                            if (dist > attackDistance)
+                            {
+                                transform.LookAt(target.transform);
+                               
+                                transform.position += transform.right * Time.deltaTime * combat.currentMovementSpeed;
+                                if (Vector3.Dot(target.transform.position, transform.forward) > 0)
+                                {
 
-                                StopCoroutine(DoAttack());
-                                StartCoroutine(DoAttack());
+                                }
+                                else
+                                {
+                                    DecideBehaviour();
+                                }
+
+                            }
+                            else
+                            {
+                                transform.position += -transform.forward * Time.deltaTime * combat.currentMovementSpeed;
+                               
                             }
 
                         }
 
-                    }
-                } 
+                        break;
+
+                }
+
+        
 
             }
 
@@ -76,7 +127,7 @@ public class HostileAI : Actor
             else
             {
                 inEngageRange = false;
-                if (!attacking)
+                if (!combat.attacking)
                 {
                     pathMover.followingTarget = true;
                 }
@@ -89,18 +140,5 @@ public class HostileAI : Actor
      
 
     }
-
-    IEnumerator DoAttack()
-    {
-        attacking = true;
-        transform.LookAt(target.transform);
-        animator.SetTrigger("ReadyAttack");
-        yield return new WaitForSeconds(anticipationTime);
-        animator.SetTrigger("Attack");
-        weapon.doDamage = true;
-        yield return new WaitForSeconds(attackTime);
-        weapon.doDamage = false;
-
-        attacking = false;
-    }
+    
 }

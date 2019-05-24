@@ -29,6 +29,8 @@ public class EquipmentHolder : MonoBehaviour
 
     }
 
+
+
     public void EquipItem( Equipment equipment)
     {
         EquipmentSlots[equipment.equipmentSlot].equipment = equipment;

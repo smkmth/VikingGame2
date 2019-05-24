@@ -6,7 +6,7 @@ using UnityEngine.UI;
 public class PlayerHUD : MonoBehaviour
 {
 
-    private Stats playerStats;
+    private Combat playerStats;
     private Stamina playerStamina;
     public GameObject playerHUD;
     public Slider healthBar;
@@ -17,7 +17,7 @@ public class PlayerHUD : MonoBehaviour
     void Start()
     {
 
-        playerStats = GetComponent<Stats>();
+        playerStats = GetComponent<Combat>();
         playerStamina = GetComponent<Stamina>();
         healthBar.maxValue = playerStats.MaxHealth;
         staminaBar.maxValue = playerStamina.MaxStamina;
