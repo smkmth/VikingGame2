@@ -16,18 +16,17 @@ public class DialogueDisplayer : MonoBehaviour
     private TextMeshProUGUI dialogueContent;
     private TextMeshProUGUI speakerName;
     private List<DialogueLine> dialogueToDisplay = new List<DialogueLine>();
+
+    [HideInInspector]
     public int currentDialogueIndex =0;
 
-    public PlayerInteraction interaction;
-
-
-
+    [HideInInspector]
     public bool isDisplayingDialogue;
+
+
 
     public void Start()
     {
-        interaction = GetComponent<PlayerInteraction>();
-
         dialogueContent = dialoguePanel.GetComponentInChildren<TextMeshProUGUI>();
         speakerName = speakerPanel.GetComponentInChildren<TextMeshProUGUI>();
         dialogueWindow.SetActive(false);
@@ -60,7 +59,7 @@ public class DialogueDisplayer : MonoBehaviour
         Time.timeScale = 1;
         dialogueWindow.SetActive(false);
         isDisplayingDialogue = false;
-        interaction.canInteract = true;
+
 
 
     }
@@ -68,7 +67,6 @@ public class DialogueDisplayer : MonoBehaviour
     {
         if (isDisplayingDialogue)
         {
-            interaction.canInteract = false;
 
             if (Input.GetButtonDown("Attack"))
             {

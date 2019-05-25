@@ -819,23 +819,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c24ec01aa3c55594e9badd71e3f5970d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackTime: 0.5
-  anticipationTime: 1
+  startPos: {x: 0, y: 0, z: 0}
   MaxHealth: 100
   Health: 100
-  startPos: {x: 0, y: 0, z: 0}
-  staggeredRecoveryTime: 3
   currentEffect: 0
-  isBlocking: 0
-  attacking: 0
   FreeCombat: 1
+  baseAttackTime: 0.5
+  baseAnticipationTime: 0
+  baseStaggerRecoveryTime: 0
+  isAttacking: 0
   dodgeDistance: 10
-  dodgeSpeed: 0
-  poise: 100
+  dodgeSpeed: 100
+  isDodging: 0
   maxPoise: 100
+  isBlocking: 0
+  baseMovementSpeed: 10
+  blockingMovementSpeed: 4
   currentMovementSpeed: 0
-  normalMovementSpeed: 7
-  slowedMovementSpeed: 3
 --- !u!54 &140164626
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -5236,19 +5236,16 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 265861017}
-  - component: {fileID: 809627413}
-  - component: {fileID: 809627412}
   - component: {fileID: 809627411}
-  - component: {fileID: 809627410}
-  - component: {fileID: 809627409}
-  - component: {fileID: 809627408}
-  - component: {fileID: 809627407}
-  - component: {fileID: 809627406}
-  - component: {fileID: 809627403}
-  - component: {fileID: 809627405}
-  - component: {fileID: 809627404}
-  - component: {fileID: 809627415}
   - component: {fileID: 809627414}
+  - component: {fileID: 809627410}
+  - component: {fileID: 809627405}
+  - component: {fileID: 809627408}
+  - component: {fileID: 809627415}
+  - component: {fileID: 809627403}
+  - component: {fileID: 809627409}
+  - component: {fileID: 809627407}
+  - component: {fileID: 809627404}
   m_Layer: 12
   m_Name: Player
   m_TagString: Player
@@ -5270,8 +5267,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   inventoryUI: {fileID: 2018021299}
   itemGrid: {fileID: 990896393}
-  MaxItemSlots: 26
-  totalItemsStored: 0
   emptySprite: {fileID: 21300000, guid: 4a29e08d634cddb4894922cff4552a71, type: 3}
   emptyString: No Item
 --- !u!114 &809627404
@@ -5291,7 +5286,6 @@ MonoBehaviour:
   speakerPanel: {fileID: 894686909}
   speakerImage: {fileID: 818104909}
   currentDialogueIndex: 0
-  interaction: {fileID: 0}
   isDisplayingDialogue: 0
 --- !u!114 &809627405
 MonoBehaviour:
@@ -5305,59 +5299,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 375c18023185b30449b49e10bd91959e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  EnemyLayerMask:
-    serializedVersion: 2
-    m_Bits: 0
-  GroundLayerMask:
-    serializedVersion: 2
-    m_Bits: 3072
-  BlockingLayerMask:
-    serializedVersion: 2
-    m_Bits: 512
-  AttackDistance: 10
-  equipmentHolder: {fileID: 0}
-  canInteract: 1
-  cam: {fileID: 1282395013}
-  currentInteractionState: 0
-  receivedDialogue: []
-  dialogueIndex: 0
-  rotationSpeed: 1000
-  Step: 1
+  playerCamera: {fileID: 1282395013}
+  lockOnDamping: 0
   FreeMove: 1
   FreeLook: 1
-  DistanceToGround: 1
-  onGround: 0
-  playerHeight: 0
-  gravity: 9.81
-  slopeAngle: 0
-  onSlope: 0
+  turnSpeed: 1000
   interactRange: 1
-  stardewControls: 0
-  controllerInput: 1
-  dodgeDistance: 5
-  dodging: 0
-  dodgeSpeed: 100
-  isLockedOn: 0
-  target: {fileID: 140164618}
-  Damping: 10
-  weapon: {fileID: 974097257}
-  anticipationTime: 0
-  attackTime: 0.5
---- !u!114 &809627406
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 114671501486436624, guid: 9cd9884b73d532a4396d92fd1fd3f804,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 809627402}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 4f30939dc45e884478648f732ec30b95, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  target: {fileID: 0}
-  Damping: 0
-  IsLockedOn: 0
+  currentInteractionState: 0
 --- !u!114 &809627407
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5420,23 +5368,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c24ec01aa3c55594e9badd71e3f5970d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackTime: 0.5
-  anticipationTime: 0
+  startPos: {x: 0, y: 0, z: 0}
   MaxHealth: 100
   Health: 100
-  startPos: {x: 0, y: 0, z: 0}
-  staggeredRecoveryTime: 3
   currentEffect: 0
-  isBlocking: 0
-  attacking: 0
   FreeCombat: 1
+  baseAttackTime: 0.5
+  baseAnticipationTime: 0
+  baseStaggerRecoveryTime: 0
+  isAttacking: 0
   dodgeDistance: 10
   dodgeSpeed: 100
-  poise: 10
+  isDodging: 0
   maxPoise: 10
+  isBlocking: 0
+  baseMovementSpeed: 10
+  blockingMovementSpeed: 3
   currentMovementSpeed: 0
-  normalMovementSpeed: 10
-  slowedMovementSpeed: 3
 --- !u!136 &809627411
 CapsuleCollider:
   m_ObjectHideFlags: 0
@@ -5447,54 +5395,10 @@ CapsuleCollider:
   m_Material: {fileID: 0}
   m_IsTrigger: 0
   m_Enabled: 1
-  m_Radius: 0.5
+  m_Radius: 0.25
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!23 &809627412
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 23483388778525110, guid: 9cd9884b73d532a4396d92fd1fd3f804,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 809627402}
-  m_Enabled: 0
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RenderingLayerMask: 4294967295
-  m_Materials:
-  - {fileID: 2100000, guid: 52c70a58df6dd624882884ad2f88b270, type: 2}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 0
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
---- !u!33 &809627413
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 33277928950401084, guid: 9cd9884b73d532a4396d92fd1fd3f804,
-    type: 2}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 809627402}
-  m_Mesh: {fileID: 10208, guid: 0000000000000000e000000000000000, type: 0}
 --- !u!54 &809627414
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -11149,23 +11053,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c24ec01aa3c55594e9badd71e3f5970d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackTime: 0.5
-  anticipationTime: 1
+  startPos: {x: 0, y: 0, z: 0}
   MaxHealth: 100
   Health: 100
-  startPos: {x: 0, y: 0, z: 0}
-  staggeredRecoveryTime: 3
   currentEffect: 0
-  isBlocking: 0
-  attacking: 0
   FreeCombat: 1
+  baseAttackTime: 0
+  baseAnticipationTime: 0
+  baseStaggerRecoveryTime: 0
+  isAttacking: 0
   dodgeDistance: 10
   dodgeSpeed: 0
-  poise: 100
+  isDodging: 0
   maxPoise: 100
+  isBlocking: 0
+  baseMovementSpeed: 0
+  blockingMovementSpeed: 0
   currentMovementSpeed: 0
-  normalMovementSpeed: 7
-  slowedMovementSpeed: 3
 --- !u!114 &1290291507
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -11429,7 +11333,6 @@ GameObject:
   - component: {fileID: 1346818322}
   - component: {fileID: 1346818321}
   - component: {fileID: 1346818320}
-  - component: {fileID: 1346818319}
   - component: {fileID: 1346818318}
   - component: {fileID: 1346818317}
   - component: {fileID: 1346818316}
@@ -11568,17 +11471,6 @@ CapsuleCollider:
   m_Height: 2
   m_Direction: 1
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &1346818319
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 0}
-  m_GameObject: {fileID: 1346818314}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f9b1e7c1159838e499b94d5a42609626, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &1346818320
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -65,19 +65,19 @@ public class HostileAI : MonoBehaviour
                     case enemyBehaviour.DirectEngagement:
                         transform.LookAt(target.transform);
 
-                        if (!combat.attacking)
+                        if (!combat.isAttacking)
                         {
                             if (dist > attackDistance)
                             {
                                 DecideBehaviour();
-                                if (!combat.attacking)
+                                if (!combat.isAttacking)
                                 {
                                     transform.position += transform.forward * Time.deltaTime * combat.currentMovementSpeed;
                                 }
                             }
                             else
                             {
-                                if (!combat.attacking)
+                                if (!combat.isAttacking)
                                 {
                                     combat.Attack();
                                 }
@@ -85,7 +85,7 @@ public class HostileAI : MonoBehaviour
                         }
                         break;
                     case enemyBehaviour.Flank:
-                        if (!combat.attacking)
+                        if (!combat.isAttacking)
                         {
                             if (dist > attackDistance)
                             {
@@ -127,7 +127,7 @@ public class HostileAI : MonoBehaviour
             else
             {
                 inEngageRange = false;
-                if (!combat.attacking)
+                if (!combat.isAttacking)
                 {
                     pathMover.followingTarget = true;
                 }

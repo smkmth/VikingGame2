@@ -20,8 +20,9 @@ public class Inventory : MonoBehaviour
     public GameObject inventoryUI;
     public GameObject itemGrid;
 
-    public int MaxItemSlots;
-    public int totalItemsStored;
+    //26 item slots
+    private int MaxItemSlots;
+    private int totalItemsStored;
 
     //array of the images
     private Image[] itemImages;
@@ -35,12 +36,7 @@ public class Inventory : MonoBehaviour
     public void Start()
     {
         totalItemsStored = 0;
-        itemSlots = new List<ItemSlot>();
-
-        for (int i = 0; i < MaxItemSlots; i++)
-        {
-            itemSlots.Add(new ItemSlot(null, 0, false));
-        }
+    
 
 
         itemImages = itemGrid.GetComponentsInChildren<Image>();
@@ -54,7 +50,15 @@ public class Inventory : MonoBehaviour
             text.text = emptyString;
         }
 
-        
+        MaxItemSlots = itemImages.Length;
+
+        itemSlots = new List<ItemSlot>();
+        for (int i = 0; i < MaxItemSlots; i++)
+        {
+            itemSlots.Add(new ItemSlot(null, 0, false));
+        }
+
+
         equipmentHolder = GetComponent<EquipmentHolder>();
         stamina = GetComponent<Stamina>();     
         interaction = GetComponent<PlayerInteraction>();     
@@ -73,7 +77,7 @@ public class Inventory : MonoBehaviour
             Cursor.visible = true;
             Cursor.lockState = CursorLockMode.None;
             Time.timeScale = 0;
-            interaction.currentInteractionState = PlayerInteraction.interactionState.InventoryMode;
+            interaction.currentInteractionState = interactionState.InventoryMode;
 
         }
         else
@@ -82,7 +86,7 @@ public class Inventory : MonoBehaviour
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             Time.timeScale = 1;
-            interaction.currentInteractionState = PlayerInteraction.interactionState.Normal;
+            interaction.currentInteractionState = interactionState.Normal;
 
 
         }

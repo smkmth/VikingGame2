@@ -1,77 +1,59 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+public enum interactionState
+{
+    Normal,
+    DialogueMode,
+    InventoryMode
+}
 public class PlayerInteraction : MonoBehaviour
 {
-    private Rigidbody rb;
-    private Combat combat;
-    private DialogueDisplayer dialogueDisplay;
-    public LayerMask EnemyLayerMask;
-    public LayerMask GroundLayerMask;
-    public LayerMask BlockingLayerMask;
-    public float AttackDistance;
-    private Inventory inventory;
-    public EquipmentHolder equipmentHolder;
-    public bool canInteract=true;
-    public Camera cam;
-    public enum interactionState
-    {
-        Normal,
-        DialogueMode,
-        InventoryMode
-    }
-    public interactionState currentInteractionState;
-    public List<DialogueLine> receivedDialogue;
-    public int dialogueIndex;
+    [Header("Camera Settings")]
+    public Camera playerCamera;
+    private CameraControl camControl;
+    private bool isLockedOn;
+    private Transform target;
+    public float lockOnDamping;
 
-    public float rotationSpeed;
-    public float Step;
-    private float rot;
+    [Header("Movement Settings")]
     public bool FreeMove;
-    public bool FreeLook;
-
-    public float DistanceToGround;
-    public bool onGround;
-    public float playerHeight;
-    public float gravity;
-    public float slopeAngle;
-    public bool onSlope =false;
-    public float interactRange;
-    public bool stardewControls;
     private float currentMoveSpeed;
-    public bool controllerInput;
-    public float dodgeDistance;
-    public bool dodging;
+    private Vector3 forwardMovement;
+    private Vector3 sidewaysMovement;
+
+    [Header("Rotation Settings")]
+    public bool FreeLook;
+    public float turnSpeed;
+
+    [Header("Interaction Settings")]
+    public float interactRange;
+    private DialogueDisplayer dialogueDisplay;
+    private List<DialogueLine> receivedDialogue;
+    public interactionState currentInteractionState;
+    private int dialogueIndex;
+
+    private Combat combat;
+
+    private Inventory inventory;
+
     private AnimationManager animator;
-    private Quaternion targetRotation;
-    public float dodgeSpeed;
-    Vector3 dodgePos;
-    Vector3 dodgeVect;
-    Vector3 forwardMovement;
-    Vector3 sidewaysMovement;
-    public bool isLockedOn;
-    public Transform target;
-    public float Damping;
-    private bool attacking;
-    public WeaponHit weapon;
-    public float anticipationTime;
-    public float attackTime;
+ 
 
     private void Start()
-    {
+
+    { 
+
         animator = GetComponent<AnimationManager>();
         inventory = GetComponent<Inventory>();
         combat = GetComponent<Combat>();
-        rb = GetComponent<Rigidbody>();
-        combat = GetComponent<Combat>();
-        equipmentHolder = GetComponent<EquipmentHolder>();
         dialogueDisplay = GetComponent<DialogueDisplayer>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
         FreeMove = true;
         FreeLook= true;
+        camControl = playerCamera.GetComponent<CameraControl>();
 
     }
 
@@ -80,10 +62,6 @@ public class PlayerInteraction : MonoBehaviour
         Cursor.lockState = wantedMode;
         // Hide cursor when locking
         Cursor.visible = (CursorLockMode.Locked != wantedMode);
-    }
-    public bool isGrounded()
-    {
-        return Physics.Raycast(transform.position, -Vector3.up, DistanceToGround + 0.1f);
     }
 
 
@@ -112,14 +90,14 @@ public class PlayerInteraction : MonoBehaviour
                     if (isLockedOn)
                     {
                         isLockedOn = false;
-                        Camera.main.GetComponent<CameraControl>().ToggleLockOn(false);
+                        camControl.ToggleLockOn(false);
 
 
                     }
                     else
                     {
                         isLockedOn = true;
-                        Camera.main.GetComponent<CameraControl>().ToggleLockOn(true);
+                        camControl.ToggleLockOn(true);
 
 
                     }
@@ -129,26 +107,24 @@ public class PlayerInteraction : MonoBehaviour
                     var lookPos = target.position - transform.position;
                     lookPos.y = 0;
                     var rotation = Quaternion.LookRotation(lookPos);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * Damping);
+                    transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * lockOnDamping);
 
                 }
 
                 if (FreeLook)
                 {
-                    if (controllerInput)
+                    
+                    //  only check on the X-Z plane:
+                    Vector3 cameraDirection = new Vector3(playerCamera.transform.forward.x, 0f, playerCamera.transform.forward.z);
+                    Vector3 playerDirection = new Vector3(transform.forward.x, 0f, transform.forward.z);
+                    if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
                     {
-                        //  only check on the X-Z plane:
-                        Vector3 cameraDirection = new Vector3(cam.transform.forward.x, 0f, cam.transform.forward.z);
-                        Vector3 playerDirection = new Vector3(transform.forward.x, 0f, transform.forward.z);
-                        if (Input.GetAxis("Vertical") != 0 || Input.GetAxis("Horizontal") != 0)
+                        if (Vector3.Angle(cameraDirection, playerDirection) > 15f)
                         {
-                            if (Vector3.Angle(cameraDirection, playerDirection) > 15f)
-                            {
-                                targetRotation = Quaternion.LookRotation(cameraDirection, transform.up);
+                            Quaternion targetRotation = Quaternion.LookRotation(cameraDirection, transform.up);
 
-                                transform.rotation = Quaternion.RotateTowards(transform.rotation,targetRotation, rotationSpeed * Time.deltaTime);
+                            transform.rotation = Quaternion.RotateTowards(transform.rotation,targetRotation, turnSpeed * Time.deltaTime);
                                     
-                            }
                         }
                     }
 
