@@ -6,7 +6,7 @@ public class Combat : MonoBehaviour
 {
 
 
-    private Animator animator;
+    private AnimationManager animator;
     private EquipmentHolder equipmentHolder;
     private WeaponHit weapon;
     public float attackTime;
@@ -40,7 +40,7 @@ public class Combat : MonoBehaviour
         currentMovementSpeed = normalMovementSpeed;
         equipmentHolder = GetComponent<EquipmentHolder>();
         rb = GetComponent<Rigidbody>();
-        animator = GetComponentInChildren<Animator>();
+        animator = GetComponentInChildren<AnimationManager>();
         weapon = GetComponentInChildren<WeaponHit>();
         Health = MaxHealth;
         startPos = transform.position;

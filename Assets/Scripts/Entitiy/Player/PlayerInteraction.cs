@@ -43,7 +43,7 @@ public class PlayerInteraction : MonoBehaviour
     public bool controllerInput;
     public float dodgeDistance;
     public bool dodging;
-    public Animator animator;
+    private AnimationManager animator;
     private Quaternion targetRotation;
     public float dodgeSpeed;
     Vector3 dodgePos;
@@ -60,6 +60,7 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Start()
     {
+        animator = GetComponent<AnimationManager>();
         inventory = GetComponent<Inventory>();
         combat = GetComponent<Combat>();
         rb = GetComponent<Rigidbody>();
