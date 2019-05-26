@@ -5,12 +5,15 @@ public class CameraControl : MonoBehaviour
 {
 
     [Header("Camera Properties")]
-    private float DistanceAway;                     //how far the camera is from the player.
 
+    private float DistanceAway;
+
+    [Tooltip("Max distance from the player")]
     public float minDistance = 1;                //min camera distance
+    [Tooltip("Min distance from the player")]
     public float maxDistance = 2;                //max camera distance
 
-    public float DistanceUp = -2;                    //how high the camera is above the player
+    private float DistanceUp = -2;                    //how high the camera is above the player
     public float smooth = 4.0f;                    //how smooth the camera moves into place
     public float rotateAround = 70f;            //the angle at which you will rotate the camera (on an axis)
 
@@ -21,7 +24,7 @@ public class CameraControl : MonoBehaviour
     public LayerMask CamOcclusion;                //the layers that will be affected by collision
 
     [Header("Map coordinate script")]
-    //    public worldVectorMap wvm;
+
     RaycastHit hit;
     float cameraHeight = 55f;
     float cameraPan = 0f;
@@ -29,18 +32,20 @@ public class CameraControl : MonoBehaviour
     Vector3 camPosition;
     Vector3 camMask;
     Vector3 followMask;
-
+    public bool controllerInput;
 
     Vector3 targetOffset;
     Vector3 hosMove;
-    public float wierdNumber;
+
     private float HorizontalAxis;
     private float VerticalAxis;
+
     public bool lockedOn;
     public Transform lockOnTarget;
+
     public float followDistance;
     public float followHeight;
-    public GameObject sceneManager;
+    private GameObject sceneManager;
 
 
     // Use this for initialization
@@ -49,8 +54,23 @@ public class CameraControl : MonoBehaviour
         sceneManager = GameObject.Find("SceneManager");
         //the statement below automatically positions the camera behind the target.
         //hosMove = transform.position - target.transform.position;
+        controllerPluggedIn controller = ControllerDetector.CheckController();
+        if (controller != controllerPluggedIn.noController)
+        {
+            controllerInput = true;
+        }
 
+        if (controllerInput)
+        {
+            Debug.Log("Xbox controller plugged in");
 
+            camRotateSpeed = 3000.0f;
+        }
+        else
+        {
+            Debug.Log("No controller plugged in");
+            camRotateSpeed = 180.0f;
+        }
 
     }
     public void ToggleLockOn(bool lockOn)
@@ -72,13 +92,12 @@ public class CameraControl : MonoBehaviour
     {
         if (!lockedOn)
         {
-            // rotateAround = target.eulerAngles.y - wierdNumber;
+         
             HorizontalAxis = Input.GetAxis("Mouse X") + Input.GetAxis("RightStickHorizontal");
             VerticalAxis = Input.GetAxis("Mouse Y") + Input.GetAxis("RightStickVertical");
 
             //Offset of the targets transform (Since the pivot point is usually at the feet).
             Vector3 targetOffset = new Vector3(target.position.x, (target.position.y + 1f), target.position.z);
-            //hosMove = Quaternion.AngleAxis(HorizontalAxis, Vector3.up) * targetOffset;
             Quaternion rotation = Quaternion.Euler(cameraHeight, rotateAround, cameraPan);
             Vector3 vectorMask = Vector3.one;
             Vector3 rotateVector = rotation * vectorMask;
@@ -93,7 +112,6 @@ public class CameraControl : MonoBehaviour
 
             transform.LookAt(target);
 
-            #region wrap the cam orbit rotation
             if (rotateAround > 360)
             {
                 rotateAround = 0f;
@@ -102,7 +120,7 @@ public class CameraControl : MonoBehaviour
             {
                 rotateAround = (rotateAround + 360f);
             }
-            #endregion
+            
 
             rotateAround += HorizontalAxis * camRotateSpeed * Time.deltaTime;
             DistanceUp = Mathf.Clamp(DistanceUp += VerticalAxis, -0.79f, 2.3f);
@@ -114,13 +132,10 @@ public class CameraControl : MonoBehaviour
     void SmoothCamMethod()
     {
         smooth = 6f;
-
-
         transform.position = Vector3.Lerp(transform.position, camPosition, Time.deltaTime * smooth);
     }
     void OccludeRay(ref Vector3 targetFollow)
     {
-        #region prevent wall clipping
         //declare a new raycast hit.
         RaycastHit wallHit = new RaycastHit();
         //linecast from your player (targetFollow) to your cameras mask (camMask) to find collisions.
@@ -132,7 +147,6 @@ public class CameraControl : MonoBehaviour
             //the y coordinate stays the same.
             camPosition = new Vector3(wallHit.point.x + wallHit.normal.x * 0.5f, camPosition.y, wallHit.point.z + wallHit.normal.z * 0.5f);
         }
-        #endregion
     }
 
 }
