@@ -5267,7 +5267,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   itemSlots: []
-  MaxItemSlots: 28
+  MaxItemSlots: 26
   totalItemsStored: 0
 --- !u!114 &809627404
 MonoBehaviour:
