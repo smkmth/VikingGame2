@@ -28,7 +28,9 @@ public class CameraControl : MonoBehaviour
     RaycastHit hit;
     float cameraHeight = 55f;
     float cameraPan = 0f;
-    public float camRotateSpeed = 180f;
+    private float camRotateSpeed = 180f;
+    public float mouseRotateSpeed = 180.0f;
+    public float controllerRotateSpeed = 3000.0f;
     Vector3 camPosition;
     Vector3 camMask;
     Vector3 followMask;
