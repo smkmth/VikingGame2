@@ -5245,6 +5245,7 @@ GameObject:
   - component: {fileID: 809627403}
   - component: {fileID: 809627409}
   - component: {fileID: 809627407}
+  - component: {fileID: 809627406}
   - component: {fileID: 809627404}
   m_Layer: 12
   m_Name: Player
@@ -5265,10 +5266,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8f7243ca1a27cf84baede7f9cf7396e2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  inventoryUI: {fileID: 2018021299}
-  itemGrid: {fileID: 990896393}
-  emptySprite: {fileID: 21300000, guid: 4a29e08d634cddb4894922cff4552a71, type: 3}
-  emptyString: No Item
+  itemSlots: []
+  MaxItemSlots: 28
+  totalItemsStored: 0
 --- !u!114 &809627404
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -5306,6 +5306,21 @@ MonoBehaviour:
   turnSpeed: 1000
   interactRange: 1
   currentInteractionState: 0
+--- !u!114 &809627406
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 809627402}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 33c90ca79d2419d4c9226fc05b639d77, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  inventoryUI: {fileID: 2018021299}
+  itemGrid: {fileID: 990896393}
+  emptySprite: {fileID: 21300000, guid: 4a29e08d634cddb4894922cff4552a71, type: 3}
+  emptyString: No Item
 --- !u!114 &809627407
 MonoBehaviour:
   m_ObjectHideFlags: 0

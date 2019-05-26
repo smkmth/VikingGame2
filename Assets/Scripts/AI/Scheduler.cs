@@ -8,6 +8,7 @@ public class Scheduler : MonoBehaviour
     private PathMover pathMover;
     public List<Timeslot> timeSlots;
     public bool followingSchedule;
+
     // Start is called before the first frame update
     void Start()
     {
@@ -54,7 +55,6 @@ public class Scheduler : MonoBehaviour
                 
             }
         }
-        Debug.Log("Fix that lazy for loop!");
     }
 }
 

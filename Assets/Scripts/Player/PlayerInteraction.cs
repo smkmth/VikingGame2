@@ -36,14 +36,15 @@ public class PlayerInteraction : MonoBehaviour
     private Combat combat;
 
     private Inventory inventory;
+    private InventoryDisplayer inventoryDisplayer;
 
     private AnimationManager animator;
  
 
     private void Start()
 
-    { 
-
+    {
+        inventoryDisplayer = GetComponent<InventoryDisplayer>();
         animator = GetComponent<AnimationManager>();
         inventory = GetComponent<Inventory>();
         combat = GetComponent<Combat>();
@@ -79,7 +80,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (Input.GetButtonDown("Inventory"))
         {
-            inventory.ToggleInventoryMenu();
+            inventoryDisplayer.ToggleInventoryMenu();
         }
         switch (currentInteractionState) 
         {
