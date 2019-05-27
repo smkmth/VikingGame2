@@ -163,7 +163,7 @@ Prefab:
     - target: {fileID: 224188666542412910, guid: 00babd79943f8c240a40dd522061295a,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 632
       objectReference: {fileID: 0}
     - target: {fileID: 224188666542412910, guid: 00babd79943f8c240a40dd522061295a,
         type: 2}
@@ -2363,7 +2363,7 @@ Prefab:
     - target: {fileID: 224948248127045688, guid: a072df8127136ec4bb8e31dfcbf69794,
         type: 2}
       propertyPath: m_AnchoredPosition.x
-      value: 0
+      value: 632
       objectReference: {fileID: 0}
     - target: {fileID: 224948248127045688, guid: a072df8127136ec4bb8e31dfcbf69794,
         type: 2}
@@ -2373,7 +2373,7 @@ Prefab:
     - target: {fileID: 224948248127045688, guid: a072df8127136ec4bb8e31dfcbf69794,
         type: 2}
       propertyPath: m_SizeDelta.x
-      value: 0
+      value: 784
       objectReference: {fileID: 0}
     - target: {fileID: 224948248127045688, guid: a072df8127136ec4bb8e31dfcbf69794,
         type: 2}
@@ -6173,7 +6173,7 @@ MonoBehaviour:
   target: {fileID: 2011219666}
   transformTarget: {fileID: 0}
   speed: 20
-  turnSpeed: 3
+  turnSpeed: 20
   turnDst: 5
   stoppingDst: 10
   repathRate: 0.3

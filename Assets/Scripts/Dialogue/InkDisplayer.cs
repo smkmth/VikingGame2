@@ -62,6 +62,8 @@ public class InkDisplayer : MonoBehaviour {
         currentCharacter.characterInfo.Disposition = characterDisposition;
 
     }
+
+
     void EndStory()
     {
         UpdateVariables();
