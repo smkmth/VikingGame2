@@ -1,4 +1,5 @@
-﻿using System.Collections;
+﻿using Ink.Runtime;
+using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 public enum interactionState
@@ -9,6 +10,8 @@ public enum interactionState
 }
 public class PlayerInteraction : MonoBehaviour
 {
+    public TimeManager time;
+
     [Header("Camera Settings")]
     public Camera playerCamera;
     private CameraControl camControl;
@@ -32,6 +35,7 @@ public class PlayerInteraction : MonoBehaviour
     private List<DialogueLine> receivedDialogue;
     public interactionState currentInteractionState;
     private int dialogueIndex;
+    public InkDisplayer dialogueDisplayer;
 
     private Combat combat;
 
@@ -66,7 +70,50 @@ public class PlayerInteraction : MonoBehaviour
     }
 
 
+    public void SetDialogueMode()
+    {
+        if (currentInteractionState == interactionState.Normal)
+        {
+            Cursor.visible = true;
+            Time.timeScale = 0;
+            Cursor.lockState = CursorLockMode.None;
+            currentInteractionState = interactionState.DialogueMode;
 
+        }
+        else if (currentInteractionState == interactionState.DialogueMode)
+        {
+
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1;
+            currentInteractionState = interactionState.Normal;
+
+
+        }
+    }
+
+    void SetInventoryMode()
+    {
+        if (currentInteractionState == interactionState.Normal)
+        {
+            inventoryDisplayer.ToggleInventoryMenu(true);
+            Cursor.visible = true;
+            Time.timeScale = 0;
+            Cursor.lockState = CursorLockMode.None;
+            currentInteractionState = interactionState.InventoryMode;
+
+        }
+        else if (currentInteractionState == interactionState.InventoryMode)
+        {
+            inventoryDisplayer.ToggleInventoryMenu(false);
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1;
+            currentInteractionState = interactionState.Normal;
+
+
+        }
+    }
 
     // Update is called once per frame
     void Update()
@@ -80,8 +127,10 @@ public class PlayerInteraction : MonoBehaviour
 
         if (Input.GetButtonDown("Inventory"))
         {
-            inventoryDisplayer.ToggleInventoryMenu();
+            SetInventoryMode();
         }
+
+        
         switch (currentInteractionState) 
         {
 
@@ -192,34 +241,58 @@ public class PlayerInteraction : MonoBehaviour
                         }
                         if (interact.transform.gameObject.tag == "NPC")
                         {
-                            receivedDialogue = interact.transform.gameObject.GetComponent<DialogueContainer>().dialogue;
+                            /*
                             currentInteractionState = interactionState.DialogueMode;
                             dialogueIndex = 0;
+                            return;
+                            */
+                            Debug.Log("interacted");
+                            TextAsset story = interact.transform.gameObject.GetComponent<DialogueContainer>().file;
+                            if (time.currentHour < 10)
+                            {
+                                dialogueDisplayer.SetStoryFromPoint(story, "Morning");
+
+                            }
+                            else if (time.currentHour < 18)
+                            {
+                                dialogueDisplayer.SetStoryFromPoint(story, "Afternoon");
+
+                            }
+                            else
+                            {
+
+                                dialogueDisplayer.SetStoryFromPoint(story, "Evening");
+                            }
+                
+                            SetDialogueMode();
                             return;
                         }
                     }
                 }
                 break;
             case interactionState.DialogueMode:
-               
-               
-                dialogueDisplay.DisplayDialogue(receivedDialogue[dialogueIndex]);
 
-                if (Input.GetButtonDown("Interact"))
-                {
-                    if (dialogueIndex + 1 < receivedDialogue.Count)
-                    {
-                        dialogueIndex++;
-                        dialogueDisplay.isDisplayingDialogue = false;
-                    }
-                    else
-                    {
-                        dialogueDisplay.FinishDisplayingDialogue();
-                        currentInteractionState = interactionState.Normal;
-                    }
+         
+                /*
+
+                 dialogueDisplay.DisplayDialogue(receivedDialogue[dialogueIndex]);
+
+                 if (Input.GetButtonDown("Interact"))
+                 {
+                     if (dialogueIndex + 1 < receivedDialogue.Count)
+                     {
+                         dialogueIndex++;
+                         dialogueDisplay.isDisplayingDialogue = false;
+                     }
+                     else
+                     {
+                         dialogueDisplay.FinishDisplayingDialogue();
+                         currentInteractionState = interactionState.Normal;
+                     }
 
 
-                }
+                 }
+                 */
                 break;
             case interactionState.InventoryMode:
                 break;

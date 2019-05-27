@@ -4,8 +4,8 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 /// <summary>
-/// here is the class which handles all inventory stuff. it should be player agnoistic
-/// so npcs, chests, shops or whatever could use a similar / modifed version of this class
+/// here is the class which handles all inventory stuff. it is player agnoistic
+/// so npcs, chests, shops or whatever can use this class
 /// </summary>
 public class Inventory : MonoBehaviour
 {

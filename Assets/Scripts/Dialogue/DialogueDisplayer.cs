@@ -4,6 +4,7 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
+
 public class DialogueDisplayer : MonoBehaviour
 {
     //roughly 46 chars in a line

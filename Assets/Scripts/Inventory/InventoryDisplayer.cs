@@ -69,28 +69,9 @@ public class InventoryDisplayer : MonoBehaviour
     }
 
     //turn on and off inventory menu
-    public void ToggleInventoryMenu()
+    public void ToggleInventoryMenu(bool isInventory)
     {
-
-        if (inventoryUI.activeSelf == false)
-        {
-            inventoryUI.SetActive(true);
-            Cursor.visible = true;
-            Cursor.lockState = CursorLockMode.None;
-            Time.timeScale = 0;
-            interaction.currentInteractionState = interactionState.InventoryMode;
-
-        }
-        else
-        {
-            inventoryUI.SetActive(false);
-            Cursor.visible = false;
-            Cursor.lockState = CursorLockMode.Locked;
-            Time.timeScale = 1;
-            interaction.currentInteractionState = interactionState.Normal;
-
-
-        }
+        inventoryUI.SetActive(isInventory);
         DisplayInventory();
 
     }
