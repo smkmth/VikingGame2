@@ -32,6 +32,8 @@ public class CharacterInfo
 {
     public string Name;
     public int Disposition;
+    public List<Sprite> faces;
+    public List<string> faceIndexes;
 
 }
 

@@ -19,6 +19,9 @@ public class InkDisplayer : MonoBehaviour {
     [SerializeField]
     private GameObject dialogueWindow;
 
+    [SerializeField]
+    private Image characterPortrait;
+
     // UI Prefabs
     //private Text textPrefab;
 
