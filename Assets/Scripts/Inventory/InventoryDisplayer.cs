@@ -18,6 +18,7 @@ public class InventoryDisplayer : MonoBehaviour
     //set up in editor!
     public GameObject inventoryUI;
     public GameObject itemGrid;
+    public GameObject inventorySlot;
 
 
     //array of the images
@@ -31,27 +32,40 @@ public class InventoryDisplayer : MonoBehaviour
 
     public void Start()
     {
+        equipmentHolder = GetComponent<EquipmentHolder>();
+        stamina = GetComponent<Stamina>();
+        interaction = GetComponent<PlayerInteraction>();
         inventory = GetComponent<Inventory>();
 
-
-
+        CreateInventoryUI();
+        
         itemImages = itemGrid.GetComponentsInChildren<Image>();
         foreach (Image image in itemImages)
         {
             image.sprite = emptySprite;
         }
+
         itemText = itemGrid.GetComponentsInChildren<TextMeshProUGUI>();
         foreach (TextMeshProUGUI text in itemText)
         {
             text.text = emptyString;
         }
-
-        equipmentHolder = GetComponent<EquipmentHolder>();
-        stamina = GetComponent<Stamina>();
-        interaction = GetComponent<PlayerInteraction>();
+       
         DisplayInventory();
         inventoryUI.SetActive(false);
 
+    }
+
+    public void CreateInventoryUI()
+    {
+        for (int i = 0; i <= inventory.MaxItemSlots; i++)
+        {
+            GameObject slot = Instantiate(inventorySlot, itemGrid.transform);
+            Button button = slot.GetComponent<Button>();
+            string tempInt = i.ToString();
+            button.onClick.AddListener(() => SelectInventorySlot(tempInt));
+        }
+        
     }
 
     //turn on and off inventory menu
@@ -81,7 +95,7 @@ public class InventoryDisplayer : MonoBehaviour
 
     }
 
-    //gets called by the ui button on click method. FIXME later make this less dependent on editor
+    //gets called by the ui button on click method - setup in create inventory ui
     public void SelectInventorySlot(string buttonIndex)
     {
         int selectedIndex = int.Parse(buttonIndex);
