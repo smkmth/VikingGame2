@@ -30,13 +30,7 @@ public class InkDisplayer : MonoBehaviour {
       //  StartStory();
     }
 
-    void StartStory()
-    {
 
-        story = new Story(inkJSONAsset.text);
-        RefreshView();
-        
-    }
     public void StartStoryFromPoint(string startPoint)
     {
         story = new Story(inkJSONAsset.text);
@@ -44,16 +38,18 @@ public class InkDisplayer : MonoBehaviour {
         RefreshView();
     }
 
-    public void SetStory(TextAsset asset)
+ 
+    public void SetStoryFromPoint(TextAsset asset, string startPoint, int currentTimeOfDay)
     {
         inkJSONAsset = asset;
-        StartStory();
 
-    }
-    public void SetStoryFromPoint(TextAsset asset, string startPoint)
-    {
-        inkJSONAsset = asset;
-        StartStoryFromPoint(startPoint);
+        //   StartStoryFromPoint(startPoint);
+        story = new Story(inkJSONAsset.text);
+        story.ChoosePathString(startPoint);
+        story.variablesState["timeOfDay"] = currentTimeOfDay;
+
+        RefreshView();
+
 
     }
     void EndStory()

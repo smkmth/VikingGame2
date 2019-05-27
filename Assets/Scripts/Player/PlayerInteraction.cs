@@ -241,29 +241,8 @@ public class PlayerInteraction : MonoBehaviour
                         }
                         if (interact.transform.gameObject.tag == "NPC")
                         {
-                            /*
-                            currentInteractionState = interactionState.DialogueMode;
-                            dialogueIndex = 0;
-                            return;
-                            */
-                            Debug.Log("interacted");
-                            TextAsset story = interact.transform.gameObject.GetComponent<DialogueContainer>().file;
-                            if (time.currentHour < 10)
-                            {
-                                dialogueDisplayer.SetStoryFromPoint(story, "Morning");
-
-                            }
-                            else if (time.currentHour < 18)
-                            {
-                                dialogueDisplayer.SetStoryFromPoint(story, "Afternoon");
-
-                            }
-                            else
-                            {
-
-                                dialogueDisplayer.SetStoryFromPoint(story, "Evening");
-                            }
-                
+                           
+                            interact.transform.gameObject.GetComponent<DialogueContainer>().Talk();
                             SetDialogueMode();
                             return;
                         }
@@ -271,28 +250,6 @@ public class PlayerInteraction : MonoBehaviour
                 }
                 break;
             case interactionState.DialogueMode:
-
-         
-                /*
-
-                 dialogueDisplay.DisplayDialogue(receivedDialogue[dialogueIndex]);
-
-                 if (Input.GetButtonDown("Interact"))
-                 {
-                     if (dialogueIndex + 1 < receivedDialogue.Count)
-                     {
-                         dialogueIndex++;
-                         dialogueDisplay.isDisplayingDialogue = false;
-                     }
-                     else
-                     {
-                         dialogueDisplay.FinishDisplayingDialogue();
-                         currentInteractionState = interactionState.Normal;
-                     }
-
-
-                 }
-                 */
                 break;
             case interactionState.InventoryMode:
                 break;

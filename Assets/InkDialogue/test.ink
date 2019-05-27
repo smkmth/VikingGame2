@@ -1,6 +1,12 @@
+VAR timeOfDay = 9
+
+=== talk ===
+testing talk {timeOfDay}
+* {timeOfDay <= 12} ->Day1Afternoon
+* {timeOfDay > 12} ->Evening
 
 
-=== Morning ===
+=== Day1Morning  ===
 
 Good morning guy.
 
@@ -10,7 +16,7 @@ Good morning guy.
 + [second with the square brackets style] -> squarebracketsstyle
 
 
-=== Afternoon ===
+=== Day1Afternoon ===
 
 Good afternoon guy.
 
