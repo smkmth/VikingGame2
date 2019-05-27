@@ -298,7 +298,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue: []
+  villageManager: {fileID: 0}
   story: {fileID: 0}
+  characterInfo:
+    Name: 
+    Disposition: 0
 --- !u!114 &140164620
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2503,6 +2507,7 @@ GameObject:
   - component: {fileID: 1138371547}
   - component: {fileID: 1138371549}
   - component: {fileID: 1138371550}
+  - component: {fileID: 1138371551}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -2521,7 +2526,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e97d5637bad76f442bf54cdb51c1c31d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentTimeOfDay: 0.5
+  currentTimeOfDay: 0.3
   currentHour: 0
   currentDay: 0
   timeMultiplier: 100
@@ -2615,6 +2620,18 @@ MonoBehaviour:
   buttonPrefab: {fileID: 114788315297595684, guid: 00babd79943f8c240a40dd522061295a,
     type: 2}
   calledTags: []
+--- !u!114 &1138371551
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1138371546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a31d8320e609e0a498859740a5370680, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CurrentCharacters: []
 --- !u!1 &1147026206
 GameObject:
   m_ObjectHideFlags: 0
@@ -5833,7 +5850,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dialogue: []
+  villageManager: {fileID: 0}
   story: {fileID: 0}
+  characterInfo:
+    Name: 
+    Disposition: 0
 --- !u!114 &1290291504
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -6032,7 +6053,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   dialogue:
   - {fileID: 11400000, guid: b248a701e837d0b418499153207231cb, type: 2}
+  villageManager: {fileID: 0}
   story: {fileID: 4900000, guid: ac0a30eaa8db94645acbb9c0b638ad5f, type: 3}
+  characterInfo:
+    Name: David
+    Disposition: 13
 --- !u!114 &1346818317
 MonoBehaviour:
   m_ObjectHideFlags: 0

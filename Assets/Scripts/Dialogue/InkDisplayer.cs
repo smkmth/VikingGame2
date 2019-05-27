@@ -23,37 +23,49 @@ public class InkDisplayer : MonoBehaviour {
 
     public List<string> calledTags;
 
+    private DialogueContainer currentCharacter;
+
     public void Start()
     {
         // Remove the default message
         RemoveChildren();
-      //  StartStory();
-    }
 
-
-    public void StartStoryFromPoint(string startPoint)
-    {
-        story = new Story(inkJSONAsset.text);
-        story.ChoosePathString(startPoint);
-        RefreshView();
     }
 
  
-    public void SetStoryFromPoint(TextAsset asset, string startPoint, int currentTimeOfDay)
+    public void StartStory(TextAsset asset, VillageInfo villageInfo, CharacterInfo characterInfo, DialogueContainer character)
     {
         inkJSONAsset = asset;
-
-        //   StartStoryFromPoint(startPoint);
         story = new Story(inkJSONAsset.text);
-        story.ChoosePathString(startPoint);
-        story.variablesState["timeOfDay"] = currentTimeOfDay;
+
+
+        //how to start a story form a specific knot
+       // story.ChoosePathString(startPoint);
+
+        //set up the variables in the story file
+        story.variablesState["timeOfDay"] = villageInfo.CurrentHour;
+        story.variablesState["currentDay"] = villageInfo.CurrentDay;
+        story.variablesState["characterName"] = characterInfo.Name;
+        story.variablesState["_characterDisposition"] = characterInfo.Disposition;
+
+        //point the ink displayer to the character object so it can be updated from story
+        currentCharacter = character;
 
         RefreshView();
 
+
+    }
+
+    void UpdateVariables()
+    {
+        int characterDisposition = (int)story.variablesState["_characterDisposition"];
+        currentCharacter.characterInfo.Disposition = characterDisposition;
 
     }
     void EndStory()
     {
+        UpdateVariables();
+        currentCharacter = null;
         RemoveChildren();
         player.SetDialogueMode();
 
@@ -67,10 +79,10 @@ public class InkDisplayer : MonoBehaviour {
     {
         // Remove all the UI on screen
         RemoveChildren();
-
         // Read all the content until we can't continue any more
         while (story.canContinue)
         {
+      
             // Continue gets the next line of the story
             calledTags = story.currentTags;
             string text = story.Continue();
