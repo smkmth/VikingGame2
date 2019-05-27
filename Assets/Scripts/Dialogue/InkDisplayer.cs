@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Ink.Runtime;
 using UnityEngine.UI;
+using TMPro;
 
 public class InkDisplayer : MonoBehaviour {
 
@@ -13,11 +14,16 @@ public class InkDisplayer : MonoBehaviour {
     public PlayerInteraction player;
 
     [SerializeField]
-    private Canvas canvas;
+    private Image canvas;
+
+    [SerializeField]
+    private GameObject dialogueWindow;
 
     // UI Prefabs
+    //private Text textPrefab;
+
     [SerializeField]
-    private Text textPrefab;
+    private TextMeshProUGUI textPrefab;
     [SerializeField]
     private Button buttonPrefab;
 
@@ -27,14 +33,17 @@ public class InkDisplayer : MonoBehaviour {
 
     public void Start()
     {
+
         // Remove the default message
         RemoveChildren();
+        dialogueWindow.SetActive(false);
 
     }
 
  
     public void StartStory(TextAsset asset, VillageInfo villageInfo, CharacterInfo characterInfo, DialogueContainer character)
     {
+        dialogueWindow.SetActive(true);
         inkJSONAsset = asset;
         story = new Story(inkJSONAsset.text);
 
@@ -50,7 +59,6 @@ public class InkDisplayer : MonoBehaviour {
 
         //point the ink displayer to the character object so it can be updated from story
         currentCharacter = character;
-
         RefreshView();
 
 
@@ -70,6 +78,7 @@ public class InkDisplayer : MonoBehaviour {
         currentCharacter = null;
         RemoveChildren();
         player.SetDialogueMode();
+        dialogueWindow.SetActive(false);
 
     }
 
@@ -120,7 +129,7 @@ public class InkDisplayer : MonoBehaviour {
     // Creates a button showing the choice text
     void CreateContentView(string text)
     {
-        Text storyText = Instantiate(textPrefab) as Text;
+        TextMeshProUGUI storyText = Instantiate(textPrefab) as TextMeshProUGUI;
         storyText.text = text;
         storyText.transform.SetParent(canvas.transform, false);
     }
@@ -132,7 +141,7 @@ public class InkDisplayer : MonoBehaviour {
         choice.transform.SetParent(canvas.transform, false);
 
         // Gets the text from the button prefab
-        Text choiceText = choice.GetComponentInChildren<Text>();
+        TextMeshProUGUI choiceText = choice.GetComponentInChildren<TextMeshProUGUI>();
         choiceText.text = text;
 
         // Make the button expand to fit the text

@@ -68,7 +68,18 @@ its day {currentDay}.
 
 === Morning ===
 
-good morning man
+good morning man.
+here are some basic divergences 
+*	"What?!"
+ 	"further options?"
+	* * 	"Detective-Inspector Japp!"
+	* * 	"Captain Hastings!"
+	* * 	"Myself!"
+* 	"Suicide!"
+	"Really, Poirot? Are you quite sure?"
+	* * 	"Quite sure."
+	* *		"It is perfectly obvious."
+-	Mrs. Christie lowered her manuscript a moment. The rest of the writing group sat, open-mouthed.
 
 ->ending
 
