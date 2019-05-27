@@ -21,6 +21,7 @@ VAR _characterDisposition = -1
 //values up for the characters variables
 
 //these ones here are tests, which make sure the values are being set in unity
+//by checking they are not set to their default value
 * {timeOfDay == -1} error, time of day is the test number ->ERROR
 * {currentDay == -1} error, current day is the test number ->ERROR 
 * {characterName == ""} error, character name not set ->ERROR
