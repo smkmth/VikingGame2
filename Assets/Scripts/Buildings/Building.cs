@@ -15,7 +15,11 @@ public class Building : MonoBehaviour {
     public buildingState currentBuildingState;
     public float riskFactor;
 
-   
+    private void Start()
+    {
+        UpdateBuilding(buildingState.active);
+
+    }
 
     public void UpdateBuilding(buildingState newBuildingState)
     {

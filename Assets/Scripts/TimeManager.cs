@@ -76,6 +76,12 @@ public class TimeManager : MonoBehaviour
         {
             currentTimeOfDay = 0;
             currentDay++; 
+            if(currentDay == invasionDay)
+            {
+                OnEnemyAttack.Invoke();
+
+
+            }
             
         }
       

@@ -24,7 +24,7 @@ public class VillageManager : MonoBehaviour {
     {
         foreach(Building building in currentBuildings)
         {
-            if (building.riskFactor > 10.0f)
+            if (building.riskFactor < 10.0f)
             {
                 building.UpdateBuilding(buildingState.destroyed);
 
