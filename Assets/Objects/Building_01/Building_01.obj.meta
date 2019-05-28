@@ -4,31 +4,31 @@ ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
-    100002: Building_01_Wall_Building
-    100004: Building_Building_01_Door
-    100006: Building_Building_01_Roof
-    100008: Building_Building_01_Window
+    100002: Building_01_Building_01_Door
+    100004: Building_01_Building_01_Wall
+    100006: Building_01_Building_01_Window
+    100008: Building_01_Roof_Building_01
     400000: //RootNode
-    400002: Building_01_Wall_Building
-    400004: Building_Building_01_Door
-    400006: Building_Building_01_Roof
-    400008: Building_Building_01_Window
-    2100000: Building_01_Wall_BuildingMat
-    2100002: Building_Building_01_DoorMat
-    2100004: Building_Building_01_RoofMat
-    2100006: Building_Building_01_WindowMat
-    2300000: Building_01_Wall_Building
-    2300002: Building_Building_01_Door
-    2300004: Building_Building_01_Roof
-    2300006: Building_Building_01_Window
-    3300000: Building_01_Wall_Building
-    3300002: Building_Building_01_Door
-    3300004: Building_Building_01_Roof
-    3300006: Building_Building_01_Window
-    4300000: Building_01_Wall_Building
-    4300002: Building_Building_01_Door
-    4300004: Building_Building_01_Roof
-    4300006: Building_Building_01_Window
+    400002: Building_01_Building_01_Door
+    400004: Building_01_Building_01_Wall
+    400006: Building_01_Building_01_Window
+    400008: Building_01_Roof_Building_01
+    2100000: Building_01_Building_01_DoorMat
+    2100002: Building_01_Building_01_WallMat
+    2100004: Building_01_Building_01_WindowMat
+    2100006: Building_01_Roof_Building_01Mat
+    2300000: Building_01_Building_01_Door
+    2300002: Building_01_Building_01_Wall
+    2300004: Building_01_Building_01_Window
+    2300006: Building_01_Roof_Building_01
+    3300000: Building_01_Building_01_Door
+    3300002: Building_01_Building_01_Wall
+    3300004: Building_01_Building_01_Window
+    3300006: Building_01_Roof_Building_01
+    4300000: Building_01_Building_01_Door
+    4300002: Building_01_Building_01_Wall
+    4300004: Building_01_Building_01_Window
+    4300006: Building_01_Roof_Building_01
   externalObjects: {}
   materials:
     importMaterials: 1
