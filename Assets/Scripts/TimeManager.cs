@@ -22,15 +22,11 @@ public class TimeManager : MonoBehaviour
     public float    sunInitialIntensity;
     public float    sunangle;
     public Light    sun;
-    public Color    risingSun;
-    public Color    settingSun;
-    public Color    daySun;
-    public Color    nightSun;
     private int prvHour =200;
     public UnityEvent OnDayEnd;
     public UnityEvent OnHourEnd;
-    public UnityEvent OnEnemyAttack;
     public OnJumpForwardInTime OnJumpForwardInTime;
+    private VillageManager villageManager;
 
     //86400  seconds in a day
     //3600 seconds in a hour
@@ -45,6 +41,7 @@ public class TimeManager : MonoBehaviour
         {
             Destroy(gameObject);
         }
+        villageManager = GetComponent<VillageManager>();
     }
 
     public void JumpForwardInTime(int hourToJumpTo)
@@ -52,8 +49,9 @@ public class TimeManager : MonoBehaviour
         currentTimeOfDay = ((hourToJumpTo / secondsInFullDay) * secondsInAHour);
   
         OnJumpForwardInTime.Invoke(hourToJumpTo);
-    }
 
+    }
+  
     // Update is called once per frame
     void Update()
     {
@@ -67,7 +65,7 @@ public class TimeManager : MonoBehaviour
             OnHourEnd.Invoke();
 
         }
-        if (currentHour == 11)
+        if (currentHour == 24)
         {
             OnDayEnd.Invoke();
         }
@@ -75,14 +73,7 @@ public class TimeManager : MonoBehaviour
         if (currentTimeOfDay >= 1)
         {
             currentTimeOfDay = 0;
-            currentDay++; 
-            if(currentDay == invasionDay)
-            {
-                OnEnemyAttack.Invoke();
-
-
-            }
-            
+           
         }
       
         sun.transform.localRotation = Quaternion.Euler((currentTimeOfDay * 360f) - 90, 170, 0);
@@ -92,17 +83,14 @@ public class TimeManager : MonoBehaviour
         if (currentTimeOfDay <= 0.23f || currentTimeOfDay >= 0.75f)
         {
             intensityMultiplier = 0;
-            sun.color = nightSun;
         }
         else if (currentTimeOfDay <= 0.25f)
         {
-            sun.color = Color.Lerp( daySun, sun.color, Time.deltaTime);
 
             intensityMultiplier = Mathf.Clamp01((currentTimeOfDay - 0.23f) * (1 / 0.02f));
         }
         else if (currentTimeOfDay >= 0.73f)
         {
-            sun.color= Color.Lerp(sun.color, settingSun, Time.deltaTime);
             intensityMultiplier = Mathf.Clamp01(1 - ((currentTimeOfDay - 0.73f) * (1 / 0.02f)));
         }
         

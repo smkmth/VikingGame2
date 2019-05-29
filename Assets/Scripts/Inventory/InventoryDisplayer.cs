@@ -62,6 +62,7 @@ public class InventoryDisplayer : MonoBehaviour
         {
             GameObject slot = Instantiate(inventorySlot, itemGrid.transform);
             Button button = slot.GetComponent<Button>();
+          
             string tempInt = i.ToString();
             button.onClick.AddListener(() => SelectInventorySlot(tempInt));
         }
@@ -73,6 +74,7 @@ public class InventoryDisplayer : MonoBehaviour
     {
         inventoryUI.SetActive(isInventory);
         DisplayInventory();
+        inventoryUI.GetComponent<ButtonHighlighter>().ActivateButtons(itemGrid.GetComponentInChildren<Button>().gameObject);
 
     }
 

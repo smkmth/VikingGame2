@@ -31,7 +31,6 @@ public class PlayerInteraction : MonoBehaviour
 
     [Header("Interaction Settings")]
     public float interactRange;
-    private DialogueDisplayer dialogueDisplay;
     private List<DialogueLine> receivedDialogue;
     public interactionState currentInteractionState;
     private int dialogueIndex;
@@ -43,7 +42,10 @@ public class PlayerInteraction : MonoBehaviour
     private InventoryDisplayer inventoryDisplayer;
 
     private AnimationManager animator;
- 
+    private float noDialogueTimer = 0.0f;
+    public float dialogueTimeOut;
+    public bool justLeftDialogue;
+    public bool canSpeak = true;
 
     private void Start()
 
@@ -52,7 +54,6 @@ public class PlayerInteraction : MonoBehaviour
         animator = GetComponent<AnimationManager>();
         inventory = GetComponent<Inventory>();
         combat = GetComponent<Combat>();
-        dialogueDisplay = GetComponent<DialogueDisplayer>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
 
@@ -74,11 +75,11 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (currentInteractionState == interactionState.Normal)
         {
+            canSpeak = false;
             Cursor.visible = true;
             Time.timeScale = 0;
             Cursor.lockState = CursorLockMode.None;
             currentInteractionState = interactionState.DialogueMode;
-
         }
         else if (currentInteractionState == interactionState.DialogueMode)
         {
@@ -87,7 +88,7 @@ public class PlayerInteraction : MonoBehaviour
             Cursor.lockState = CursorLockMode.Locked;
             Time.timeScale = 1;
             currentInteractionState = interactionState.Normal;
-
+            noDialogueTimer = 0.0f;
 
         }
     }
@@ -241,13 +242,38 @@ public class PlayerInteraction : MonoBehaviour
                         }
                         if (interact.transform.gameObject.tag == "NPC")
                         {
-                           
-                            interact.transform.gameObject.GetComponent<DialogueContainer>().Talk();
-                            SetDialogueMode();
-                            return;
+                            if (canSpeak)
+                            {
+
+                                noDialogueTimer = 0.0f;
+                                interact.transform.gameObject.GetComponent<DialogueContainer>().Talk();
+                                SetDialogueMode();
+                                return;
+                            }
+
+                        }
+                        if (interact.transform.gameObject.tag == "Interactable")
+                        {
+                            Interactable interactable = interact.transform.gameObject.GetComponent<Interactable>();
+                            Debug.Log("hit interact");
+                            interactable.UseInteractable(gameObject);
                         }
                     }
                 }
+                if (!canSpeak)
+                {
+                    if (noDialogueTimer == dialogueTimeOut)
+                    {
+                        dialogueTimeOut =+ Time.deltaTime;
+                    }
+                    else
+                    {
+                        noDialogueTimer = 0;
+                        canSpeak = true;
+                    }
+
+                }
+
                 break;
             case interactionState.DialogueMode:
                 break;
