@@ -37,6 +37,7 @@ public class PlayerInteraction : MonoBehaviour
     public InkDisplayer dialogueDisplayer;
 
     private Combat combat;
+    public PlayerHUD hud;
 
     private Inventory inventory;
     private InventoryDisplayer inventoryDisplayer;
@@ -48,11 +49,11 @@ public class PlayerInteraction : MonoBehaviour
     public bool canSpeak = true;
 
     private void Start()
-
     {
         inventoryDisplayer = GetComponent<InventoryDisplayer>();
         animator = GetComponent<AnimationManager>();
         inventory = GetComponent<Inventory>();
+        hud = GetComponent<PlayerHUD>();
         combat = GetComponent<Combat>();
         Cursor.visible = false;
         Cursor.lockState = CursorLockMode.Locked;
@@ -75,6 +76,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (currentInteractionState == interactionState.Normal)
         {
+            hud.ToggleHUD(true);
             canSpeak = false;
             Cursor.visible = true;
             Time.timeScale = 0;
@@ -83,7 +85,7 @@ public class PlayerInteraction : MonoBehaviour
         }
         else if (currentInteractionState == interactionState.DialogueMode)
         {
-
+            hud.ToggleHUD(false);
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             Time.timeScale = 1;
@@ -97,6 +99,7 @@ public class PlayerInteraction : MonoBehaviour
     {
         if (currentInteractionState == interactionState.Normal)
         {
+            hud.ToggleHUD(true);
             inventoryDisplayer.ToggleInventoryMenu(true);
             Cursor.visible = true;
             Time.timeScale = 0;
@@ -106,6 +109,7 @@ public class PlayerInteraction : MonoBehaviour
         }
         else if (currentInteractionState == interactionState.InventoryMode)
         {
+            hud.ToggleHUD(false);
             inventoryDisplayer.ToggleInventoryMenu(false);
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;

@@ -7,7 +7,7 @@ using TMPro;
 public class InventoryDisplayer : MonoBehaviour
 {
 
-
+    
     private Stamina stamina;
     private PlayerInteraction interaction;
     private Inventory inventory;

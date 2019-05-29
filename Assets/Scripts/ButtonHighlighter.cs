@@ -33,6 +33,7 @@ public class ButtonHighlighter : MonoBehaviour
         selectedObj = EventSystem.current.currentSelectedGameObject;
 
         if (selectedObj == null) return;
+
         Button selectedAsButton = selectedObj.GetComponent<Button>();
         if (selectedAsButton != null && selectedAsButton != previousButton)
         {
