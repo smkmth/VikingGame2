@@ -14,7 +14,7 @@ public class TimeManager : MonoBehaviour
     public static TimeManager TimeManagerInstance = null;
     public const float    secondsInFullDay = 86400;
     public const float    secondsInAHour = 3600;
-    
+    public int      invasionDay;
     public float    currentTimeOfDay;
     public int      currentHour;
     public int      currentDay;
@@ -29,6 +29,7 @@ public class TimeManager : MonoBehaviour
     private int prvHour =200;
     public UnityEvent OnDayEnd;
     public UnityEvent OnHourEnd;
+    public UnityEvent OnEnemyAttack;
     public OnJumpForwardInTime OnJumpForwardInTime;
 
     //86400  seconds in a day
@@ -75,6 +76,12 @@ public class TimeManager : MonoBehaviour
         {
             currentTimeOfDay = 0;
             currentDay++; 
+            if(currentDay == invasionDay)
+            {
+                OnEnemyAttack.Invoke();
+
+
+            }
             
         }
       
