@@ -6,7 +6,6 @@ public class VillageManager : MonoBehaviour {
 
     TimeManager time;
     public List<string> CurrentCharacters;
-    public List<Building> currentBuildings;
 
     private void Start()
     {
@@ -19,19 +18,6 @@ public class VillageManager : MonoBehaviour {
 
         return villageInfo;
     }
-
-    public void AttackVillage()
-    {
-        foreach(Building building in currentBuildings)
-        {
-            if (building.riskFactor < 10.0f)
-            {
-                building.UpdateBuilding(buildingState.destroyed);
-
-            }
-        }
-    }
-
 }
 
 public class VillageInfo
