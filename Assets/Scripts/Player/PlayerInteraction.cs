@@ -47,7 +47,7 @@ public class PlayerInteraction : MonoBehaviour
     public float dialogueTimeOut;
     public bool justLeftDialogue;
     public bool canSpeak = true;
-
+    public bool aiming;
     private void Start()
     {
         inventoryDisplayer = GetComponent<InventoryDisplayer>();
@@ -222,7 +222,15 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     combat.Block(false);
                 }
+                if (Input.GetAxisRaw("Aim") != 0)
+                {
+                    aiming = true;
 
+                }
+                else
+                {
+                    aiming = false;
+                }
                 if (Input.GetButtonDown("Interact"))
                 {
                     RaycastHit interact;
