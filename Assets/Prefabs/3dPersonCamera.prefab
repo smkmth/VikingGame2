@@ -37,8 +37,8 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1297259285283204}
   m_LocalRotation: {x: 0.028793924, y: 0, z: 0, w: 0.9995854}
-  m_LocalPosition: {x: 18.55, y: 3.71, z: -0.2}
-  m_LocalScale: {x: 1, y: 0.99999994, z: 1}
+  m_LocalPosition: {x: 13.35, y: 0.99, z: 9.4}
+  m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 0
@@ -92,7 +92,7 @@ AudioListener:
   m_Enabled: 1
 --- !u!114 &114158189733735146
 MonoBehaviour:
-  m_ObjectHideFlags: 0
+  m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1297259285283204}
@@ -158,14 +158,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 404e5c80cf0a08b4d943591db52604c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDistance: 3
+  minDistance: 1.7
   maxDistance: 5
-  DistanceUp: 0
   smooth: 10000
   rotateAround: 0
+  minDown: -1.5
+  minUp: 0.5
   target: {fileID: 0}
   CamOcclusion:
     serializedVersion: 2
     m_Bits: 512
-  camRotateSpeed: 230
-  wierdNumber: 37
+  mouseRotateSpeed: 180
+  controllerRotateSpeed: 3000
+  controllerInput: 0
+  lockedOn: 0
+  lockOnTarget: {fileID: 0}
+  aimTarget: {fileID: 0}
+  player: {fileID: 0}
+  followDistance: 10
+  followHeight: 3

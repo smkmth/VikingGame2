@@ -31,7 +31,26 @@ public class Inventory : MonoBehaviour
 
     }
 
-    public void AddItem(Item itemToAdd)
+    public int GetItemCount(Item itemToCheck)
+    {
+        int count =0;
+        for (int i = 0; i < MaxItemSlots; ++i)
+        {
+
+            if (itemSlots[i].filled)
+            {
+                if (itemSlots[i].item.title == itemToCheck.title)
+                {
+                    count = itemSlots[i].quantity;
+                    break;
+                }
+
+            }
+        }
+
+        return count;
+    }
+    public bool AddItem(Item itemToAdd)
     {
         //check we dont already have this item, if not, then add it, else increase the amount we have of it
 
@@ -40,11 +59,11 @@ public class Inventory : MonoBehaviour
 
             if (itemSlots[i].filled)
             {
-                if (itemSlots[i].item.name == itemToAdd.name)
+                if (itemSlots[i].item.title == itemToAdd.title)
                 {
                     itemSlots[i].quantity += 1;
                     totalItemsStored += 1;
-                    return;
+                    return true;
                 }
 
             }
@@ -59,39 +78,43 @@ public class Inventory : MonoBehaviour
                 itemSlots[i].item = itemToAdd;
                 itemSlots[i].quantity += 1;
                 itemSlots[i].filled = true;
-                return;
+                return true;
 
             }
 
         }
-
         Debug.Log("Inventory full!");
+        return false;
 
 
     }
 
-    public void RemoveItem(Item itemToRemove)
+    public bool RemoveItem(Item itemToRemove)
     {
         if (itemSlots.Count > 0)
         {
             for (int i = 0; i < MaxItemSlots; ++i)
             {
-                if (itemSlots[i].item.name == itemToRemove.name)
+                if (itemSlots[i].item != null)
                 {
-                    itemSlots[i].quantity -= 1;
-                    totalItemsStored -= 1;
-
-                    if (itemSlots[i].quantity <= 0)
+                    if (itemSlots[i].item.title == itemToRemove.title)
                     {
-                        itemSlots[i].filled = false;
-                        itemSlots[i].item = null;
+                        itemSlots[i].quantity -= 1;
+                        totalItemsStored -= 1;
 
+                        if (itemSlots[i].quantity <= 0)
+                        {
+                            itemSlots[i].filled = false;
+                            itemSlots[i].item = null;
+
+                        }
+                        return true;
                     }
-                    return;
                 }
             }
+            
         }
-
+        return false;
 
 
     }

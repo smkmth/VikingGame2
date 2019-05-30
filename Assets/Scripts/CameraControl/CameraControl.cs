@@ -15,8 +15,9 @@ public class CameraControl : MonoBehaviour
 
     private float DistanceUp = -2;                    //how high the camera is above the player
     public float smooth = 4.0f;                    //how smooth the camera moves into place
-    public float rotateAround = 70f;            //the angle at which you will rotate the camera (on an axis)
-
+    public float rotateAround = 70f;
+    public float minDown ;//the angle at which you will rotate the camera (on an axis)
+    public float minUp;
     [Header("Player to follow")]
     public Transform target;                    //the target the camera follows
 
@@ -44,6 +45,7 @@ public class CameraControl : MonoBehaviour
 
     public bool lockedOn;
     public Transform lockOnTarget;
+    public Transform aimTarget;
     public PlayerInteraction player;
     public float followDistance;
     public float followHeight;
@@ -113,8 +115,15 @@ public class CameraControl : MonoBehaviour
             OccludeRay(ref targetOffset);
             SmoothCamMethod();
 
+            if (player.aiming)
+            {
+                transform.LookAt(aimTarget);
+            }
+            else
+            {
+                transform.LookAt(target );
 
-           transform.LookAt(target );
+            }
 
             if (rotateAround > 360)
             {
@@ -127,7 +136,7 @@ public class CameraControl : MonoBehaviour
             
 
             rotateAround += HorizontalAxis * camRotateSpeed * Time.deltaTime;
-            DistanceUp = Mathf.Clamp(DistanceUp += VerticalAxis, -0.79f, 2.3f);
+            DistanceUp = Mathf.Clamp(DistanceUp += VerticalAxis, minDown, minUp);
             
             DistanceAway = Mathf.Clamp(DistanceAway += VerticalAxis, minDistance, maxDistance);
             if (player.aiming)

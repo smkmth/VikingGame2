@@ -22,6 +22,7 @@ public class PlayerInteraction : MonoBehaviour
     [Header("Movement Settings")]
     public bool FreeMove;
     private float currentMoveSpeed;
+    public float aimmoveSpeed;
     private Vector3 forwardMovement;
     private Vector3 sidewaysMovement;
 
@@ -43,11 +44,33 @@ public class PlayerInteraction : MonoBehaviour
     private InventoryDisplayer inventoryDisplayer;
 
     private AnimationManager animator;
+
+    [Header("Archery Settings")]
+
     private float noDialogueTimer = 0.0f;
     public float dialogueTimeOut;
     public bool justLeftDialogue;
     public bool canSpeak = true;
+
+
     public bool aiming;
+
+    public Transform aimTarget;
+    public float radius = 2.0f;
+    public float rotationSpeed = 80.0f;
+    public float radiusSpeed = .5f;
+    public bool bowDrawn = false;
+    public GameObject arrowPrefab;
+    public Transform bowPosition;
+    public float shotForce;
+    public float bowPowerTimer;
+    public float shotHeight;
+    public float maxBowPower;
+    public float bowPowerModifer;
+    public float bowPullBackRate;
+    public Item arrow;
+
+
     private void Start()
     {
         inventoryDisplayer = GetComponent<InventoryDisplayer>();
@@ -140,31 +163,7 @@ public class PlayerInteraction : MonoBehaviour
         {
 
             case interactionState.Normal :
-                if (Input.GetButtonDown("LockOn"))
-                {
-                    if (isLockedOn)
-                    {
-                        isLockedOn = false;
-                        camControl.ToggleLockOn(false);
-
-
-                    }
-                    else
-                    {
-                        isLockedOn = true;
-                        camControl.ToggleLockOn(true);
-
-
-                    }
-                }
-                if (isLockedOn)
-                {
-                    var lookPos = target.position - transform.position;
-                    lookPos.y = 0;
-                    var rotation = Quaternion.LookRotation(lookPos);
-                    transform.rotation = Quaternion.Slerp(transform.rotation, rotation, Time.deltaTime * lockOnDamping);
-
-                }
+              
 
                 if (FreeLook)
                 {
@@ -225,11 +224,61 @@ public class PlayerInteraction : MonoBehaviour
                 if (Input.GetAxisRaw("Aim") != 0)
                 {
                     aiming = true;
+                    FreeMove = false;
+                    animator.SetBool("Run", false);
+
+
+                    Vector3 cameraDirection = new Vector3(playerCamera.transform.forward.x, 0f, playerCamera.transform.forward.z);
+                    Vector3 playerDirection = new Vector3(transform.forward.x, 0f, transform.forward.z);
+
+                    if (Vector3.Angle(cameraDirection, playerDirection) > 0.5f)
+                    {
+                        Quaternion targetRotation = Quaternion.LookRotation(cameraDirection, transform.up);
+
+                        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+
+                    }
+                    if (Input.GetAxisRaw("PullBack") > 0)
+                    {
+
+                        Debug.Log("arrowReady");
+                        if (bowPowerModifer < maxBowPower)
+                        {
+                            bowPowerModifer += (Time.deltaTime * bowPullBackRate);
+                        }
+                        else
+                        {
+                            bowPowerModifer = maxBowPower;
+                        }
+                        bowDrawn = true;
+
+                    }
+                    if(bowDrawn == true)
+                    {
+                       
+                        if (Input.GetAxisRaw("PullBack") == 0)
+                        {
+                            if (inventory.RemoveItem(arrow))
+                            {
+                                bowDrawn = false;
+                                Debug.Log("arrowFire");
+
+                                GameObject arrow = Instantiate(arrowPrefab, bowPosition.position, playerCamera.transform.rotation);
+
+                                arrow.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * (shotForce + bowPowerModifer), ForceMode.Impulse);
+                                bowPowerTimer = 0;
+                                bowPowerModifer = 0;
+                            }
+                        }
+                    }
+
 
                 }
                 else
                 {
                     aiming = false;
+                    FreeMove = true;
+
                 }
                 if (Input.GetButtonDown("Interact"))
                 {
