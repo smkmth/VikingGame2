@@ -31,6 +31,7 @@ public class InkDisplayer : MonoBehaviour {
     private Button buttonPrefab;
 
     public List<string> calledTags;
+    public List<Button> activeButtons;
 
     private DialogueContainer currentCharacter;
 
@@ -46,6 +47,7 @@ public class InkDisplayer : MonoBehaviour {
  
     public void StartStory(TextAsset asset, VillageInfo villageInfo, CharacterInfo characterInfo, DialogueContainer character)
     {
+        Debug.Log("start dialogue");
         dialogueWindow.SetActive(true);
         inkJSONAsset = asset;
         story = new Story(inkJSONAsset.text);
@@ -104,20 +106,31 @@ public class InkDisplayer : MonoBehaviour {
             text = text.Trim();
             // Display the text on screen!
             CreateContentView(text);
+
         }
 
         // Display all the choices, if there are any!
         if (story.currentChoices.Count > 0)
         {
+            foreach (Button button in activeButtons)
+            {
+                Destroy(button);
+            }
+            activeButtons.Clear();
             for (int i = 0; i < story.currentChoices.Count; i++)
             {
                 Choice choice = story.currentChoices[i];
                 Button button = CreateChoiceView(choice.text.Trim());
+                activeButtons.Add(button);
+
                 // Tell the button what to do when we press it
                 button.onClick.AddListener(delegate {
                     OnClickChoiceButton(choice);
                 });
             }
+            dialogueWindow.GetComponent<ButtonHighlighter>().ActivateButtons(activeButtons[0].gameObject);
+
+
         }
         // If we've read all the content and there's no choices, the story is finished!
         else
@@ -126,7 +139,11 @@ public class InkDisplayer : MonoBehaviour {
             choice.onClick.AddListener(delegate {
                 EndStory();
             });
+            dialogueWindow.GetComponent<ButtonHighlighter>().ActivateButtons(choice.gameObject);
+
         }
+  
+
     }
 
     // Creates a button showing the choice text
@@ -139,9 +156,11 @@ public class InkDisplayer : MonoBehaviour {
     // Creates a button showing the choice text
     Button CreateChoiceView(string text)
     {
+
         // Creates the button from a prefab
         Button choice = Instantiate(buttonPrefab) as Button;
         choice.transform.SetParent(canvas.transform, false);
+
 
         // Gets the text from the button prefab
         TextMeshProUGUI choiceText = choice.GetComponentInChildren<TextMeshProUGUI>();

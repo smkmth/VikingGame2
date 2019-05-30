@@ -1,6 +1,7 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using TMPro;
 
 public class Stamina : MonoBehaviour
 {
@@ -12,15 +13,26 @@ public class Stamina : MonoBehaviour
     public bool canLoseStamina = false;
     public int timeToWakeUp;
     public GameObject fadeToBlackCanvas;
+    public TextMeshProUGUI fadeToBlackText;
+    public string sleepText;
+    public string passOutText;
+    private string currentText;
+
+    public Vector3 placeToWakeUp;
 
     private Combat stats;
+    private VillageManager villageManager;
+    public FadeToBlackManager fadeToBlack;
 
 
     // Start is called before the first frame update
     void Start()
     {
+        villageManager = GameObject.Find("SceneManager").GetComponent<VillageManager>();
+        
         stats = GetComponent<Combat>();
         currentStamina = MaxStamina;
+        currentText = passOutText;
 
     }
 
@@ -36,26 +48,17 @@ public class Stamina : MonoBehaviour
             }
             else
             {
-                StartCoroutine(PassOut());
+                villageManager.GoToSleep(transform.position, true);
             }
 
         }
     }
 
-    public IEnumerator PassOut()
+    public void Sleep()
     {
-        fadeToBlackCanvas.SetActive(true);
-        canLoseStamina = false;
-        TimeManager.TimeManagerInstance.JumpForwardInTime(timeToWakeUp);
-        currentStamina = MaxStamina;
-        transform.position = stats.startPos;
-        yield return new WaitForSeconds(3);
-        canLoseStamina = true;
-        fadeToBlackCanvas.SetActive(false);
+        villageManager.GoToSleep(transform.position, false);
 
-        yield return null;
     }
-
 
     public void RestoreStamina(float amount)
     {

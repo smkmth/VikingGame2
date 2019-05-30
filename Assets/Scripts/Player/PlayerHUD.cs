@@ -19,10 +19,26 @@ public class PlayerHUD : MonoBehaviour
 
         playerStats = GetComponent<Combat>();
         playerStamina = GetComponent<Stamina>();
+
         healthBar.maxValue = playerStats.MaxHealth;
         staminaBar.maxValue = playerStamina.MaxStamina;
         playerHUD.SetActive(true);
         
+    }
+    public void ToggleHUD(bool hudOn)
+    {
+        if (!playerHUD.activeSelf)
+        {
+
+            playerHUD.SetActive(true);
+        }
+        else
+        {
+            playerHUD.SetActive(false);
+
+        }
+
+
     }
 
     // wastefull atm, find way to make this occur when it needs to 

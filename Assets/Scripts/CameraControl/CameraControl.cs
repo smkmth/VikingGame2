@@ -44,7 +44,7 @@ public class CameraControl : MonoBehaviour
 
     public bool lockedOn;
     public Transform lockOnTarget;
-
+    public PlayerInteraction player;
     public float followDistance;
     public float followHeight;
     private GameObject sceneManager;
@@ -53,6 +53,7 @@ public class CameraControl : MonoBehaviour
     // Use this for initialization
     void Start()
     {
+        player = target.GetComponent<PlayerInteraction>();
         sceneManager = GameObject.Find("SceneManager");
         //the statement below automatically positions the camera behind the target.
         //hosMove = transform.position - target.transform.position;
@@ -112,7 +113,8 @@ public class CameraControl : MonoBehaviour
             OccludeRay(ref targetOffset);
             SmoothCamMethod();
 
-            transform.LookAt(target);
+
+           transform.LookAt(target );
 
             if (rotateAround > 360)
             {
@@ -126,7 +128,12 @@ public class CameraControl : MonoBehaviour
 
             rotateAround += HorizontalAxis * camRotateSpeed * Time.deltaTime;
             DistanceUp = Mathf.Clamp(DistanceUp += VerticalAxis, -0.79f, 2.3f);
+            
             DistanceAway = Mathf.Clamp(DistanceAway += VerticalAxis, minDistance, maxDistance);
+            if (player.aiming)
+            {
+                DistanceAway -= 1;
+            }
         }
 
 
