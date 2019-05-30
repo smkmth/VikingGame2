@@ -240,7 +240,18 @@ public class PlayerInteraction : MonoBehaviour
                     }
                     if (Input.GetAxisRaw("PullBack") > 0)
                     {
+                        /*
+                        bowDrawn = false;
+                        Debug.Log("arrowFire");
 
+                        GameObject arrow = Instantiate(arrowPrefab, bowPosition.position, playerCamera.transform.rotation);
+
+                        arrow.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * (shotForce + bowPowerModifer), ForceMode.Impulse);
+                        bowPowerTimer = 0;
+                        bowPowerModifer = 0;
+                    }
+                        */
+                        
                         Debug.Log("arrowReady");
                         if (bowPowerModifer < maxBowPower)
                         {
@@ -271,6 +282,7 @@ public class PlayerInteraction : MonoBehaviour
                             }
                         }
                     }
+                    
 
 
                 }

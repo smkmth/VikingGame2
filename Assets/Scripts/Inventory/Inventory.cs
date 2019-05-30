@@ -95,7 +95,7 @@ public class Inventory : MonoBehaviour
         {
             for (int i = 0; i < MaxItemSlots; ++i)
             {
-                if (itemSlots[i].item != null)
+                if (itemSlots[i].filled ==false)
                 {
                     if (itemSlots[i].item.title == itemToRemove.title)
                     {
