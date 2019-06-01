@@ -167,6 +167,7 @@ public class PlayerInteraction : MonoBehaviour
 
                 if (FreeLook)
                 {
+                    /*
                     
                     //  only check on the X-Z plane:
                     Vector3 cameraDirection = new Vector3(playerCamera.transform.forward.x, 0f, playerCamera.transform.forward.z);
@@ -181,26 +182,35 @@ public class PlayerInteraction : MonoBehaviour
                                     
                         }
                     }
+                    */
 
                 }
                 if (FreeMove)
                 {
                     forwardMovement = transform.forward * Input.GetAxis("Vertical");
                     sidewaysMovement = transform.right * Input.GetAxis("Horizontal");
+                    float cameraFacing = Camera.main.transform.eulerAngles.y;
 
-
-                    Vector3 nextMovePos = (forwardMovement + sidewaysMovement) * Time.deltaTime * combat.currentMovementSpeed;
-
-                    if (nextMovePos.x != 0 && nextMovePos.z != 0)
+                    if (forwardMovement != Vector3.zero || sidewaysMovement != Vector3.zero)
                     {
+
+
+                        Vector3 nextMovePos = (forwardMovement + sidewaysMovement);
+                        Quaternion nextMoveRot = Quaternion.LookRotation(nextMovePos);
+                        float angle = Mathf.Atan2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * Mathf.Rad2Deg;
+                       
                         animator.SetBool("Run", true);
+                        
+                      
+                        transform.rotation = Quaternion.AngleAxis(angle + cameraFacing, Vector3.up);
+                        transform.position += transform.forward * 10.0f * Time.deltaTime ;
                     }
                     else
                     {
                         animator.SetBool("Run", false);
+
                     }
 
-                    transform.position += nextMovePos;
 
                 }
 
@@ -221,7 +231,7 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     combat.Block(false);
                 }
-                if (Input.GetAxisRaw("Aim") != 0 )
+                if (Input.GetAxisRaw("Aim") != 0)
                 {
                     aiming = true;
                     FreeMove = false;
@@ -250,7 +260,9 @@ public class PlayerInteraction : MonoBehaviour
                         bowPowerTimer = 0;
                         bowPowerModifer = 0;
                     }
-                        */
+                    */
+                
+                        
                         
                         Debug.Log("arrowReady");
                         if (bowPowerModifer < maxBowPower)
@@ -285,6 +297,7 @@ public class PlayerInteraction : MonoBehaviour
                     }
                     
 
+                
 
                 }
                 else

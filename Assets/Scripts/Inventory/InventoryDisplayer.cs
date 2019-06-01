@@ -138,45 +138,47 @@ public class InventoryDisplayer : MonoBehaviour
     //JUST update the visuals of the inventory- dont implement any inventory management stuff here please future danny
     public void DisplayInventory()
     {
-
-        for (int i = 0; i < inventory.MaxItemSlots; i++)
+        if (inventory.itemSlots.Count > 0)
         {
-            if (inventory.itemSlots[i].filled)
+            for (int i = 0; i < inventory.MaxItemSlots; i++)
             {
-                itemImages[i].sprite = inventory.itemSlots[i].item.icon;
-
-
-                if (inventory.itemSlots[i].equiped)
+                if (inventory.itemSlots[i].filled)
                 {
-                    var colors = itemImages[i].gameObject.GetComponent<Button>().colors;
-                    colors.normalColor = Color.red;
-                    colors.highlightedColor = Color.red;
-                    itemImages[i].gameObject.GetComponent<Button>().colors = colors;
-                    itemText[i].text = inventory.itemSlots[i].item.title + "(" + inventory.itemSlots[i].quantity + ")" + " Equipped ";
-                    itemImages[i].gameObject.GetComponent<Button>().enabled = false;
-                    itemImages[i].gameObject.GetComponent<Button>().enabled = true;
+                    itemImages[i].sprite = inventory.itemSlots[i].item.icon;
+
+
+                    if (inventory.itemSlots[i].equiped)
+                    {
+                        var colors = itemImages[i].gameObject.GetComponent<Button>().colors;
+                        colors.normalColor = Color.red;
+                        colors.highlightedColor = Color.red;
+                        itemImages[i].gameObject.GetComponent<Button>().colors = colors;
+                        itemText[i].text = inventory.itemSlots[i].item.title + "(" + inventory.itemSlots[i].quantity + ")" + " Equipped ";
+                        itemImages[i].gameObject.GetComponent<Button>().enabled = false;
+                        itemImages[i].gameObject.GetComponent<Button>().enabled = true;
+
+                    }
+                    else
+                    {
+                        var colors = itemImages[i].gameObject.GetComponent<Button>().colors;
+                        colors.normalColor = Color.white;
+                        colors.highlightedColor = Color.white;
+                        itemImages[i].gameObject.GetComponent<Button>().colors = colors;
+
+                        itemImages[i].gameObject.GetComponent<Button>().enabled = false;
+                        itemImages[i].gameObject.GetComponent<Button>().enabled = true;
+                        itemText[i].text = inventory.itemSlots[i].item.title + "(" + inventory.itemSlots[i].quantity + ")";
+                    }
+
+
 
                 }
                 else
                 {
-                    var colors = itemImages[i].gameObject.GetComponent<Button>().colors;
-                    colors.normalColor = Color.white;
-                    colors.highlightedColor = Color.white;
-                    itemImages[i].gameObject.GetComponent<Button>().colors = colors;
+                    itemText[i].text = emptyString;
+                    itemImages[i].sprite = emptySprite;
 
-                    itemImages[i].gameObject.GetComponent<Button>().enabled = false;
-                    itemImages[i].gameObject.GetComponent<Button>().enabled = true;
-                    itemText[i].text = inventory.itemSlots[i].item.title + "(" + inventory.itemSlots[i].quantity + ")";
                 }
-
-
-
-            }
-            else
-            {
-                itemText[i].text = emptyString;
-                itemImages[i].sprite = emptySprite;
-
             }
         }
 
