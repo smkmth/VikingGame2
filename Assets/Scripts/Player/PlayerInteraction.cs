@@ -221,7 +221,7 @@ public class PlayerInteraction : MonoBehaviour
                 {
                     combat.Block(false);
                 }
-                if (Input.GetAxisRaw("Aim") != 0)
+                if (Input.GetAxisRaw("Aim") != 0 )
                 {
                     aiming = true;
                     FreeMove = false;
@@ -264,10 +264,11 @@ public class PlayerInteraction : MonoBehaviour
                         bowDrawn = true;
 
                     }
+
                     if(bowDrawn == true)
                     {
                        
-                        if (Input.GetAxisRaw("PullBack") == 0)
+                        if (Input.GetAxisRaw("PullBack") == 0 )
                         {
                             if (inventory.RemoveItem(arrow))
                             {
