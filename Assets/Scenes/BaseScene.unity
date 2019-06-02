@@ -618,6 +618,11 @@ Prefab:
       propertyPath: fadeToBlackText
       value: 
       objectReference: {fileID: 1156686978}
+    - target: {fileID: 114304701375493130, guid: 27bbba28647b1d14b98be63f2c1bad50,
+        type: 2}
+      propertyPath: baseMovementSpeed
+      value: 1000
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27bbba28647b1d14b98be63f2c1bad50, type: 2}
   m_IsPrefabAsset: 0

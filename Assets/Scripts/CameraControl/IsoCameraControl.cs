@@ -46,7 +46,7 @@ public class IsoCameraControl : MonoBehaviour {
         }
         else
         {
-            float rot = Input.GetAxisRaw("CameraRot");
+
 
             if (Input.GetButtonDown("PosCameraRot"))
             {

@@ -35,14 +35,13 @@ public class PlayerInteraction : MonoBehaviour
     private List<DialogueLine> receivedDialogue;
     public interactionState currentInteractionState;
     private int dialogueIndex;
-    public InkDisplayer dialogueDisplayer;
 
+
+    public InkDisplayer dialogueDisplayer;
     private Combat combat;
     public PlayerHUD hud;
-
     private Inventory inventory;
     private InventoryDisplayer inventoryDisplayer;
-
     private AnimationManager animator;
 
     [Header("Archery Settings")]
@@ -56,13 +55,14 @@ public class PlayerInteraction : MonoBehaviour
     public bool aiming;
 
     public Transform aimTarget;
-    public float radius = 2.0f;
-    public float rotationSpeed = 80.0f;
-    public float radiusSpeed = .5f;
+  //  public float radius = 2.0f;
+  //  public float rotationSpeed = 80.0f;
+ //   public float radiusSpeed = .5f;
     public bool bowDrawn = false;
     public GameObject arrowPrefab;
     public Transform bowPosition;
     public float shotForce;
+
     public float bowPowerTimer;
     public float shotHeight;
     public float maxBowPower;
@@ -194,16 +194,13 @@ public class PlayerInteraction : MonoBehaviour
                     if (forwardMovement != Vector3.zero || sidewaysMovement != Vector3.zero)
                     {
 
-
-                        Vector3 nextMovePos = (forwardMovement + sidewaysMovement);
-                        Quaternion nextMoveRot = Quaternion.LookRotation(nextMovePos);
                         float angle = Mathf.Atan2(Input.GetAxis("Horizontal"), Input.GetAxis("Vertical")) * Mathf.Rad2Deg;
                        
                         animator.SetBool("Run", true);
                         
                       
                         transform.rotation = Quaternion.AngleAxis(angle + cameraFacing, Vector3.up);
-                        transform.position += transform.forward * 10.0f * Time.deltaTime ;
+                        transform.position += transform.forward * 10.0f * Time.deltaTime;
                     }
                     else
                     {
@@ -259,12 +256,8 @@ public class PlayerInteraction : MonoBehaviour
                         arrow.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * (shotForce + bowPowerModifer), ForceMode.Impulse);
                         bowPowerTimer = 0;
                         bowPowerModifer = 0;
-                    }
-                    */
-                
-                        
-                        
-                        Debug.Log("arrowReady");
+                        }
+                        */
                         if (bowPowerModifer < maxBowPower)
                         {
                             bowPowerModifer += (Time.deltaTime * bowPullBackRate);

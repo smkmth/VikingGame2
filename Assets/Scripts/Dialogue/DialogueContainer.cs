@@ -11,13 +11,11 @@ public class DialogueContainer : MonoBehaviour
     public TextAsset story;
     public CharacterInfo characterInfo;
     private InkDisplayer dialogueDisplayer;
-    private TimeManager time;
 
     public void Start()
     {
         dialogueDisplayer = GameObject.Find("SceneManager").GetComponent<InkDisplayer>();
         villageManager = GameObject.Find("SceneManager").GetComponent<VillageManager>();
-        time = GameObject.Find("SceneManager").GetComponent<TimeManager>();
 
     }
 
