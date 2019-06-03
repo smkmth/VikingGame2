@@ -100,7 +100,7 @@ public class CameraControl : MonoBehaviour
          
             HorizontalAxis = Input.GetAxis("Mouse X") + Input.GetAxis("RightStickHorizontal");
             VerticalAxis = Input.GetAxis("Mouse Y") + Input.GetAxis("RightStickVertical");
-
+            Debug.Log(HorizontalAxis + VerticalAxis);
             //Offset of the targets transform (Since the pivot point is usually at the feet).
             Vector3 targetOffset = new Vector3(target.position.x, (target.position.y + 1f), target.position.z);
             Quaternion rotation = Quaternion.Euler(cameraHeight, rotateAround, cameraPan);
