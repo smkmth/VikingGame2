@@ -11747,7 +11747,7 @@ MonoBehaviour:
     m_NormalColor: {r: 1, g: 1, b: 1, a: 1}
     m_HighlightedColor: {r: 0.9607843, g: 0.9607843, b: 0.9607843, a: 1}
     m_PressedColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 1}
-    m_DisabledColor: {r: 0.78431374, g: 0.78431374, b: 0.78431374, a: 0.5019608}
+    m_DisabledColor: {r: 0.509434, g: 0.509434, b: 0.509434, a: 0.5019608}
     m_ColorMultiplier: 1
     m_FadeDuration: 0.1
   m_SpriteState:
@@ -12229,7 +12229,7 @@ MonoBehaviour:
 '
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: ba4062970bddca34ab92c2146aa38f02, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12335,13 +12335,14 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 2bf520fc7470f9743a5894123876c267, type: 2}
   currentSlots: []
   craftingMenu: {fileID: 1329921730356270}
-  craftingSlotPrefab: {fileID: 1408015696624084, guid: 6ddf1a448c734e74680392de40caa0e0,
+  craftingSlotPrefab: {fileID: 1475994306868896, guid: 298024175a6e1ea49bafd5858fb0deb8,
     type: 2}
   recipesPanel: {fileID: 1141623978348722}
   missingIngredientsPanel: {fileID: 1317371711612492}
   foundIngredientsPanel: {fileID: 1463345754860138}
   ingredientsPrefab: {fileID: 1651024381172088, guid: 6402631303a52ec4aa28946ea22693fb,
     type: 2}
+  craftButton: {fileID: 114414493386037902}
   playerInventory: {fileID: 0}
 --- !u!114 &114711774754342648
 MonoBehaviour:
@@ -12526,7 +12527,7 @@ MonoBehaviour:
     m_Right: 0
     m_Top: 0
     m_Bottom: 0
-  m_ChildAlignment: 0
+  m_ChildAlignment: 1
   m_Spacing: 0
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 1
@@ -12554,7 +12555,7 @@ MonoBehaviour:
   m_text: You need these items
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 6fb1152771518c645b0d362926466a90, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -12880,7 +12881,7 @@ MonoBehaviour:
   m_text: You have these items
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
-  m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
+  m_sharedMaterial: {fileID: 2100000, guid: 6fb1152771518c645b0d362926466a90, type: 2}
   m_fontSharedMaterials: []
   m_fontMaterial: {fileID: 0}
   m_fontMaterials: []
@@ -14348,8 +14349,8 @@ RectTransform:
   - {fileID: 224105436166317018}
   - {fileID: 224528981863766596}
   - {fileID: 224470824197839154}
-  - {fileID: 224991574336077884}
   - {fileID: 224397786612745728}
+  - {fileID: 224991574336077884}
   m_Father: {fileID: 4536790918683388}
   m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -14424,7 +14425,7 @@ RectTransform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 224278162281430944}
-  m_RootOrder: 6
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
@@ -14722,7 +14723,7 @@ RectTransform:
   m_Children:
   - {fileID: 224004787793729638}
   m_Father: {fileID: 224278162281430944}
-  m_RootOrder: 5
+  m_RootOrder: 6
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}

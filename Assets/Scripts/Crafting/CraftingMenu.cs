@@ -1,5 +1,6 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -13,6 +14,7 @@ public class CraftingMenu : MonoBehaviour {
     public GameObject missingIngredientsPanel;
     public GameObject foundIngredientsPanel;
     public GameObject ingredientsPrefab;
+    public Button craftButton;
     public Inventory playerInventory;
 
     private CraftingRecipe selectedItem;
@@ -24,9 +26,11 @@ public class CraftingMenu : MonoBehaviour {
         {
             GameObject currentCraftSlot = Instantiate(craftingSlotPrefab, recipesPanel.transform);
             Button currentButton = currentCraftSlot.GetComponent<Button>();
+            TextMeshProUGUI currentButtonText = currentCraftSlot.GetComponentInChildren<TextMeshProUGUI>();
             CraftingRecipe currentCraftingRecipe = masterCraftingRecipes[i];
             // Tell the button what to do when we press it
-            
+            currentButtonText.text = currentCraftingRecipe.itemProduced.title;
+
             currentButton.onClick.AddListener(delegate
             {
                 OnClickCraftSlot(currentCraftingRecipe);
@@ -34,6 +38,7 @@ public class CraftingMenu : MonoBehaviour {
             currentSlots.Add(currentButton);
         }
         craftingMenu.SetActive(false);
+        selectedItem = masterCraftingRecipes[0];
 
 		
 	}
@@ -67,14 +72,17 @@ public class CraftingMenu : MonoBehaviour {
         }
         return itemsMissing;
     }
+
 	public void ToggleCraftingMenu(bool isCrafting)
     {
-
         craftingMenu.SetActive(isCrafting);
-        RemoveChildren();
+        UpdateCraftingMenu(selectedItem);
     }
+
     public void UpdateCraftingMenu(CraftingRecipe selectedRecipe)
     {
+        RemoveChildren();
+
         List<Item> missingItems = CheckItemsMissing(selectedRecipe);
         List<Item> ownedItems = CheckItemsOwned(selectedRecipe);
         foreach (Item missingItem in missingItems)
@@ -89,6 +97,15 @@ public class CraftingMenu : MonoBehaviour {
             GameObject ownedItemSlot = Instantiate(ingredientsPrefab, foundIngredientsPanel.transform);
             Image ownedItemImage = ownedItemSlot.GetComponent<Image>();
             ownedItemImage.sprite = ownedItem.icon;
+        }
+        if (missingItems.Count == 0)
+        {
+            craftButton.interactable = true;
+        }
+        else
+        {
+            craftButton.interactable = false;
+
         }
 
 
@@ -112,7 +129,6 @@ public class CraftingMenu : MonoBehaviour {
 
     public void OnClickCraftSlot(CraftingRecipe selectedCraftingRecipe)
     {
-        RemoveChildren();
         selectedItem = selectedCraftingRecipe;
         UpdateCraftingMenu(selectedCraftingRecipe);
 
@@ -121,14 +137,18 @@ public class CraftingMenu : MonoBehaviour {
    {
         if (CheckItemsMissing(selectedItem).Count == 0)
         {
-            Debug.Log("HERE");
             playerInventory.AddItem(selectedItem.itemProduced);
+            foreach (Item item in selectedItem.requiredIngredients)
+            {
+                playerInventory.RemoveItem(item);
+            }
         }
+        UpdateCraftingMenu(selectedItem);
+
     }
 
     void RemoveChildren()
     {
-        selectedItem = null;
         {
             int childCount = missingIngredientsPanel.transform.childCount;
             for (int i = childCount - 1; i >= 0; --i)
