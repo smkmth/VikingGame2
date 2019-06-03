@@ -158,22 +158,23 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 404e5c80cf0a08b4d943591db52604c5, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  minDistance: 1.7
-  maxDistance: 5
+  minDistance: 3
+  maxDistance: 4
   smooth: 10000
   rotateAround: 0
-  minDown: -1.5
-  minUp: 0.5
+  minDown: -4
+  minUp: 4
   target: {fileID: 0}
   CamOcclusion:
     serializedVersion: 2
-    m_Bits: 512
+    m_Bits: 1536
   mouseRotateSpeed: 180
   controllerRotateSpeed: 3000
   controllerInput: 0
+  overShoulderMod: 2
   lockedOn: 0
   lockOnTarget: {fileID: 0}
   aimTarget: {fileID: 0}
   player: {fileID: 0}
-  followDistance: 10
+  followDistance: 6
   followHeight: 3

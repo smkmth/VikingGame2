@@ -2235,24 +2235,6 @@ Prefab:
       propertyPath: target
       value: 
       objectReference: {fileID: 476799196}
-    - target: {fileID: 1297259285283204, guid: 94fb6b21210856443a9862dfb2a1d9c0, type: 2}
-      propertyPath: m_IsActive
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 4707975508858066, guid: 94fb6b21210856443a9862dfb2a1d9c0, type: 2}
-      propertyPath: m_LocalScale.y
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 114246304078230060, guid: 94fb6b21210856443a9862dfb2a1d9c0,
-        type: 2}
-      propertyPath: camRotateSpeed
-      value: 180
-      objectReference: {fileID: 0}
-    - target: {fileID: 114246304078230060, guid: 94fb6b21210856443a9862dfb2a1d9c0,
-        type: 2}
-      propertyPath: lockedOn
-      value: 0
-      objectReference: {fileID: 0}
     - target: {fileID: 114246304078230060, guid: 94fb6b21210856443a9862dfb2a1d9c0,
         type: 2}
       propertyPath: lockOnTarget
@@ -2260,49 +2242,14 @@ Prefab:
       objectReference: {fileID: 140164618}
     - target: {fileID: 114246304078230060, guid: 94fb6b21210856443a9862dfb2a1d9c0,
         type: 2}
-      propertyPath: followDistance
-      value: 10
-      objectReference: {fileID: 0}
-    - target: {fileID: 114246304078230060, guid: 94fb6b21210856443a9862dfb2a1d9c0,
-        type: 2}
-      propertyPath: followHeight
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 114246304078230060, guid: 94fb6b21210856443a9862dfb2a1d9c0,
-        type: 2}
-      propertyPath: minDistance
-      value: 4
-      objectReference: {fileID: 0}
-    - target: {fileID: 114246304078230060, guid: 94fb6b21210856443a9862dfb2a1d9c0,
-        type: 2}
-      propertyPath: maxDistance
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 114246304078230060, guid: 94fb6b21210856443a9862dfb2a1d9c0,
-        type: 2}
-      propertyPath: DistanceUp
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114246304078230060, guid: 94fb6b21210856443a9862dfb2a1d9c0,
-        type: 2}
-      propertyPath: wierdNumber
-      value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 114246304078230060, guid: 94fb6b21210856443a9862dfb2a1d9c0,
-        type: 2}
-      propertyPath: player
-      value: 
-      objectReference: {fileID: 476799203}
-    - target: {fileID: 114246304078230060, guid: 94fb6b21210856443a9862dfb2a1d9c0,
-        type: 2}
       propertyPath: aimTarget
       value: 
       objectReference: {fileID: 486243174}
     - target: {fileID: 114246304078230060, guid: 94fb6b21210856443a9862dfb2a1d9c0,
         type: 2}
-      propertyPath: overShoulderMod
-      value: 3
-      objectReference: {fileID: 0}
+      propertyPath: player
+      value: 
+      objectReference: {fileID: 476799203}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 94fb6b21210856443a9862dfb2a1d9c0, type: 2}
   m_IsPrefabAsset: 0
@@ -2420,6 +2367,7 @@ GameObject:
   - component: {fileID: 1138371549}
   - component: {fileID: 1138371550}
   - component: {fileID: 1138371551}
+  - component: {fileID: 1138371552}
   m_Layer: 0
   m_Name: SceneManager
   m_TagString: Untagged
@@ -2571,6 +2519,23 @@ MonoBehaviour:
     m_TypeName: UnityEngine.Events.UnityEvent, UnityEngine.CoreModule, Version=0.0.0.0,
       Culture=neutral, PublicKeyToken=null
   invasionDay: 0
+--- !u!114 &1138371552
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1138371546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 8a297251757a9a54a890ed60977d8df1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  itemsToPool:
+  - shouldExpand: 0
+    amountToPool: 50
+    objectToPool: {fileID: 1029737870497516, guid: 9c1a96439819b664a8cf13cf4871ebdb,
+      type: 2}
+  pooledObjects: []
 --- !u!1 &1147026206
 GameObject:
   m_ObjectHideFlags: 0

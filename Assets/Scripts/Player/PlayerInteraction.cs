@@ -311,7 +311,12 @@ public class PlayerInteraction : MonoBehaviour
                                 bowDrawn = false;
                                 Debug.Log("arrowFire");
 
-                                GameObject arrow = Instantiate(arrowPrefab, bowPosition.position, playerCamera.transform.rotation);
+                                // GameObject arrow = Instantiate(arrowPrefab, bowPosition.position, playerCamera.transform.rotation);
+                                GameObject arrow = ObjectPooler.PoolerInstance.GetPooledObject("Arrow");
+                                arrow.SetActive(true);
+                                arrow.transform.position = bowPosition.position;
+                                arrow.transform.rotation = playerCamera.transform.rotation;
+                               // GameObject arrow = Instantiate(arrowPrefab, bowPosition.position, playerCamera.transform.rotation);
 
                                 arrow.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * (shotForce + bowPowerModifer), ForceMode.Impulse);
                                 bowPowerTimer = 0;
