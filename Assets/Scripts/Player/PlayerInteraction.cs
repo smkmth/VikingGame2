@@ -6,7 +6,8 @@ public enum interactionState
 {
     Normal,
     DialogueMode,
-    InventoryMode
+    InventoryMode,
+    CraftingMode
 }
 public class PlayerInteraction : MonoBehaviour
 {
@@ -70,12 +71,14 @@ public class PlayerInteraction : MonoBehaviour
     public float bowPullBackRate;
     public Item arrow;
 
+    public CraftingMenu craftingMenu;
 
     private void Start()
     {
         inventoryDisplayer = GetComponent<InventoryDisplayer>();
         animator = GetComponent<AnimationManager>();
         inventory = GetComponent<Inventory>();
+        craftingMenu = GetComponent<CraftingMenu>();
         hud = GetComponent<PlayerHUD>();
         combat = GetComponent<Combat>();
         Cursor.visible = false;
@@ -143,6 +146,34 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
+
+    void SetCraftingMode()
+    {
+        if (currentInteractionState == interactionState.Normal)
+        {
+            hud.ToggleHUD(true);
+            craftingMenu.ToggleCraftingMenu(true);
+            Cursor.visible = true;
+            Time.timeScale = 0;
+            Cursor.lockState = CursorLockMode.None;
+            currentInteractionState = interactionState.CraftingMode;
+
+        }
+        else if (currentInteractionState == interactionState.CraftingMode)
+        {
+            hud.ToggleHUD(false);
+            craftingMenu.ToggleCraftingMenu(false);
+            Cursor.visible = false;
+            Cursor.lockState = CursorLockMode.Locked;
+            Time.timeScale = 1;
+            currentInteractionState = interactionState.Normal;
+
+
+        }
+    }
+
+
+
     // Update is called once per frame
     void Update()
     {
@@ -158,7 +189,11 @@ public class PlayerInteraction : MonoBehaviour
             SetInventoryMode();
         }
 
-        
+        if (Input.GetButtonDown("Crafting"))
+        {
+            SetCraftingMode();
+        }
+
         switch (currentInteractionState) 
         {
 
@@ -216,10 +251,6 @@ public class PlayerInteraction : MonoBehaviour
                     combat.Dodge(forwardMovement, sidewaysMovement);
                 }
 
-                if (Input.GetButtonDown("Attack"))
-                {
-                    combat.Attack();
-                }
                 if (Input.GetButton("Block"))
                 {
                     combat.Block(true);
@@ -358,6 +389,8 @@ public class PlayerInteraction : MonoBehaviour
             case interactionState.DialogueMode:
                 break;
             case interactionState.InventoryMode:
+                break;
+            case interactionState.CraftingMode:
                 break;
         }
     }

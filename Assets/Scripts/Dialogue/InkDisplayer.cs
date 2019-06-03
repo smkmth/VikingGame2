@@ -187,6 +187,7 @@ public class InkDisplayer : MonoBehaviour {
     {
         story.ChooseChoiceIndex(choice.index);
         RefreshView();
+        Debug.Log("this");
     }
 
 

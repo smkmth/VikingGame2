@@ -30,6 +30,18 @@ public class Inventory : MonoBehaviour
 
 
     }
+    public List<int> CheckRequiredItems(List<Item> itemsToCheck)
+    {
+        List<int> count = new List<int>();
+        for(int i = 0; i <= itemsToCheck.Count; i++)
+        {
+            count[i] = GetItemCount(itemsToCheck[i]);
+        }
+
+
+        return count;
+
+    }
 
     public int GetItemCount(Item itemToCheck)
     {

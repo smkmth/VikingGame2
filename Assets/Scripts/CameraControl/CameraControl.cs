@@ -16,7 +16,7 @@ public class CameraControl : MonoBehaviour
     private float DistanceUp = -2;                    //how high the camera is above the player
     public float smooth = 4.0f;                    //how smooth the camera moves into place
     public float rotateAround = 70f;
-    public float minDown ;//the angle at which you will rotate the camera (on an axis)
+    public float minDown;                      //the angle at which you will rotate the camera (on an axis)
     public float minUp;
     [Header("Player to follow")]
     public Transform target;                    //the target the camera follows
@@ -42,7 +42,7 @@ public class CameraControl : MonoBehaviour
 
     private float HorizontalAxis;
     private float VerticalAxis;
-
+    public float overShoulderMod;
     public bool lockedOn;
     public Transform lockOnTarget;
     public Transform aimTarget;
@@ -136,12 +136,12 @@ public class CameraControl : MonoBehaviour
             
 
             rotateAround += HorizontalAxis * camRotateSpeed * Time.deltaTime;
-            DistanceUp = Mathf.Clamp(DistanceUp += VerticalAxis, minDown, minUp);
             
+            DistanceUp = Mathf.Clamp(DistanceUp += VerticalAxis, minDown, minUp);
             DistanceAway = Mathf.Clamp(DistanceAway += VerticalAxis, minDistance, maxDistance);
             if (player.aiming)
             {
-                DistanceAway -= 1;
+                DistanceAway -= overShoulderMod;
             }
         }
 
