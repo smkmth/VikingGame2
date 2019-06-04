@@ -147,11 +147,14 @@ public class PlayerInteraction : MonoBehaviour
     }
 
 
-    void SetCraftingMode()
+
+    public void SetCraftingMode( interactableType craftingMenuType)
     {
         if (currentInteractionState == interactionState.Normal)
         {
+
             hud.ToggleHUD(true);
+            craftingMenu.craftingMenuType = craftingMenuType;
             craftingMenu.ToggleCraftingMenu(true);
             Cursor.visible = true;
             Time.timeScale = 0;
@@ -191,7 +194,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (Input.GetButtonDown("Crafting"))
         {
-            SetCraftingMode();
+            SetCraftingMode(interactableType.Nothing);
         }
 
         switch (currentInteractionState) 
