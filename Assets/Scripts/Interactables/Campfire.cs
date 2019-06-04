@@ -4,9 +4,12 @@ using UnityEngine;
 
 public class Campfire : Interactable {
 
+    public Item currentProcessingItem;
+
     public override void UseInteractable(GameObject user)
     {
-        user.GetComponent<PlayerInteraction>().SetCraftingMode(interactableType.Fire);
+
+        user.GetComponent<PlayerInteraction>().SetCraftingMode();
     }
 
         

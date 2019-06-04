@@ -9,6 +9,6 @@ public class CraftingRecipe : ScriptableObject {
     public List<Item> requiredIngredients;
     public List<int> indexedIngredientQuantity;
     public Item itemProduced;
-
+    public float processTime;
 }
 

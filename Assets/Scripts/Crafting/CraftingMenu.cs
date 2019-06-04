@@ -4,10 +4,9 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
 
-public class CraftingMenu : MonoBehaviour {
+public class CraftingMenu : MonoBehaviour
+{
 
-    public interactableType craftingMenuType;
-    public List<CraftingRecipe> masterCraftingRecipes;
     public List<Button> currentSlots;
     public GameObject craftingMenu;
     public GameObject craftingSlotPrefab;
@@ -16,110 +15,81 @@ public class CraftingMenu : MonoBehaviour {
     public GameObject foundIngredientsPanel;
     public GameObject ingredientsPrefab;
     public Button craftButton;
-    public Inventory playerInventory;
     private ButtonHighlighter buttonHighlighter;
-
+    public Crafter thisCrafter;
     private CraftingRecipe selectedItem;
 
     // Use this for initialization
-    void Awake () {
-
-        BuildMenu();
-
-        buttonHighlighter = craftingMenu.GetComponent<ButtonHighlighter>();
-        playerInventory = GetComponent<Inventory>();
-
-        
-        
-
-		
-	}
-
-    public void BuildMenu()
+    void Awake()
     {
+        buttonHighlighter = craftingMenu.GetComponent<ButtonHighlighter>();
+        thisCrafter = null;
+    }
+
+    public void ToggleCraftingMenu(bool isCrafting, Crafter crafter)
+    {
+        if (isCrafting)
         {
-            int childCount = recipesPanel.transform.childCount;
-            for (int i = childCount - 1; i >= 0; --i)
-            {
-                GameObject.Destroy(recipesPanel.transform.GetChild(i).gameObject);
-            }
-        }
-        for (int i = 0; i < masterCraftingRecipes.Count; i++)
-        {
-            if (masterCraftingRecipes[i].requiredType == interactableType.Nothing || masterCraftingRecipes[i].requiredType == craftingMenuType)
-            {
-                CreateCraftingOption(i);
-            }
+            
+            thisCrafter = crafter;
+            List<CraftingRecipe> craftingRecipes = thisCrafter.GetCraftingRecipes();
+            BuildMenu(craftingRecipes);
+            buttonHighlighter.ActivateButtons(currentSlots[0].gameObject);
+            UpdateCraftingMenu(selectedItem);
 
         }
-        craftingMenu.SetActive(false);
-        selectedItem = masterCraftingRecipes[0];
+        else
+        {
+            thisCrafter = null;
+        }
+        craftingMenu.SetActive(isCrafting);
+    }
+
+    public void BuildMenu(List<CraftingRecipe> craftingRecipeList)
+    {
+
+        int childCount = recipesPanel.transform.childCount;
+        for (int i = childCount - 1; i >= 0; --i)
+        {
+            GameObject.Destroy(recipesPanel.transform.GetChild(i).gameObject);
+        }
+
+        foreach (CraftingRecipe recipe in craftingRecipeList)
+        {
+            CreateCraftingOption(recipe);
+
+        }
 
     }
 
-    private void CreateCraftingOption(int index)
+    private void CreateCraftingOption(CraftingRecipe craftingRecpie)
     {
-        CraftingRecipe currentCraftingRecipe = masterCraftingRecipes[index];
 
         GameObject currentCraftSlot = Instantiate(craftingSlotPrefab, recipesPanel.transform);
         Button currentButton = currentCraftSlot.GetComponent<Button>();
         TextMeshProUGUI currentButtonText = currentCraftSlot.GetComponentInChildren<TextMeshProUGUI>();
         // Tell the button what to do when we press it
-        currentButtonText.text = currentCraftingRecipe.itemProduced.title;
+        currentButtonText.text = craftingRecpie.itemProduced.title;
 
         currentButton.onClick.AddListener(delegate
         {
-            OnClickCraftSlot(currentCraftingRecipe);
+            OnClickCraftSlot(craftingRecpie);
         });
         currentSlots.Add(currentButton);
     }
 
-    public List<Item> CheckItemsOwned(CraftingRecipe recipeToCheck)
-    {
 
-        List<Item> itemsHave = new List<Item>();
-        for (int i = 0; i < recipeToCheck.requiredIngredients.Count; i++)
-        {
-            if (playerInventory.GetItemCount(recipeToCheck.requiredIngredients[i]) != 0)
-            {
-                itemsHave.Add(recipeToCheck.requiredIngredients[i]);
 
-            }
-        }
-        return itemsHave;
-    }
 
-    public List<Item> CheckItemsMissing(CraftingRecipe recipeToCheck)
-    {
-        
-        List<Item> itemsMissing = new List<Item>();
-        for (int i = 0; i < recipeToCheck.requiredIngredients.Count; i++)
-        {
-            if (playerInventory.GetItemCount(recipeToCheck.requiredIngredients[i]) == 0)
-            {
-                itemsMissing.Add(recipeToCheck.requiredIngredients[i]);
-
-            }
-        }
-        return itemsMissing;
-    }
-
-	public void ToggleCraftingMenu(bool isCrafting)
-    {
-        BuildMenu();
-        buttonHighlighter.ActivateButtons(currentSlots[0].gameObject);
-        craftingMenu.SetActive(isCrafting);
-        UpdateCraftingMenu(selectedItem);
-    }
 
     public void UpdateCraftingMenu(CraftingRecipe selectedRecipe)
     {
         RemoveChildren();
-        List<Item> missingItems = CheckItemsMissing(selectedRecipe);
-        List<Item> ownedItems = CheckItemsOwned(selectedRecipe);
+        List<Item> missingItems = thisCrafter.CheckItemsMissing(selectedRecipe);
+        List<Item> ownedItems = thisCrafter.CheckItemsOwned(selectedRecipe);
         foreach (Item missingItem in missingItems)
         {
-            GameObject missingItemSlot =Instantiate(ingredientsPrefab, missingIngredientsPanel.transform);
+            GameObject missingItemSlot = Instantiate(ingredientsPrefab, missingIngredientsPanel.transform);
             Image missingItemImage = missingItemSlot.GetComponent<Image>();
             missingItemImage.sprite = missingItem.icon;
         }
@@ -144,20 +114,6 @@ public class CraftingMenu : MonoBehaviour {
 
     }
 
-    public int RecipeToIndex(CraftingRecipe recipeToFind)
-    {
-        int index = -1;
-        for(int i = 0; i < masterCraftingRecipes.Count; i++)
-        {
-            if (masterCraftingRecipes[i].name == recipeToFind.name)
-            {
-                index = i;
-            }
-
-        }
-        return index;
-    }
-   
 
     public void OnClickCraftSlot(CraftingRecipe selectedCraftingRecipe)
     {
@@ -165,23 +121,11 @@ public class CraftingMenu : MonoBehaviour {
         UpdateCraftingMenu(selectedCraftingRecipe);
 
     }
-    public void CraftItem()
-   {
-        if (CheckItemsMissing(selectedItem).Count == 0)
-        {
-            playerInventory.AddItem(selectedItem.itemProduced);
-            foreach (Item item in selectedItem.requiredIngredients)
-            {
-                playerInventory.RemoveItem(item);
-            }
-        }
-        UpdateCraftingMenu(selectedItem);
 
-    }
 
     void RemoveChildren()
     {
-    
+
         {
             int childCount = missingIngredientsPanel.transform.childCount;
             for (int i = childCount - 1; i >= 0; --i)
@@ -198,4 +142,11 @@ public class CraftingMenu : MonoBehaviour {
         }
         currentSlots.Clear();
     }
+
+    void CraftButtonPressed()
+    {
+        thisCrafter.CraftItem(selectedItem);
+        UpdateCraftingMenu(selectedItem);
+    }
+
 }
