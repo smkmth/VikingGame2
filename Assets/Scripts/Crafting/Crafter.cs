@@ -9,6 +9,14 @@ public class Crafter : MonoBehaviour {
     public Inventory playerInventory;
     public List<CraftingRecipe> masterCraftingRecipes;
     public Item currentItemProcessing;
+    public MasterCraftList craftlist;
+
+    public void Start()
+    {
+        masterCraftingRecipes = GameObject.Find("SceneManager").GetComponent<MasterCraftList>().MasterCraftRecipies;
+        playerInventory = GameObject.Find("Player").GetComponent<Inventory>();
+    }
+
 
     public List<CraftingRecipe> GetCraftingRecipes()
     {

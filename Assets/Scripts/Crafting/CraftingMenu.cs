@@ -20,10 +20,11 @@ public class CraftingMenu : MonoBehaviour
     private CraftingRecipe selectedItem;
 
     // Use this for initialization
-    void Awake()
+    void Start()
     {
-        buttonHighlighter = craftingMenu.GetComponent<ButtonHighlighter>();
         thisCrafter = null;
+        buttonHighlighter = craftingMenu.GetComponent<ButtonHighlighter>();
+        craftingMenu.SetActive(false);
     }
 
     public void ToggleCraftingMenu(bool isCrafting, Crafter crafter)
@@ -34,7 +35,7 @@ public class CraftingMenu : MonoBehaviour
             thisCrafter = crafter;
             List<CraftingRecipe> craftingRecipes = thisCrafter.GetCraftingRecipes();
             BuildMenu(craftingRecipes);
-            buttonHighlighter.ActivateButtons(currentSlots[0].gameObject);
+           // buttonHighlighter.ActivateButtons(currentSlots[0].gameObject);
             UpdateCraftingMenu(selectedItem);
 
         }

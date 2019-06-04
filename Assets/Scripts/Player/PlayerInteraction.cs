@@ -195,7 +195,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (Input.GetButtonDown("Crafting"))
         {
-            SetCraftingMode(interactableType.Nothing);
+            SetCraftingMode(playerCrafter);
         }
 
         switch (currentInteractionState) 
