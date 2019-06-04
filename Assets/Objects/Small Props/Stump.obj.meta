@@ -1,14 +1,22 @@
 fileFormatVersion: 2
-guid: d5257e2905081fe499e3a7f3a195d27a
+guid: 735065a47bd7d8640bfe231e060bcf2b
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2100000: lambert31
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Rock1
+    100000: polySurface1_polySurface1
+    100002: polySurface2_polySurface2
+    100004: //RootNode
+    400000: polySurface1_polySurface1
+    400002: polySurface2_polySurface2
+    400004: //RootNode
+    2100000: polySurface1_polySurface1Mat
+    2100002: polySurface2_polySurface2Mat
+    2300000: polySurface1_polySurface1
+    2300002: polySurface2_polySurface2
+    3300000: polySurface1_polySurface1
+    3300002: polySurface2_polySurface2
+    4300000: polySurface1_polySurface1
+    4300002: polySurface2_polySurface2
   externalObjects: {}
   materials:
     importMaterials: 1

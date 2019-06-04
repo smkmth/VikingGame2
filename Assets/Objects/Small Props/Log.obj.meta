@@ -1,14 +1,16 @@
 fileFormatVersion: 2
-guid: 0d18fabf8c7eecb4c9c9af47e24a2593
+guid: d63271589fe95b547b9c6bba72dbaf44
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
     100000: //RootNode
+    100002: Log_Log
     400000: //RootNode
-    2100000: lambert31
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Rock2
+    400002: Log_Log
+    2100000: Log_LogMat
+    2300000: Log_Log
+    3300000: Log_Log
+    4300000: Log_Log
   externalObjects: {}
   materials:
     importMaterials: 1

@@ -1,14 +1,16 @@
 fileFormatVersion: 2
-guid: 26b77f5fc5c63f944bfcf56be7616b0a
+guid: da5545ac62c55eb4eb8abef7cd457096
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: //RootNode
-    400000: //RootNode
-    2100000: lambert1
-    2300000: //RootNode
-    3300000: //RootNode
-    4300000: Stump1
+    100000: Rock1_Rock1
+    100002: //RootNode
+    400000: Rock1_Rock1
+    400002: //RootNode
+    2100000: Rock1_Rock1Mat
+    2300000: Rock1_Rock1
+    3300000: Rock1_Rock1
+    4300000: Rock1_Rock1
   externalObjects: {}
   materials:
     importMaterials: 1
