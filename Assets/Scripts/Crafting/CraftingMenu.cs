@@ -6,7 +6,6 @@ using UnityEngine.UI;
 
 public class CraftingMenu : MonoBehaviour {
 
-    public interactableType craftingMenuType;
     public List<CraftingRecipe> masterCraftingRecipes;
     public List<Button> currentSlots;
     public GameObject craftingMenu;
@@ -17,62 +16,32 @@ public class CraftingMenu : MonoBehaviour {
     public GameObject ingredientsPrefab;
     public Button craftButton;
     public Inventory playerInventory;
-    private ButtonHighlighter buttonHighlighter;
 
     private CraftingRecipe selectedItem;
 
     // Use this for initialization
-    void Awake () {
-
-        BuildMenu();
-
-        buttonHighlighter = craftingMenu.GetComponent<ButtonHighlighter>();
+    void Start () {
         playerInventory = GetComponent<Inventory>();
-
-        
-        
-
-		
-	}
-
-    public void BuildMenu()
-    {
+        for(int i = 0; i  < masterCraftingRecipes.Count; i++)
         {
-            int childCount = recipesPanel.transform.childCount;
-            for (int i = childCount - 1; i >= 0; --i)
-            {
-                GameObject.Destroy(recipesPanel.transform.GetChild(i).gameObject);
-            }
-        }
-        for (int i = 0; i < masterCraftingRecipes.Count; i++)
-        {
-            if (masterCraftingRecipes[i].requiredType == interactableType.Nothing || masterCraftingRecipes[i].requiredType == craftingMenuType)
-            {
-                CreateCraftingOption(i);
-            }
+            GameObject currentCraftSlot = Instantiate(craftingSlotPrefab, recipesPanel.transform);
+            Button currentButton = currentCraftSlot.GetComponent<Button>();
+            TextMeshProUGUI currentButtonText = currentCraftSlot.GetComponentInChildren<TextMeshProUGUI>();
+            CraftingRecipe currentCraftingRecipe = masterCraftingRecipes[i];
+            // Tell the button what to do when we press it
+            currentButtonText.text = currentCraftingRecipe.itemProduced.title;
 
+            currentButton.onClick.AddListener(delegate
+            {
+                OnClickCraftSlot(currentCraftingRecipe);
+            });
+            currentSlots.Add(currentButton);
         }
         craftingMenu.SetActive(false);
         selectedItem = masterCraftingRecipes[0];
 
-    }
-
-    private void CreateCraftingOption(int index)
-    {
-        CraftingRecipe currentCraftingRecipe = masterCraftingRecipes[index];
-
-        GameObject currentCraftSlot = Instantiate(craftingSlotPrefab, recipesPanel.transform);
-        Button currentButton = currentCraftSlot.GetComponent<Button>();
-        TextMeshProUGUI currentButtonText = currentCraftSlot.GetComponentInChildren<TextMeshProUGUI>();
-        // Tell the button what to do when we press it
-        currentButtonText.text = currentCraftingRecipe.itemProduced.title;
-
-        currentButton.onClick.AddListener(delegate
-        {
-            OnClickCraftSlot(currentCraftingRecipe);
-        });
-        currentSlots.Add(currentButton);
-    }
+		
+	}
 
     public List<Item> CheckItemsOwned(CraftingRecipe recipeToCheck)
     {
@@ -106,8 +75,6 @@ public class CraftingMenu : MonoBehaviour {
 
 	public void ToggleCraftingMenu(bool isCrafting)
     {
-        BuildMenu();
-        buttonHighlighter.ActivateButtons(currentSlots[0].gameObject);
         craftingMenu.SetActive(isCrafting);
         UpdateCraftingMenu(selectedItem);
     }
@@ -115,6 +82,7 @@ public class CraftingMenu : MonoBehaviour {
     public void UpdateCraftingMenu(CraftingRecipe selectedRecipe)
     {
         RemoveChildren();
+
         List<Item> missingItems = CheckItemsMissing(selectedRecipe);
         List<Item> ownedItems = CheckItemsOwned(selectedRecipe);
         foreach (Item missingItem in missingItems)
@@ -181,7 +149,6 @@ public class CraftingMenu : MonoBehaviour {
 
     void RemoveChildren()
     {
-    
         {
             int childCount = missingIngredientsPanel.transform.childCount;
             for (int i = childCount - 1; i >= 0; --i)
@@ -196,6 +163,5 @@ public class CraftingMenu : MonoBehaviour {
                 GameObject.Destroy(foundIngredientsPanel.transform.GetChild(i).gameObject);
             }
         }
-        currentSlots.Clear();
     }
 }

@@ -21,8 +21,6 @@ public class FadeToBlackManager : MonoBehaviour {
     {
         placeToWakeUp = placeToWake;
         StartCoroutine(GoToSleep(stringToDisplay));
-        TimeManager.TimeManagerInstance.JumpForwardInTime(timeToWakeUp);
-
     }
 
 
@@ -33,6 +31,7 @@ public class FadeToBlackManager : MonoBehaviour {
         fadeToBlackText.text = textToDisplay;
         yield return new WaitForSeconds(2);
         stamina.canLoseStamina = false;
+        TimeManager.TimeManagerInstance.JumpForwardInTime(timeToWakeUp);
         stamina.currentStamina = stamina.MaxStamina;
         transform.position = placeToWakeUp;
         stamina.canLoseStamina = true;

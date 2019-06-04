@@ -14,8 +14,7 @@ public class CameraControl : MonoBehaviour
     public float maxDistance = 2;                //max camera distance
 
     private float DistanceUp = -2;                    //how high the camera is above the player
-    public float smooth = 4.0f;
-    public float currentSmooth;//how smooth the camera moves into place
+    public float smooth = 4.0f;                    //how smooth the camera moves into place
     public float rotateAround = 70f;
     public float minDown;                      //the angle at which you will rotate the camera (on an axis)
     public float minUp;
@@ -30,12 +29,10 @@ public class CameraControl : MonoBehaviour
     RaycastHit hit;
     float cameraHeight = 55f;
     float cameraPan = 0f;
-    public float camPanSpeed;
     private float camRotateSpeed = 180f;
     public float mouseRotateSpeed = 180.0f;
     public float controllerRotateSpeed = 3000.0f;
-    public float distToGround;
-     Vector3 camPosition;
+    Vector3 camPosition;
     Vector3 camMask;
     Vector3 followMask;
     public bool controllerInput;
@@ -58,9 +55,7 @@ public class CameraControl : MonoBehaviour
     // Use this for initialization
     void Start()
     {
-        currentSmooth = smooth;
-        
-        
+        player = target.GetComponent<PlayerInteraction>();
         sceneManager = GameObject.Find("SceneManager");
         //the statement below automatically positions the camera behind the target.
         //hosMove = transform.position - target.transform.position;
@@ -74,12 +69,12 @@ public class CameraControl : MonoBehaviour
         {
             Debug.Log("Xbox controller plugged in");
 
-            camRotateSpeed = controllerRotateSpeed;
+            camRotateSpeed = 3000.0f;
         }
         else
         {
             Debug.Log("No controller plugged in");
-            camRotateSpeed = mouseRotateSpeed;
+            camRotateSpeed = 180.0f;
         }
 
     }
@@ -105,7 +100,7 @@ public class CameraControl : MonoBehaviour
          
             HorizontalAxis = Input.GetAxis("Mouse X") + Input.GetAxis("RightStickHorizontal");
             VerticalAxis = Input.GetAxis("Mouse Y") + Input.GetAxis("RightStickVertical");
-
+            Debug.Log(HorizontalAxis + VerticalAxis);
             //Offset of the targets transform (Since the pivot point is usually at the feet).
             Vector3 targetOffset = new Vector3(target.position.x, (target.position.y + 1f), target.position.z);
             Quaternion rotation = Quaternion.Euler(cameraHeight, rotateAround, cameraPan);
@@ -118,7 +113,6 @@ public class CameraControl : MonoBehaviour
 
 
             OccludeRay(ref targetOffset);
-            GroundRay();
             SmoothCamMethod();
 
             if (player.aiming)
@@ -127,7 +121,7 @@ public class CameraControl : MonoBehaviour
             }
             else
             {
-                transform.LookAt(target);
+                transform.LookAt(target );
 
             }
 
@@ -143,8 +137,8 @@ public class CameraControl : MonoBehaviour
 
             rotateAround += HorizontalAxis * camRotateSpeed * Time.deltaTime;
             
-            DistanceUp = Mathf.Clamp(DistanceUp += VerticalAxis * camPanSpeed * Time.deltaTime, minDown, minUp);
-            DistanceAway = Mathf.Clamp(DistanceAway += VerticalAxis * camPanSpeed * Time.deltaTime, minDistance, maxDistance);
+            DistanceUp = Mathf.Clamp(DistanceUp += VerticalAxis, minDown, minUp);
+            DistanceAway = Mathf.Clamp(DistanceAway += VerticalAxis, minDistance, maxDistance);
             if (player.aiming)
             {
                 DistanceAway -= overShoulderMod;
@@ -155,8 +149,8 @@ public class CameraControl : MonoBehaviour
     }
     void SmoothCamMethod()
     {
-        currentSmooth = smooth;
-        transform.position = Vector3.Lerp(transform.position, camPosition, Time.deltaTime * currentSmooth);
+        smooth = 6f;
+        transform.position = Vector3.Lerp(transform.position, camPosition, Time.deltaTime * smooth);
     }
     void OccludeRay(ref Vector3 targetFollow)
     {
@@ -166,27 +160,11 @@ public class CameraControl : MonoBehaviour
         if (Physics.Linecast(targetFollow, camMask, out wallHit, CamOcclusion))
         {
             //the smooth is increased so you detect geometry collisions faster.
-            currentSmooth = smooth *2;
+            smooth = 10f;
             //the x and z coordinates are pushed away from the wall by hit.normal.
             //the y coordinate stays the same.
             camPosition = new Vector3(wallHit.point.x + wallHit.normal.x * 0.5f, camPosition.y, wallHit.point.z + wallHit.normal.z * 0.5f);
         }
     }
-    void GroundRay()
-    {
 
-        //declare a new raycast hit.
-        RaycastHit floorHit = new RaycastHit();
-        //linecast from your player (targetFollow) to your cameras mask (camMask) to find collisions.
-        if (Physics.Raycast(transform.position, Vector3.down,out floorHit, distToGround, CamOcclusion ))
-        {
-            
-            minDown = (floorHit.transform.position.y -transform.position.y);
-            //the smooth is increased so you detect geometry collisions faster.
-            //currentSmooth = smooth * 2;
-            //the x and z coordinates are pushed away from the wall by hit.normal.
-            //the y coordinate stays the same.
-           // camPosition = new Vector3(camPosition.x, floorHit.transform.position.y + 1.0f, camPosition.z);
-        }
-    }
 }

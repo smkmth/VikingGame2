@@ -147,14 +147,11 @@ public class PlayerInteraction : MonoBehaviour
     }
 
 
-
-    public void SetCraftingMode( interactableType craftingMenuType)
+    void SetCraftingMode()
     {
         if (currentInteractionState == interactionState.Normal)
         {
-
             hud.ToggleHUD(true);
-            craftingMenu.craftingMenuType = craftingMenuType;
             craftingMenu.ToggleCraftingMenu(true);
             Cursor.visible = true;
             Time.timeScale = 0;
@@ -194,7 +191,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (Input.GetButtonDown("Crafting"))
         {
-            SetCraftingMode(interactableType.Nothing);
+            SetCraftingMode();
         }
 
         switch (currentInteractionState) 
@@ -314,12 +311,7 @@ public class PlayerInteraction : MonoBehaviour
                                 bowDrawn = false;
                                 Debug.Log("arrowFire");
 
-                                // GameObject arrow = Instantiate(arrowPrefab, bowPosition.position, playerCamera.transform.rotation);
-                                GameObject arrow = ObjectPooler.PoolerInstance.GetPooledObject("Arrow");
-                                arrow.SetActive(true);
-                                arrow.transform.position = bowPosition.position;
-                                arrow.transform.rotation = playerCamera.transform.rotation;
-                               // GameObject arrow = Instantiate(arrowPrefab, bowPosition.position, playerCamera.transform.rotation);
+                                GameObject arrow = Instantiate(arrowPrefab, bowPosition.position, playerCamera.transform.rotation);
 
                                 arrow.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * (shotForce + bowPowerModifer), ForceMode.Impulse);
                                 bowPowerTimer = 0;
