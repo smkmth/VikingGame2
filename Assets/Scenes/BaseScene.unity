@@ -1222,12 +1222,35 @@ Transform:
   m_CorrespondingSourceObject: {fileID: 4429452286964920, guid: 27bbba28647b1d14b98be63f2c1bad50,
     type: 2}
   m_PrefabInternal: {fileID: 114552113}
+--- !u!114 &476799201 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 114490088390148240, guid: 27bbba28647b1d14b98be63f2c1bad50,
+    type: 2}
+  m_PrefabInternal: {fileID: 114552113}
+  m_Script: {fileID: 11500000, guid: 8f7243ca1a27cf84baede7f9cf7396e2, type: 3}
 --- !u!114 &476799203 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 114040673722629146, guid: 27bbba28647b1d14b98be63f2c1bad50,
     type: 2}
   m_PrefabInternal: {fileID: 114552113}
   m_Script: {fileID: 11500000, guid: 375c18023185b30449b49e10bd91959e, type: 3}
+--- !u!114 &476799208
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 476799195}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 69694e6426fb0424bbebe597b9896a24, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  craftingType: 0
+  inventory: {fileID: 476799201}
+  playerInventory: {fileID: 0}
+  masterCraftingRecipes: []
+  currentItemProcessing: {fileID: 0}
+  craftlist: {fileID: 0}
 --- !u!4 &486243174 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 4423564548648638, guid: 27bbba28647b1d14b98be63f2c1bad50,
@@ -2502,6 +2525,7 @@ GameObject:
   - component: {fileID: 1138371547}
   - component: {fileID: 1138371549}
   - component: {fileID: 1138371550}
+  - component: {fileID: 1138371553}
   - component: {fileID: 1138371551}
   - component: {fileID: 1138371552}
   m_Layer: 0
@@ -2675,6 +2699,20 @@ MonoBehaviour:
     objectToPool: {fileID: 1029737870497516, guid: 9c1a96439819b664a8cf13cf4871ebdb,
       type: 2}
   pooledObjects: []
+--- !u!114 &1138371553
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1138371546}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5c4fb0a692d5bae4488148493086b6ae, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  MasterCraftRecipies:
+  - {fileID: 11400000, guid: 2bf520fc7470f9743a5894123876c267, type: 2}
+  - {fileID: 11400000, guid: 622bda01db2812e409d98c2713f8cfea, type: 2}
 --- !u!1 &1147026206
 GameObject:
   m_ObjectHideFlags: 0
@@ -4875,7 +4913,7 @@ GameObject:
   - component: {fileID: 2120559527}
   m_Layer: 0
   m_Name: Cube
-  m_TagString: Untagged
+  m_TagString: Interactable
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -4958,3 +4996,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: da8de5dde2a93b44aae8a31ec8e6ac18, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  currentProcessingItem: {fileID: 0}
+  crafter: {fileID: 0}
