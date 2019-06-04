@@ -4,6 +4,7 @@ using UnityEngine;
 
 public class MasterCraftList : MonoBehaviour
 {
-
+    public Sprite fireSprite;
+    public Sprite anvilSprite;
     public List<CraftingRecipe> MasterCraftRecipies;
 }

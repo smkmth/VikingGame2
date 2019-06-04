@@ -11,6 +11,10 @@ public class CraftingMenu : MonoBehaviour
     public GameObject craftingMenu;
     public GameObject craftingSlotPrefab;
     public GameObject recipesPanel;
+    public GameObject processingPanel;
+    public Image processingImage;
+    public Button processingItemButton;
+    public TextMeshProUGUI processingText;
     public GameObject missingIngredientsPanel;
     public GameObject foundIngredientsPanel;
     public GameObject ingredientsPrefab;
@@ -18,13 +22,24 @@ public class CraftingMenu : MonoBehaviour
     private ButtonHighlighter buttonHighlighter;
     public Crafter thisCrafter;
     private CraftingRecipe selectedItem;
+    private MasterCraftList masterCraftList;
+
 
     // Use this for initialization
     void Start()
     {
+        processingText.text = "";
+        masterCraftList = GameObject.Find("SceneManager").GetComponent<MasterCraftList>();
+        processingPanel.SetActive(false);
+        processingItemButton.gameObject.SetActive(false);
         thisCrafter = null;
         buttonHighlighter = craftingMenu.GetComponent<ButtonHighlighter>();
         craftingMenu.SetActive(false);
+        craftButton.onClick.AddListener(delegate
+        {
+            CraftButtonPressed();
+        });
+        
     }
 
     public void ToggleCraftingMenu(bool isCrafting, Crafter crafter)
@@ -33,10 +48,29 @@ public class CraftingMenu : MonoBehaviour
         {
             
             thisCrafter = crafter;
+            switch (thisCrafter.craftingType)
+            {
+                case interactableType.Nothing:
+                    processingPanel.SetActive(false);
+                    break;
+                case interactableType.Fire:
+                    processingPanel.SetActive(true);
+                    processingImage.sprite = masterCraftList.fireSprite;
+                    break;
+                case interactableType.Anvil:
+                    processingPanel.SetActive(true);
+                    processingImage.sprite = masterCraftList.anvilSprite;
+                    break;
+
+            }
             List<CraftingRecipe> craftingRecipes = thisCrafter.GetCraftingRecipes();
             BuildMenu(craftingRecipes);
+            selectedItem = craftingRecipes[0];
            // buttonHighlighter.ActivateButtons(currentSlots[0].gameObject);
-            UpdateCraftingMenu(selectedItem);
+            
+             UpdateCraftingMenu(selectedItem);
+
+            
 
         }
         else
@@ -80,12 +114,36 @@ public class CraftingMenu : MonoBehaviour
     }
 
 
+    public void UpdateProcessing()
+    {
+        switch (thisCrafter.currentProcessState)
+        {
+            case processState.currentlyProcessing:
+                processingItemButton.gameObject.SetActive(true);
+                processingItemButton.interactable = false;
+                processingItemButton.image.sprite = thisCrafter.currentItemProcessing.icon;
+                processingText.text = "currently processing " +  thisCrafter.currentItemProcessing.title + ". Time remaining: "+ thisCrafter.processTimer.ToString();
+                break;
+            case processState.finishedProcessing:
+                processingItemButton.gameObject.SetActive(true);
+                processingItemButton.interactable = true;
+                processingItemButton.onClick.AddListener(delegate
+                {
+                    OnClickFinishedProcessing();
+                });
+                processingItemButton.image.sprite = thisCrafter.currentItemProcessing.icon;
+                break;
+            case processState.nothingToProcess:
+                break;
+        }
 
+
+    }
 
 
     public void UpdateCraftingMenu(CraftingRecipe selectedRecipe)
     {
-        RemoveChildren();
+       RemoveChildren();
         List<Item> missingItems = thisCrafter.CheckItemsMissing(selectedRecipe);
         List<Item> ownedItems = thisCrafter.CheckItemsOwned(selectedRecipe);
         foreach (Item missingItem in missingItems)
@@ -111,11 +169,15 @@ public class CraftingMenu : MonoBehaviour
 
         }
 
-
+        
 
     }
 
-
+    public void OnClickFinishedProcessing()
+    {
+       
+        thisCrafter.FinishProcessing();
+;    }
     public void OnClickCraftSlot(CraftingRecipe selectedCraftingRecipe)
     {
         selectedItem = selectedCraftingRecipe;

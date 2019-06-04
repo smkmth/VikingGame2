@@ -4,8 +4,7 @@ using UnityEngine;
 
 public class Campfire : Interactable {
 
-    public Item currentProcessingItem;
-    public Crafter crafter;
+    private Crafter crafter;
 
     public void Start()
     {
