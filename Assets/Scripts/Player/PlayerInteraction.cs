@@ -62,6 +62,7 @@ public class PlayerInteraction : MonoBehaviour
     public bool bowDrawn = false;
     public GameObject arrowPrefab;
     public Transform bowPosition;
+    public Crafter playerCrafter;
     public float shotForce;
 
     public float bowPowerTimer;
@@ -75,10 +76,12 @@ public class PlayerInteraction : MonoBehaviour
 
     private void Start()
     {
+        playerCrafter = GetComponent<Crafter>();
         inventoryDisplayer = GetComponent<InventoryDisplayer>();
         animator = GetComponent<AnimationManager>();
         inventory = GetComponent<Inventory>();
         craftingMenu = GetComponent<CraftingMenu>();
+        
         hud = GetComponent<PlayerHUD>();
         combat = GetComponent<Combat>();
         Cursor.visible = false;
@@ -126,6 +129,7 @@ public class PlayerInteraction : MonoBehaviour
         if (currentInteractionState == interactionState.Normal)
         {
             hud.ToggleHUD(true);
+
             inventoryDisplayer.ToggleInventoryMenu(true);
             Cursor.visible = true;
             Time.timeScale = 0;
@@ -147,12 +151,12 @@ public class PlayerInteraction : MonoBehaviour
     }
 
 
-    void SetCraftingMode()
+    public void SetCraftingMode(Crafter crafter)
     {
         if (currentInteractionState == interactionState.Normal)
         {
+            craftingMenu.ToggleCraftingMenu(true,crafter);
             hud.ToggleHUD(true);
-            craftingMenu.ToggleCraftingMenu(true);
             Cursor.visible = true;
             Time.timeScale = 0;
             Cursor.lockState = CursorLockMode.None;
@@ -161,8 +165,8 @@ public class PlayerInteraction : MonoBehaviour
         }
         else if (currentInteractionState == interactionState.CraftingMode)
         {
+            craftingMenu.ToggleCraftingMenu(false, crafter);
             hud.ToggleHUD(false);
-            craftingMenu.ToggleCraftingMenu(false);
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
             Time.timeScale = 1;
@@ -191,7 +195,7 @@ public class PlayerInteraction : MonoBehaviour
 
         if (Input.GetButtonDown("Crafting"))
         {
-            SetCraftingMode();
+            SetCraftingMode(playerCrafter);
         }
 
         switch (currentInteractionState) 

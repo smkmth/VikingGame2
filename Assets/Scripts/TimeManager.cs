@@ -47,6 +47,7 @@ public class TimeManager : MonoBehaviour
     public void JumpForwardInTime(int hourToJumpTo)
     {
         currentTimeOfDay = ((hourToJumpTo / secondsInFullDay) * secondsInAHour);
+        currentDay++;
   
         OnJumpForwardInTime.Invoke(hourToJumpTo);
 

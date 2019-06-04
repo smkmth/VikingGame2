@@ -1,16 +1,18 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
+using UnityEditor;
 using UnityEngine;
 
-public class PlaceableItem : MonoBehaviour {
+public enum interactableType
+{
+    Nothing,
+    Fire,
+    Anvil
+}
 
-	// Use this for initialization
-	void Start () {
-		
-	}
-	
-	// Update is called once per frame
-	void Update () {
-		
-	}
+[CreateAssetMenu(fileName = "Food", menuName = "Items/PlaceableItem", order = 52)]
+public class PlaceableItem : Item
+{
+    public GameObject prefabItemPlaced;
+    public interactableType placeableItemType;
 }
