@@ -314,10 +314,14 @@ public class PlayerInteraction : MonoBehaviour
                                 // GameObject arrow = Instantiate(arrowPrefab, bowPosition.position, playerCamera.transform.rotation);
                                 GameObject arrow = ObjectPooler.PoolerInstance.GetPooledObject("Arrow");
                                 arrow.SetActive(true);
+                                
                                 arrow.transform.position = bowPosition.position;
                                 arrow.transform.rotation = playerCamera.transform.rotation;
-                               // GameObject arrow = Instantiate(arrowPrefab, bowPosition.position, playerCamera.transform.rotation);
+                                // GameObject arrow = Instantiate(arrowPrefab, bowPosition.position, playerCamera.transform.rotation);
 
+                                Rigidbody arrowrb = arrow.GetComponent<Rigidbody>();
+                                arrowrb.isKinematic = false;
+                                arrowrb.AddForce(playerCamera.transform.forward * (shotForce + bowPowerModifer), ForceMode.Impulse);
                                 arrow.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * (shotForce + bowPowerModifer), ForceMode.Impulse);
                                 bowPowerTimer = 0;
                                 bowPowerModifer = 0;

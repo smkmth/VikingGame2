@@ -22,7 +22,9 @@ GameObject:
   - component: {fileID: 33502388344151002}
   - component: {fileID: 23914904159665502}
   - component: {fileID: 65291977412005454}
+  - component: {fileID: 114564016555729718}
   - component: {fileID: 54816976950567980}
+  - component: {fileID: 114378857438100364}
   m_Layer: 0
   m_Name: ArrowPrefab
   m_TagString: Arrow
@@ -40,7 +42,7 @@ GameObject:
   - component: {fileID: 4151269497727128}
   - component: {fileID: 33157478129360676}
   - component: {fileID: 23894451048946830}
-  - component: {fileID: 65331219411815460}
+  - component: {fileID: 114702691989459428}
   - component: {fileID: 54780035362958860}
   - component: {fileID: 138416340326155570}
   m_Layer: 0
@@ -190,7 +192,7 @@ Rigidbody:
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!65 &65291977412005454
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -198,23 +200,55 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1029737870497516}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65331219411815460
-BoxCollider:
+--- !u!114 &114378857438100364
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1029737870497516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffcdcd4bee486d4479991a1eab21d8e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sendTriggerMessage: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 3584
+  skinWidth: 1
+--- !u!114 &114564016555729718
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1029737870497516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab7a63ece3400ec44ab866c7397e4309, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectingCollision: 1
+--- !u!114 &114702691989459428
+MonoBehaviour:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1367760849917364}
-  m_Material: {fileID: 0}
-  m_IsTrigger: 0
   m_Enabled: 1
-  serializedVersion: 2
-  m_Size: {x: 1, y: 1, z: 1}
-  m_Center: {x: 0, y: 0, z: 0}
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffcdcd4bee486d4479991a1eab21d8e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sendTriggerMessage: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 3584
+  skinWidth: 1
 --- !u!138 &138416340326155570
 FixedJoint:
   m_ObjectHideFlags: 1
