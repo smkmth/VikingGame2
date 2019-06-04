@@ -16,11 +16,13 @@ public class CraftingMenu : MonoBehaviour {
     public GameObject ingredientsPrefab;
     public Button craftButton;
     public Inventory playerInventory;
+    private ButtonHighlighter buttonHighlighter;
 
     private CraftingRecipe selectedItem;
 
     // Use this for initialization
     void Start () {
+        buttonHighlighter = GetComponent<ButtonHighlighter>();
         playerInventory = GetComponent<Inventory>();
         for(int i = 0; i  < masterCraftingRecipes.Count; i++)
         {
@@ -75,6 +77,7 @@ public class CraftingMenu : MonoBehaviour {
 
 	public void ToggleCraftingMenu(bool isCrafting)
     {
+        buttonHighlighter.ActivateButtons(currentSlots[0].gameObject);
         craftingMenu.SetActive(isCrafting);
         UpdateCraftingMenu(selectedItem);
     }
