@@ -1,17 +1,22 @@
 fileFormatVersion: 2
-guid: da5545ac62c55eb4eb8abef7cd457096
+guid: c7855ea1f5fbde54eb46d52bbc96e841
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: Rock1_Rock1
-    100002: //RootNode
-    400000: Rock1_Rock1
-    400002: //RootNode
-    2100000: Rock1_Rock1Mat
-    2300000: Rock1_Rock1
-    3300000: Rock1_Rock1
-    4300000: Rock1_Rock1
-  externalObjects: {}
+    100000: //RootNode
+    100002: top_chest
+    400000: //RootNode
+    400002: top_chest
+    2100000: top_chestMat
+    2300000: top_chest
+    3300000: top_chest
+    4300000: top_chest
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: top_chestMat
+    second: {fileID: 2100000, guid: c94ccd4a28bfa364382bd0943a313a63, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

@@ -1,17 +1,22 @@
 fileFormatVersion: 2
-guid: f269c329a577a0340b9cb38f52deb3e3
+guid: 6375dfbf7036e554ea9f4c0604dc9da6
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: rock3_rock3
+    100000: Rock2_Rock2
     100002: //RootNode
-    400000: rock3_rock3
+    400000: Rock2_Rock2
     400002: //RootNode
-    2100000: rock3_rock3Mat
-    2300000: rock3_rock3
-    3300000: rock3_rock3
-    4300000: rock3_rock3
-  externalObjects: {}
+    2100000: Rock2_Rock2Mat
+    2300000: Rock2_Rock2
+    3300000: Rock2_Rock2
+    4300000: Rock2_Rock2
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rock2_Rock2Mat
+    second: {fileID: 2100000, guid: f7f99468712fafd498791b359128b619, type: 2}
   materials:
     importMaterials: 1
     materialName: 0

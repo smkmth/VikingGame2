@@ -1,23 +1,22 @@
 fileFormatVersion: 2
-guid: 735065a47bd7d8640bfe231e060bcf2b
+guid: da5545ac62c55eb4eb8abef7cd457096
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: polySurface1_polySurface1
-    100002: polySurface2_polySurface2
-    100004: //RootNode
-    400000: polySurface1_polySurface1
-    400002: polySurface2_polySurface2
-    400004: //RootNode
-    2100000: polySurface1_polySurface1Mat
-    2100002: polySurface2_polySurface2Mat
-    2300000: polySurface1_polySurface1
-    2300002: polySurface2_polySurface2
-    3300000: polySurface1_polySurface1
-    3300002: polySurface2_polySurface2
-    4300000: polySurface1_polySurface1
-    4300002: polySurface2_polySurface2
-  externalObjects: {}
+    100000: Rock1_Rock1
+    100002: //RootNode
+    400000: Rock1_Rock1
+    400002: //RootNode
+    2100000: Rock1_Rock1Mat
+    2300000: Rock1_Rock1
+    3300000: Rock1_Rock1
+    4300000: Rock1_Rock1
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Rock1_Rock1Mat
+    second: {fileID: 2100000, guid: f7f99468712fafd498791b359128b619, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
