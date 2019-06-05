@@ -164,7 +164,7 @@ public class Combat : MonoBehaviour
 
     }
 
-    public void TakeDamage(int amount, float force, Combat enemy)
+    public void TakeDamage(int amount, float force)
     {
         if (!isBlocking)
         {
@@ -185,10 +185,7 @@ public class Combat : MonoBehaviour
             {
                 Stagger();
             }
-            else
-            {
-                enemy.Stagger();
-            }
+
         }
 
 

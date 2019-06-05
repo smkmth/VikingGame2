@@ -17,3 +17,4 @@ MonoBehaviour:
   type: 3
   healthRestore: 10
   staminaRestore: 10
+  specialEffects: []

@@ -23,12 +23,8 @@ public class WeaponHit : MonoBehaviour {
             if (doDamage)
             {
                 Combat combat = collision.transform.gameObject.GetComponent<Combat>();
-                combat.TakeDamage(weaponData.attackDamage, 3.0f, thisCombat );
-
+                combat.TakeDamage(weaponData.attackDamage, 3.0f );
             }
-
         }
-
-
     }
 }

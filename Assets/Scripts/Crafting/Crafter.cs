@@ -20,6 +20,7 @@ public class Crafter : MonoBehaviour {
     public float processTimer;
     private float processTarget;
     private CraftingMenu craftingMenu;
+
     public void Start()
     {
         craftingMenu = GameObject.Find("Player").GetComponent<CraftingMenu>();
@@ -35,10 +36,10 @@ public class Crafter : MonoBehaviour {
     {
         if (currentProcessState == processState.currentlyProcessing)
         {
-            if (processTimer <= processTarget)
+            if (processTimer > 0)
             {
 
-                processTimer += Time.deltaTime;
+                processTimer -= Time.deltaTime;
                 craftingMenu.UpdateProcessing();
             }
             else
@@ -54,6 +55,8 @@ public class Crafter : MonoBehaviour {
         playerInventory.AddItem(currentItemProcessing);
         currentItemProcessing = null;
         currentProcessState = processState.nothingToProcess;
+        craftingMenu.UpdateProcessing();
+
 
     }
 
@@ -123,7 +126,7 @@ public class Crafter : MonoBehaviour {
             {
                 currentItemProcessing = itemToCraft.itemProduced;
                 currentProcessState = processState.currentlyProcessing;
-                processTarget = itemToCraft.processTime;
+                processTimer = itemToCraft.processTime;
                 craftingMenu.UpdateProcessing();
             }
             else

@@ -53,6 +53,10 @@ public class CameraControl : MonoBehaviour
     public float followDistance;
     public float followHeight;
     private GameObject sceneManager;
+    public float castRadius;
+    public float shotRange;
+    public GameObject crosshair;
+
 
 
     // Use this for initialization
@@ -100,7 +104,7 @@ public class CameraControl : MonoBehaviour
     }
     void LateUpdate()
     {
-        if (!lockedOn)
+        if (player.currentInteractionState == interactionState.Normal)
         {
          
             HorizontalAxis = Input.GetAxis("Mouse X") + Input.GetAxis("RightStickHorizontal");
@@ -118,7 +122,7 @@ public class CameraControl : MonoBehaviour
 
 
             OccludeRay(ref targetOffset);
-            GroundRay();
+            //GroundRay();
             SmoothCamMethod();
 
             if (player.aiming)
@@ -140,15 +144,24 @@ public class CameraControl : MonoBehaviour
                 rotateAround = (rotateAround + 360f);
             }
             
-
             rotateAround += HorizontalAxis * camRotateSpeed * Time.deltaTime;
+
+            if (player.aiming)
+            {
+                RaycastHit hitInfo;
+                Physics.SphereCast(crosshair.transform.position, castRadius, transform.forward, out hitInfo, shotRange);
+                if (hitInfo.collider != null)
+                {
+                    if (hitInfo.collider.gameObject.tag == "Enemy")
+                    {
+                        Debug.Log("Aiming");
+                    }
+                }
+                DistanceAway -= overShoulderMod;
+            }
             
             DistanceUp = Mathf.Clamp(DistanceUp += VerticalAxis * camPanSpeed * Time.deltaTime, minDown, minUp);
             DistanceAway = Mathf.Clamp(DistanceAway += VerticalAxis * camPanSpeed * Time.deltaTime, minDistance, maxDistance);
-            if (player.aiming)
-            {
-                DistanceAway -= overShoulderMod;
-            }
         }
 
 
@@ -182,11 +195,7 @@ public class CameraControl : MonoBehaviour
         {
             
             minDown = (floorHit.transform.position.y -transform.position.y);
-            //the smooth is increased so you detect geometry collisions faster.
-            //currentSmooth = smooth * 2;
-            //the x and z coordinates are pushed away from the wall by hit.normal.
-            //the y coordinate stays the same.
-           // camPosition = new Vector3(camPosition.x, floorHit.transform.position.y + 1.0f, camPosition.z);
+     
         }
     }
 }
