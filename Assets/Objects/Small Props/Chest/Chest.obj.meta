@@ -1,23 +1,44 @@
 fileFormatVersion: 2
-guid: 735065a47bd7d8640bfe231e060bcf2b
+guid: c7855ea1f5fbde54eb46d52bbc96e841
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: polySurface1_polySurface1
-    100002: polySurface2_polySurface2
-    100004: //RootNode
-    400000: polySurface1_polySurface1
-    400002: polySurface2_polySurface2
-    400004: //RootNode
-    2100000: polySurface1_polySurface1Mat
-    2100002: polySurface2_polySurface2Mat
-    2300000: polySurface1_polySurface1
-    2300002: polySurface2_polySurface2
-    3300000: polySurface1_polySurface1
-    3300002: polySurface2_polySurface2
-    4300000: polySurface1_polySurface1
-    4300002: polySurface2_polySurface2
-  externalObjects: {}
+    100000: Bottom_chest_Bottom_chest
+    100002: //RootNode
+    100004: locks_locks
+    100006: top_chest_top_chest
+    400000: Bottom_chest_Bottom_chest
+    400002: //RootNode
+    400004: locks_locks
+    400006: top_chest_top_chest
+    2100000: Bottom_chest_Bottom_chestMat
+    2100002: locks_locksMat
+    2100004: top_chest_top_chestMat
+    2300000: Bottom_chest_Bottom_chest
+    2300002: locks_locks
+    2300004: top_chest_top_chest
+    3300000: Bottom_chest_Bottom_chest
+    3300002: locks_locks
+    3300004: top_chest_top_chest
+    4300000: Bottom_chest_Bottom_chest
+    4300002: locks_locks
+    4300004: top_chest_top_chest
+  externalObjects:
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: Bottom_chest_Bottom_chestMat
+    second: {fileID: 2100000, guid: c94ccd4a28bfa364382bd0943a313a63, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: locks_locksMat
+    second: {fileID: 2100000, guid: c94ccd4a28bfa364382bd0943a313a63, type: 2}
+  - first:
+      type: UnityEngine:Material
+      assembly: UnityEngine.CoreModule
+      name: top_chest_top_chestMat
+    second: {fileID: 2100000, guid: c94ccd4a28bfa364382bd0943a313a63, type: 2}
   materials:
     importMaterials: 1
     materialName: 0
