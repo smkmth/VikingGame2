@@ -3,41 +3,19 @@ guid: c7855ea1f5fbde54eb46d52bbc96e841
 ModelImporter:
   serializedVersion: 23
   fileIDToRecycleName:
-    100000: Bottom_chest_Bottom_chest
-    100002: //RootNode
-    100004: locks_locks
-    100006: top_chest_top_chest
-    400000: Bottom_chest_Bottom_chest
-    400002: //RootNode
-    400004: locks_locks
-    400006: top_chest_top_chest
-    2100000: Bottom_chest_Bottom_chestMat
-    2100002: locks_locksMat
-    2100004: top_chest_top_chestMat
-    2300000: Bottom_chest_Bottom_chest
-    2300002: locks_locks
-    2300004: top_chest_top_chest
-    3300000: Bottom_chest_Bottom_chest
-    3300002: locks_locks
-    3300004: top_chest_top_chest
-    4300000: Bottom_chest_Bottom_chest
-    4300002: locks_locks
-    4300004: top_chest_top_chest
+    100000: //RootNode
+    100002: top_chest
+    400000: //RootNode
+    400002: top_chest
+    2100000: top_chestMat
+    2300000: top_chest
+    3300000: top_chest
+    4300000: top_chest
   externalObjects:
   - first:
       type: UnityEngine:Material
       assembly: UnityEngine.CoreModule
-      name: Bottom_chest_Bottom_chestMat
-    second: {fileID: 2100000, guid: c94ccd4a28bfa364382bd0943a313a63, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: locks_locksMat
-    second: {fileID: 2100000, guid: c94ccd4a28bfa364382bd0943a313a63, type: 2}
-  - first:
-      type: UnityEngine:Material
-      assembly: UnityEngine.CoreModule
-      name: top_chest_top_chestMat
+      name: top_chestMat
     second: {fileID: 2100000, guid: c94ccd4a28bfa364382bd0943a313a63, type: 2}
   materials:
     importMaterials: 1
