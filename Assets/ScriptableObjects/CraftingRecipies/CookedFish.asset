@@ -16,3 +16,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: 7e0ce9a4d806ed24eb786fd4ba8939c1, type: 2}
   indexedIngredientQuantity: 01000000
   itemProduced: {fileID: 11400000, guid: 82a42760612ea40489846ec193270474, type: 2}
+  processTime: 3

@@ -1,22 +1,61 @@
 ﻿using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-
+public enum processState
+{
+    nothingToProcess,
+    currentlyProcessing,
+    finishedProcessing
+}
 public class Crafter : MonoBehaviour {
 
     public interactableType craftingType;
-    public Inventory inventory;
+    public Inventory outputInventory;
     public Inventory playerInventory;
     public List<CraftingRecipe> masterCraftingRecipes;
     public Item currentItemProcessing;
     public MasterCraftList craftlist;
-
+    public bool isCurrentlyProcessing;
+    public processState currentProcessState;
+    public float processTimer;
+    private float processTarget;
+    private CraftingMenu craftingMenu;
     public void Start()
     {
+        craftingMenu = GameObject.Find("Player").GetComponent<CraftingMenu>();
         masterCraftingRecipes = GameObject.Find("SceneManager").GetComponent<MasterCraftList>().MasterCraftRecipies;
         playerInventory = GameObject.Find("Player").GetComponent<Inventory>();
+        if (outputInventory == null)
+        {
+            outputInventory = GetComponent<Inventory>();
+        }
     }
 
+    public void Update()
+    {
+        if (currentProcessState == processState.currentlyProcessing)
+        {
+            if (processTimer <= processTarget)
+            {
+
+                processTimer += Time.deltaTime;
+                craftingMenu.UpdateProcessing();
+            }
+            else
+            {
+                currentProcessState = processState.finishedProcessing;
+                craftingMenu.UpdateProcessing();
+                processTimer = 0;
+            }
+        }
+    }
+    public void FinishProcessing()
+    {
+        playerInventory.AddItem(currentItemProcessing);
+        currentItemProcessing = null;
+        currentProcessState = processState.nothingToProcess;
+
+    }
 
     public List<CraftingRecipe> GetCraftingRecipes()
     {
@@ -40,7 +79,7 @@ public class Crafter : MonoBehaviour {
         List<Item> itemsHave = new List<Item>();
         for (int i = 0; i < recipeToCheck.requiredIngredients.Count; i++)
         {
-            if (playerInventory.GetItemCount(recipeToCheck.requiredIngredients[i]) != 0)
+            if (playerInventory.GetItemCount(recipeToCheck.requiredIngredients[i]) >= recipeToCheck.indexedIngredientQuantity[i])
             {
                 itemsHave.Add(recipeToCheck.requiredIngredients[i]);
 
@@ -54,7 +93,7 @@ public class Crafter : MonoBehaviour {
         List<Item> itemsMissing = new List<Item>();
         for (int i = 0; i < recipeToCheck.requiredIngredients.Count; i++)
         {
-            if (playerInventory.GetItemCount(recipeToCheck.requiredIngredients[i]) == 0)
+            if (playerInventory.GetItemCount(recipeToCheck.requiredIngredients[i]) < recipeToCheck.indexedIngredientQuantity[i])
             {
                 itemsMissing.Add(recipeToCheck.requiredIngredients[i]);
 
@@ -83,10 +122,13 @@ public class Crafter : MonoBehaviour {
             if (itemToCraft.processTime > 0)
             {
                 currentItemProcessing = itemToCraft.itemProduced;
+                currentProcessState = processState.currentlyProcessing;
+                processTarget = itemToCraft.processTime;
+                craftingMenu.UpdateProcessing();
             }
             else
             {
-                inventory.AddItem(itemToCraft.itemProduced);
+                outputInventory.AddItem(itemToCraft.itemProduced);
 
             }
             foreach (Item item in itemToCraft.requiredIngredients)
