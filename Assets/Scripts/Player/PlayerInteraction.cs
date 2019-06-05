@@ -52,7 +52,7 @@ public class PlayerInteraction : MonoBehaviour
     public bool justLeftDialogue;
     public bool canSpeak = true;
 
-
+    public GameObject crosshair;
     public bool aiming;
 
     public Transform aimTarget;
@@ -71,6 +71,9 @@ public class PlayerInteraction : MonoBehaviour
     public float bowPowerModifer;
     public float bowPullBackRate;
     public Item arrow;
+    public int arrowDamage;
+    public float castRadius;
+    public float shotRange;
 
     public CraftingMenu craftingMenu;
 
@@ -158,7 +161,6 @@ public class PlayerInteraction : MonoBehaviour
             craftingMenu.ToggleCraftingMenu(true,crafter);
             hud.ToggleHUD(true);
             Cursor.visible = true;
-            Time.timeScale = 0;
             Cursor.lockState = CursorLockMode.None;
             currentInteractionState = interactionState.CraftingMode;
 
@@ -169,7 +171,6 @@ public class PlayerInteraction : MonoBehaviour
             hud.ToggleHUD(false);
             Cursor.visible = false;
             Cursor.lockState = CursorLockMode.Locked;
-            Time.timeScale = 1;
             currentInteractionState = interactionState.Normal;
 
 
@@ -265,13 +266,16 @@ public class PlayerInteraction : MonoBehaviour
                 }
                 if (Input.GetAxisRaw("Aim") != 0)
                 {
+
+                    crosshair.transform.LookAt(transform);
                     aiming = true;
                     FreeMove = false;
                     animator.SetBool("Run", false);
 
-
                     Vector3 cameraDirection = new Vector3(playerCamera.transform.forward.x, 0f, playerCamera.transform.forward.z);
                     Vector3 playerDirection = new Vector3(transform.forward.x, 0f, transform.forward.z);
+                    
+                    
 
                     if (Vector3.Angle(cameraDirection, playerDirection) > 0.5f)
                     {
@@ -280,19 +284,9 @@ public class PlayerInteraction : MonoBehaviour
                         transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
 
                     }
-                    if (Input.GetAxisRaw("PullBack") > 0)
+                    if (Input.GetAxis("PullBack") > 0)
                     {
-                        /*
-                        bowDrawn = false;
-                        Debug.Log("arrowFire");
-
-                        GameObject arrow = Instantiate(arrowPrefab, bowPosition.position, playerCamera.transform.rotation);
-
-                        arrow.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * (shotForce + bowPowerModifer), ForceMode.Impulse);
-                        bowPowerTimer = 0;
-                        bowPowerModifer = 0;
-                        }
-                        */
+                       
                         if (bowPowerModifer < maxBowPower)
                         {
                             bowPowerModifer += (Time.deltaTime * bowPullBackRate);
@@ -313,7 +307,6 @@ public class PlayerInteraction : MonoBehaviour
                             if (inventory.RemoveItem(arrow))
                             {
                                 bowDrawn = false;
-                                Debug.Log("arrowFire");
 
                                 // GameObject arrow = Instantiate(arrowPrefab, bowPosition.position, playerCamera.transform.rotation);
                                 GameObject arrow = ObjectPooler.PoolerInstance.GetPooledObject("Arrow");
@@ -324,6 +317,7 @@ public class PlayerInteraction : MonoBehaviour
                                 // GameObject arrow = Instantiate(arrowPrefab, bowPosition.position, playerCamera.transform.rotation);
 
                                 Rigidbody arrowrb = arrow.GetComponent<Rigidbody>();
+                                arrowrb.gameObject.GetComponent<Arrow>().damage = arrowDamage;
                                 arrowrb.isKinematic = false;
                                 arrowrb.AddForce(playerCamera.transform.forward * (shotForce + bowPowerModifer), ForceMode.Impulse);
                                 arrow.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * (shotForce + bowPowerModifer), ForceMode.Impulse);
@@ -332,13 +326,12 @@ public class PlayerInteraction : MonoBehaviour
                             }
                         }
                     }
-                    
-
-                
 
                 }
                 else
                 {
+                    bowDrawn = false;
+
                     aiming = false;
                     FreeMove = true;
 
@@ -361,6 +354,7 @@ public class PlayerInteraction : MonoBehaviour
                             }
                             else
                             {
+                                animator.SetTrigger("AxeSwing");
                                 item.hitsToHarvest -= 1;
                             }
                         }

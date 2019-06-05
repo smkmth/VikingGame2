@@ -68,9 +68,11 @@ public class CraftingMenu : MonoBehaviour
             selectedItem = craftingRecipes[0];
            // buttonHighlighter.ActivateButtons(currentSlots[0].gameObject);
             
-             UpdateCraftingMenu(selectedItem);
+            UpdateCraftingMenu(selectedItem);
+            UpdateProcessing();
 
-            
+
+
 
         }
         else
@@ -99,7 +101,6 @@ public class CraftingMenu : MonoBehaviour
 
     private void CreateCraftingOption(CraftingRecipe craftingRecpie)
     {
-
         GameObject currentCraftSlot = Instantiate(craftingSlotPrefab, recipesPanel.transform);
         Button currentButton = currentCraftSlot.GetComponent<Button>();
         TextMeshProUGUI currentButtonText = currentCraftSlot.GetComponentInChildren<TextMeshProUGUI>();
@@ -116,13 +117,18 @@ public class CraftingMenu : MonoBehaviour
 
     public void UpdateProcessing()
     {
+        if(thisCrafter == null)
+        {
+            return;
+        }
+        
         switch (thisCrafter.currentProcessState)
         {
             case processState.currentlyProcessing:
                 processingItemButton.gameObject.SetActive(true);
                 processingItemButton.interactable = false;
                 processingItemButton.image.sprite = thisCrafter.currentItemProcessing.icon;
-                processingText.text = "currently processing " +  thisCrafter.currentItemProcessing.title + ". Time remaining: "+ thisCrafter.processTimer.ToString();
+                processingText.text = " currently processing " +  thisCrafter.currentItemProcessing.title + ". Time remaining: "+ Mathf.RoundToInt(thisCrafter.processTimer);
                 break;
             case processState.finishedProcessing:
                 processingItemButton.gameObject.SetActive(true);
@@ -132,8 +138,14 @@ public class CraftingMenu : MonoBehaviour
                     OnClickFinishedProcessing();
                 });
                 processingItemButton.image.sprite = thisCrafter.currentItemProcessing.icon;
+                processingText.text = "finished processing " + thisCrafter.currentItemProcessing.title;
                 break;
             case processState.nothingToProcess:
+
+                processingItemButton.interactable = false;
+                processingItemButton.image.sprite = masterCraftList.emptyIcon;
+                processingText.text = "Currently processing nothing";
+
                 break;
         }
 
@@ -177,6 +189,7 @@ public class CraftingMenu : MonoBehaviour
     {
        
         thisCrafter.FinishProcessing();
+        UpdateCraftingMenu(selectedItem);
 ;    }
     public void OnClickCraftSlot(CraftingRecipe selectedCraftingRecipe)
     {

@@ -8,14 +8,15 @@ public class Arrow : MonoBehaviour {
     Rigidbody rb;
     Rigidbody childRb;
     public bool detectingCollision = true;
-
+    public int damage;
     // Use this for initialization
     void Start () {
         rb = GetComponent<Rigidbody>();
         childRb = GetComponentInChildren<Rigidbody>();
 	}
-	
-	
+  
+
+
 
     private void OnTriggerEnter(Collider collision)
     {
@@ -33,7 +34,12 @@ public class Arrow : MonoBehaviour {
             transform.parent = collision.transform;
             detectingCollision = false;
             // move the arrow deep inside the enemy or whatever it sticks to
-           
+            if (collision.gameObject.tag == "Enemy")
+            {
+                collision.gameObject.GetComponent<Combat>().TakeDamage(damage, 1.0f);
+
+            }
+
             
         }
 
