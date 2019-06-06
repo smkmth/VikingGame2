@@ -4,6 +4,7 @@ using UnityEngine;
 
 public enum enemyBehaviour
 {
+    Search,
     DirectEngagement,
     Flank
  
@@ -13,7 +14,7 @@ public class HostileAI : MonoBehaviour
 {
 
     private PathMover pathMover;
-    private GameObject target;
+    public GameObject target;
     private Combat combat;
     private bool inEngageRange;
     public float attackDistance = 1.0f;
@@ -25,7 +26,7 @@ public class HostileAI : MonoBehaviour
 
     // Use this for initialization
     void Start () {
-        target = GameObject.Find("Player");
+        //target = GameObject.Find("Player");
         pathMover = GetComponent<PathMover>();
         combat = GetComponent<Combat>();
         pathMover.target= target.transform;
@@ -62,6 +63,9 @@ public class HostileAI : MonoBehaviour
             {
                 switch (thisBehaviour)
                 {
+                    case enemyBehaviour.Search:
+
+                        break;
                     case enemyBehaviour.DirectEngagement:
                         transform.LookAt(target.transform);
 
@@ -126,6 +130,7 @@ public class HostileAI : MonoBehaviour
             }
             else
             {
+
                 inEngageRange = false;
                 if (!combat.isAttacking)
                 {

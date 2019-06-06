@@ -18,13 +18,13 @@ public class ObjectPooler : MonoBehaviour
     public static ObjectPooler PoolerInstance;
     public List<PoolItem> itemsToPool;
     public List<GameObject> pooledObjects;
-
+    GameObject sceneManager;
 
     // Use this for initialization
     void Awake()
     {
         PoolerInstance = this;
-
+        sceneManager = GameObject.Find("SceneManager");
     }
 
 
@@ -38,6 +38,7 @@ public class ObjectPooler : MonoBehaviour
             for (int i = 0; i < item.amountToPool; i++)
             {
                 GameObject obj = (GameObject)Instantiate(item.objectToPool);
+                obj.transform.parent = sceneManager.transform;
                 obj.SetActive(false);
                 pooledObjects.Add(obj);
             }

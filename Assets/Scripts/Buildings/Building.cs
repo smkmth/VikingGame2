@@ -7,12 +7,21 @@ public enum buildingState
     active,
     destroyed 
 }
+[System.Serializable]
+public class AttackPoint
+{
+    public bool isOccupied;
+    public Transform location;
+}
+
 public class Building : MonoBehaviour {
 
     public GameObject unbuiltBuilding;
     public GameObject normalBuilding;
     public GameObject destroyedBuilding;
+    public AttackPoint[] attackPoints;
     public buildingState currentBuildingState;
+
     public float riskFactor;
 
     private void Start()
