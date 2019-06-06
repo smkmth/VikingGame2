@@ -10,5 +10,6 @@ public class Food : Item
     [Tooltip("How much stamina this item will restore")]
     public float staminaRestore;
 
+    public List<SpecialEffect> specialEffects;
 }
 

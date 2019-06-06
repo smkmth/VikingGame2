@@ -540,10 +540,10 @@ InputManager:
     negativeButton: 
     positiveButton: 
     altNegativeButton: 
-    altPositiveButton: joystick button 3
-    gravity: 100
-    dead: 0.01
-    sensitivity: 0.1
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.1
+    sensitivity: 0.3
     snap: 1
     invert: 0
     type: 2
@@ -556,11 +556,11 @@ InputManager:
     negativeButton: 
     positiveButton: 
     altNegativeButton: 
-    altPositiveButton: joystick button 3
-    gravity: 100
-    dead: 0.01
-    sensitivity: 0.1
-    snap: 1
+    altPositiveButton: 
+    gravity: 0
+    dead: 0.1
+    sensitivity: 0.3
+    snap: 0
     invert: 0
     type: 2
     axis: 4
@@ -602,7 +602,7 @@ InputManager:
     descriptiveName: 
     descriptiveNegativeName: 
     negativeButton: 
-    positiveButton: 
+    positiveButton: mouse 0
     altNegativeButton: 
     altPositiveButton: joystick button 9
     gravity: 100000
@@ -652,7 +652,7 @@ InputManager:
     negativeButton: 
     positiveButton: c
     altNegativeButton: 
-    altPositiveButton: 
+    altPositiveButton: joystick button 2
     gravity: 100000
     dead: 0.01
     sensitivity: 1

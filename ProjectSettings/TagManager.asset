@@ -8,6 +8,7 @@ TagManager:
   - Enemy
   - Item
   - Interactable
+  - Arrow
   layers:
   - Default
   - TransparentFX

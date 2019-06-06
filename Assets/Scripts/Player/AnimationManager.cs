@@ -5,6 +5,9 @@ using UnityEngine;
 public class AnimationManager : MonoBehaviour {
 
     public Animator[] anims;
+public void Start(){
+SetBool("cast", true);
+}
 
 
     public void SetBool(string boolToSet, bool isTrue)

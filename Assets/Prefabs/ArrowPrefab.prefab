@@ -22,10 +22,12 @@ GameObject:
   - component: {fileID: 33502388344151002}
   - component: {fileID: 23914904159665502}
   - component: {fileID: 65291977412005454}
+  - component: {fileID: 114564016555729718}
   - component: {fileID: 54816976950567980}
+  - component: {fileID: 114378857438100364}
   m_Layer: 0
   m_Name: ArrowPrefab
-  m_TagString: Untagged
+  m_TagString: Arrow
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
@@ -40,9 +42,9 @@ GameObject:
   - component: {fileID: 4151269497727128}
   - component: {fileID: 33157478129360676}
   - component: {fileID: 23894451048946830}
-  - component: {fileID: 65331219411815460}
   - component: {fileID: 54780035362958860}
   - component: {fileID: 138416340326155570}
+  - component: {fileID: 65796293665177040}
   m_Layer: 0
   m_Name: Cube
   m_TagString: Untagged
@@ -70,7 +72,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1029737870497516}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 12.21, y: 0, z: 15.62}
+  m_LocalPosition: {x: 14.234177, y: -0.9, z: 25.237078}
   m_LocalScale: {x: 0.05, y: 0.05, z: 1}
   m_Children:
   - {fileID: 4151269497727128}
@@ -168,9 +170,9 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1367760849917364}
   serializedVersion: 2
-  m_Mass: 1
+  m_Mass: 100
   m_Drag: 0
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.5
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
@@ -183,14 +185,14 @@ Rigidbody:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1029737870497516}
   serializedVersion: 2
-  m_Mass: 0.1
+  m_Mass: 0.001
   m_Drag: 1
-  m_AngularDrag: 0.05
+  m_AngularDrag: 0.5
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
   m_Constraints: 0
-  m_CollisionDetection: 1
+  m_CollisionDetection: 2
 --- !u!65 &65291977412005454
 BoxCollider:
   m_ObjectHideFlags: 1
@@ -198,23 +200,52 @@ BoxCollider:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1029737870497516}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
---- !u!65 &65331219411815460
+--- !u!65 &65796293665177040
 BoxCollider:
   m_ObjectHideFlags: 1
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1367760849917364}
   m_Material: {fileID: 0}
-  m_IsTrigger: 0
+  m_IsTrigger: 1
   m_Enabled: 1
   serializedVersion: 2
   m_Size: {x: 1, y: 1, z: 1}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &114378857438100364
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1029737870497516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ffcdcd4bee486d4479991a1eab21d8e7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sendTriggerMessage: 0
+  layerMask:
+    serializedVersion: 2
+    m_Bits: 3584
+  skinWidth: 1
+--- !u!114 &114564016555729718
+MonoBehaviour:
+  m_ObjectHideFlags: 1
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1029737870497516}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ab7a63ece3400ec44ab866c7397e4309, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  detectingCollision: 1
+  damage: 0
 --- !u!138 &138416340326155570
 FixedJoint:
   m_ObjectHideFlags: 1

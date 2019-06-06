@@ -11,6 +11,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 11dff35d7cd1e7f43bb6b811a8ec5ffd, type: 3}
   m_Name: ArrowRecipie
   m_EditorClassIdentifier: 
+  requiredType: 0
   requiredIngredients:
   - {fileID: 11400000, guid: 0ff2f72195b1d8645b6a3d6b225adf7b, type: 2}
   - {fileID: 11400000, guid: cabc802732825e241b5cb559199dcf2d, type: 2}
