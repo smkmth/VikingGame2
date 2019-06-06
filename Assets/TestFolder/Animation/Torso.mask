@@ -1,0 +1,120 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!319 &31900000
+AvatarMask:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_Name: Torso
+  m_Mask: 00000000010000000100000000000000000000000100000001000000010000000100000000000000000000000100000001000000
+  m_Elements:
+  - m_Path: 
+    m_Weight: 1
+  - m_Path: Axe
+    m_Weight: 1
+  - m_Path: AxeBone
+    m_Weight: 1
+  - m_Path: Base
+    m_Weight: 1
+  - m_Path: Fishing_Rod
+    m_Weight: 1
+  - m_Path: Hip
+    m_Weight: 1
+  - m_Path: Hip/Hip_L
+    m_Weight: 0
+  - m_Path: Hip/Hip_L/Knee_L
+    m_Weight: 0
+  - m_Path: Hip/Hip_L/Knee_L/Ankle_L
+    m_Weight: 0
+  - m_Path: Hip/Hip_L/Knee_L/Ankle_L/Foot_L
+    m_Weight: 0
+  - m_Path: Hip/Hip_L/Knee_L/Ankle_L/Foot_L/Toe_L
+    m_Weight: 0
+  - m_Path: Hip/Hip_R
+    m_Weight: 0
+  - m_Path: Hip/Hip_R/Knee_R
+    m_Weight: 0
+  - m_Path: Hip/Hip_R/Knee_R/Ankle_R
+    m_Weight: 0
+  - m_Path: Hip/Hip_R/Knee_R/Ankle_R/Foot_R
+    m_Weight: 0
+  - m_Path: Hip/Hip_R/Knee_R/Ankle_R/Foot_R/Toe_R
+    m_Weight: 0
+  - m_Path: Hip/spine01
+    m_Weight: 1
+  - m_Path: Hip/spine01/Front01
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/Front02
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/spine03
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/spine03/Clavical_L
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/spine03/Clavical_L/Shoulder_L
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/spine03/Clavical_L/Shoulder_L/Elbow_L
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/spine03/Clavical_L/Shoulder_L/Elbow_L/Wrist_L
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/spine03/Clavical_L/Shoulder_L/Elbow_L/Wrist_L/Hand01_L
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/spine03/Clavical_L/Shoulder_L/Elbow_L/Wrist_L/Hand01_L/Hand02_L
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/spine03/Clavical_L/Shoulder_L/Elbow_L/Wrist_L/Hand01_L/Hand02_L/Hand03_L
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/spine03/Clavical_L/Shoulder_L/Elbow_L/Wrist_L/Hand01_L/Hand02_L/Hand03_L/Hand04_L
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/spine03/Clavical_R
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/spine03/Clavical_R/Shoulder_R
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/spine03/Clavical_R/Shoulder_R/Elbow_R
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/spine03/Clavical_R/Shoulder_R/Elbow_R/Wrist_R
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/spine03/Clavical_R/Shoulder_R/Elbow_R/Wrist_R/Hand01_R
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/spine03/Clavical_R/Shoulder_R/Elbow_R/Wrist_R/Hand01_R/Hand02_R
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/spine03/Clavical_R/Shoulder_R/Elbow_R/Wrist_R/Hand01_R/Hand02_R/Hand03_R
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/spine03/Clavical_R/Shoulder_R/Elbow_R/Wrist_R/Hand01_R/Hand02_R/Hand03_R/Hand04_R
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/spine03/joint10
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/spine03/spine04
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/spine03/spine04/neck
+    m_Weight: 1
+  - m_Path: Hip/spine01/spine02/spine03/spine04/neck/Head
+    m_Weight: 1
+  - m_Path: Rod_Base
+    m_Weight: 1
+  - m_Path: Rod_Base/Reel_Base
+    m_Weight: 1
+  - m_Path: Rod_Base/Reel_Base/Reel_Rotor
+    m_Weight: 1
+  - m_Path: Rod_Base/Reel_Base/Reel_Rotor/Reel_Handle
+    m_Weight: 1
+  - m_Path: Rod_Base/Rod_shaft_01
+    m_Weight: 1
+  - m_Path: Rod_Base/Rod_shaft_01/Rod_shaft_02
+    m_Weight: 1
+  - m_Path: Rod_Base/Rod_shaft_01/Rod_shaft_02/Rod_shaft_03
+    m_Weight: 1
+  - m_Path: Rod_Base/Rod_shaft_01/Rod_shaft_02/Rod_shaft_03/Rod_shaft_04
+    m_Weight: 1
+  - m_Path: Rod_Base/Rod_shaft_01/Rod_shaft_02/Rod_shaft_03/Rod_shaft_04/Rod_shaft_05
+    m_Weight: 1
+  - m_Path: Rod_Base/Rod_shaft_01/Rod_shaft_02/Rod_shaft_03/Rod_shaft_04/Rod_shaft_05/Rod_shaft_06
+    m_Weight: 1
+  - m_Path: Rod_Base/Rod_shaft_01/Rod_shaft_02/Rod_shaft_03/Rod_shaft_04/Rod_shaft_05/Rod_shaft_06/Rod_shaft_07
+    m_Weight: 1
+  - m_Path: Rod_Base/Rod_shaft_01/Rod_shaft_02/Rod_shaft_03/Rod_shaft_04/Rod_shaft_05/Rod_shaft_06/Rod_shaft_07/Rod_shaft_08
+    m_Weight: 1
+  - m_Path: Rod_Base/Rod_shaft_01/Rod_shaft_02/Rod_shaft_03/Rod_shaft_04/Rod_shaft_05/Rod_shaft_06/Rod_shaft_07/Rod_shaft_08/Rod_shaft_09
+    m_Weight: 1
+  - m_Path: Rod_Base/Rod_shaft_01/Rod_shaft_02/Rod_shaft_03/Rod_shaft_04/Rod_shaft_05/Rod_shaft_06/Rod_shaft_07/Rod_shaft_08/Rod_shaft_09/Rod_shaft_10
+    m_Weight: 1
