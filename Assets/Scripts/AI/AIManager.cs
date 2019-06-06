@@ -5,11 +5,20 @@ using UnityEngine;
 public class AIManager : MonoBehaviour {
 
     public HostileAI[] hostileAis;
+    public Building buildings;
     public GameObject player;
-	
-	// Update is called once per frame
-	void Update ()
+	public void Start()
     {
-        
-	}
+        StartAttack();
+    }
+    public void StartAttack()
+    {
+        foreach(HostileAI ai in hostileAis)
+        {
+
+            ai.target = buildings.gameObject;
+            ai.GetComponent<PathMover>().target = buildings.attackPoints[Random.Range(0, buildings.attackPoints.Length)].location;
+        }
+    }
+
 }

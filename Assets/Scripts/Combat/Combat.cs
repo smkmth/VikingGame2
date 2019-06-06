@@ -58,11 +58,12 @@ public class Combat : MonoBehaviour
     public float blockingMovementSpeed;
     [HideInInspector]
     public float currentMovementSpeed;                                  //the players current movement speed
-
+    GameObject sceneManager;
 
 
     private void Start()
     {
+        sceneManager = GameObject.Find("SceneManager");
         currentMovementSpeed = baseMovementSpeed;
         equipmentHolder = GetComponent<EquipmentHolder>();
         rb = GetComponent<Rigidbody>();
@@ -175,6 +176,13 @@ public class Combat : MonoBehaviour
         
             if (Health <= 0)
             {
+                Arrow[] arrows = GetComponentsInChildren<Arrow>();
+                foreach (Arrow arrow in arrows)
+                {
+                    arrow.gameObject.transform.parent = sceneManager.transform;
+                    arrow.gameObject.SetActive(false);
+
+                }
                 Destroy(gameObject);
             }
         }

@@ -25,7 +25,7 @@ GameObject:
   - component: {fileID: 114564016555729718}
   - component: {fileID: 54816976950567980}
   - component: {fileID: 114378857438100364}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: ArrowPrefab
   m_TagString: Arrow
   m_Icon: {fileID: 0}
@@ -45,7 +45,7 @@ GameObject:
   - component: {fileID: 54780035362958860}
   - component: {fileID: 138416340326155570}
   - component: {fileID: 65796293665177040}
-  m_Layer: 0
+  m_Layer: 14
   m_Name: Cube
   m_TagString: Untagged
   m_Icon: {fileID: 0}

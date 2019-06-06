@@ -131,9 +131,9 @@ public class PlayerInteraction : MonoBehaviour
         }
     }
 
-    void SetInventoryMode()
+    void SetInventoryMode(bool toggleOn)
     {
-        if (currentInteractionState == interactionState.Normal)
+        if (toggleOn)
         {
             hud.ToggleHUD(true);
 
@@ -144,7 +144,7 @@ public class PlayerInteraction : MonoBehaviour
             currentInteractionState = interactionState.InventoryMode;
 
         }
-        else if (currentInteractionState == interactionState.InventoryMode)
+        else if (!toggleOn)
         {
             hud.ToggleHUD(false);
             inventoryDisplayer.ToggleInventoryMenu(false);
@@ -186,29 +186,11 @@ public class PlayerInteraction : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (Input.GetAxisRaw("Aim") ==1)
-        {
-            currentInteractionState = interactionState.Aiming;
-
-        }
-        else
-        {
-          
-            bowDrawn = false;
-            aiming = false;
-            FreeMove = true;
-            currentInteractionState = interactionState.Normal;
-
-        }
+   
 
         if (Input.GetKeyDown(KeyCode.Escape))
         {
             SetCursorState(CursorLockMode.None);
-        }
-
-        if (Input.GetButtonDown("Inventory"))
-        {
-            SetInventoryMode();
         }
 
         if (Input.GetButtonDown("Crafting"))
@@ -220,7 +202,18 @@ public class PlayerInteraction : MonoBehaviour
         {
 
             case interactionState.Normal :
-              
+
+                if (Input.GetAxisRaw("Aim") == 1)
+                {
+                    currentInteractionState = interactionState.Aiming;
+
+                }
+
+                if (Input.GetButtonDown("Inventory"))
+                {
+                    SetInventoryMode(true);
+                }
+
 
                 if (FreeLook)
                 {
@@ -342,72 +335,89 @@ public class PlayerInteraction : MonoBehaviour
 
                 break;
             case interactionState.Aiming:
-            
-                crosshair.transform.LookAt(transform);
-                aiming = true;
-                FreeMove = false;
-                animator.SetBool("Run", false);
 
-                Vector3 cameraDirection = new Vector3(playerCamera.transform.forward.x, 0f, playerCamera.transform.forward.z);
-                Vector3 playerDirection = new Vector3(transform.forward.x, 0f, transform.forward.z);
-
-                forwardMovement = transform.forward * Input.GetAxis("Vertical");
-                sidewaysMovement = transform.right * Input.GetAxis("Horizontal");
-
-
-                Vector3 nextMovePos = (forwardMovement + sidewaysMovement) * Time.deltaTime * combat.currentMovementSpeed;
-
-
-
-                transform.position += nextMovePos;
-
-
-                if (Vector3.Angle(cameraDirection, playerDirection) > 0.5f)
+                if (Input.GetAxisRaw("Aim") == 0)
                 {
-                    Quaternion targetRotation = Quaternion.LookRotation(cameraDirection, transform.up);
 
-                    transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+                    bowDrawn = false;
+                    aiming = false;
+                    FreeMove = true;
+                    currentInteractionState = interactionState.Normal;
 
                 }
-                if (Input.GetAxis("PullBack") > 0)
+                else
                 {
 
-                    if (bowPowerModifer < maxBowPower)
+
+
+
+
+                    crosshair.transform.LookAt(transform);
+                    aiming = true;
+                    FreeMove = false;
+                    animator.SetBool("Run", false);
+
+                    Vector3 cameraDirection = new Vector3(playerCamera.transform.forward.x, 0f, playerCamera.transform.forward.z);
+                    Vector3 playerDirection = new Vector3(transform.forward.x, 0f, transform.forward.z);
+
+                    forwardMovement = transform.forward * Input.GetAxis("Vertical");
+                    sidewaysMovement = transform.right * Input.GetAxis("Horizontal");
+
+
+                    Vector3 nextMovePos = (forwardMovement + sidewaysMovement) * Time.deltaTime * combat.currentMovementSpeed;
+
+
+
+                    transform.position += nextMovePos;
+
+
+                    if (Vector3.Angle(cameraDirection, playerDirection) > 0.5f)
                     {
-                        bowPowerModifer += (Time.deltaTime * bowPullBackRate);
+                        Quaternion targetRotation = Quaternion.LookRotation(cameraDirection, transform.up);
+
+                        transform.rotation = Quaternion.RotateTowards(transform.rotation, targetRotation, turnSpeed * Time.deltaTime);
+
                     }
-                    else
+                    if (Input.GetAxis("PullBack") > 0)
                     {
-                        bowPowerModifer = maxBowPower;
-                    }
-                    bowDrawn = true;
 
-                }
-
-                if (bowDrawn == true)
-                {
-
-                    if (Input.GetAxisRaw("PullBack") == 0)
-                    {
-                        if (inventory.RemoveItem(arrow))
+                        if (bowPowerModifer < maxBowPower)
                         {
-                            bowDrawn = false;
+                            bowPowerModifer += (Time.deltaTime * bowPullBackRate);
+                        }
+                        else
+                        {
+                            bowPowerModifer = maxBowPower;
+                        }
+                        bowDrawn = true;
 
-                            // GameObject arrow = Instantiate(arrowPrefab, bowPosition.position, playerCamera.transform.rotation);
-                            GameObject arrow = ObjectPooler.PoolerInstance.GetPooledObject("Arrow");
-                            arrow.SetActive(true);
+                    }
 
-                            arrow.transform.position = bowPosition.position;
-                            arrow.transform.rotation = playerCamera.transform.rotation;
-                            // GameObject arrow = Instantiate(arrowPrefab, bowPosition.position, playerCamera.transform.rotation);
+                    if (bowDrawn == true)
+                    {
 
-                            Rigidbody arrowrb = arrow.GetComponent<Rigidbody>();
-                            arrowrb.gameObject.GetComponent<Arrow>().damage = arrowDamage;
-                            arrowrb.isKinematic = false;
-                            arrowrb.AddForce(playerCamera.transform.forward * (shotForce + bowPowerModifer), ForceMode.Impulse);
-                            arrow.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * (shotForce + bowPowerModifer), ForceMode.Impulse);
-                            bowPowerTimer = 0;
-                            bowPowerModifer = 0;
+                        if (Input.GetAxisRaw("PullBack") == 0)
+                        {
+                            if (inventory.RemoveItem(arrow))
+                            {
+                                bowDrawn = false;
+
+                                // GameObject arrow = Instantiate(arrowPrefab, bowPosition.position, playerCamera.transform.rotation);
+                                GameObject arrow = ObjectPooler.PoolerInstance.GetPooledObject("Arrow");
+                                arrow.SetActive(true);
+
+                                arrow.transform.position = bowPosition.position;
+                                arrow.transform.rotation = playerCamera.transform.rotation;
+                                // GameObject arrow = Instantiate(arrowPrefab, bowPosition.position, playerCamera.transform.rotation);
+
+                                Rigidbody arrowrb = arrow.GetComponent<Rigidbody>();
+                                arrowrb.gameObject.GetComponent<Arrow>().damage = arrowDamage;
+                                arrowrb.isKinematic = false;
+                                arrowrb.AddForce(playerCamera.transform.forward * (shotForce + bowPowerModifer), ForceMode.Impulse);
+                                arrow.GetComponent<Rigidbody>().AddForce(playerCamera.transform.forward * (shotForce + bowPowerModifer), ForceMode.Impulse);
+                                bowPowerTimer = 0;
+                                bowPowerModifer = 0;
+                            }
                         }
                     }
                 }
@@ -415,10 +425,21 @@ public class PlayerInteraction : MonoBehaviour
         
         break;
             case interactionState.DialogueMode:
+             
                 break;
             case interactionState.InventoryMode:
+                if (Input.GetButtonDown("Inventory"))
+                {
+                    SetInventoryMode(false);
+                }
+
                 break;
             case interactionState.CraftingMode:
+                if (Input.GetButtonDown("Inventory"))
+                {
+                    SetInventoryMode(false);
+                }
+
                 break;
         }
     }
