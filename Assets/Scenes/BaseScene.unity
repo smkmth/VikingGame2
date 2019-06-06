@@ -343,7 +343,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_Children: []
   m_Father: {fileID: 476799196}
-  m_RootOrder: 5
+  m_RootOrder: 7
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &56818362
 GameObject:
@@ -644,19 +644,19 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4983021761106640, guid: 27bbba28647b1d14b98be63f2c1bad50, type: 2}
       propertyPath: m_RootOrder
-      value: 5
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4536790918683388, guid: 27bbba28647b1d14b98be63f2c1bad50, type: 2}
       propertyPath: m_RootOrder
-      value: 3
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 4423564548648638, guid: 27bbba28647b1d14b98be63f2c1bad50, type: 2}
       propertyPath: m_RootOrder
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4093644077273104, guid: 27bbba28647b1d14b98be63f2c1bad50, type: 2}
       propertyPath: m_RootOrder
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4457292784324966, guid: 27bbba28647b1d14b98be63f2c1bad50, type: 2}
       propertyPath: m_RootOrder
@@ -664,7 +664,7 @@ Prefab:
       objectReference: {fileID: 0}
     - target: {fileID: 4903091328439782, guid: 27bbba28647b1d14b98be63f2c1bad50, type: 2}
       propertyPath: m_RootOrder
-      value: 7
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 4423564548648638, guid: 27bbba28647b1d14b98be63f2c1bad50, type: 2}
       propertyPath: m_LocalPosition.x
@@ -827,6 +827,11 @@ Prefab:
       propertyPath: m_IsActive
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 114304701375493130, guid: 27bbba28647b1d14b98be63f2c1bad50,
+        type: 2}
+      propertyPath: baseMovementSpeed
+      value: 10
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27bbba28647b1d14b98be63f2c1bad50, type: 2}
   m_IsPrefabAsset: 0
@@ -873,6 +878,14 @@ Prefab:
       propertyPath: m_Controller
       value: 
       objectReference: {fileID: 9100000, guid: 08b0ff411a5f2d541a128b59bf887e7c, type: 2}
+    - target: {fileID: 100006, guid: 33a5fe74bb89c6e4d8585e003a2cd69f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 100004, guid: 33a5fe74bb89c6e4d8585e003a2cd69f, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 33a5fe74bb89c6e4d8585e003a2cd69f, type: 3}
   m_IsPrefabAsset: 0
@@ -7828,6 +7841,8 @@ GameObject:
   - component: {fileID: 2059548121}
   - component: {fileID: 2059548125}
   - component: {fileID: 2059548124}
+  - component: {fileID: 2059548127}
+  - component: {fileID: 2059548126}
   m_Layer: 12
   m_Name: Capsule
   m_TagString: Enemy
@@ -7916,7 +7931,7 @@ Rigidbody:
   m_UseGravity: 1
   m_IsKinematic: 0
   m_Interpolate: 0
-  m_Constraints: 32
+  m_Constraints: 80
   m_CollisionDetection: 0
 --- !u!114 &2059548125
 MonoBehaviour:
@@ -7946,6 +7961,42 @@ MonoBehaviour:
   baseMovementSpeed: 0
   blockingMovementSpeed: 0
   currentMovementSpeed: 0
+--- !u!114 &2059548126
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2059548119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 069e603fdff158d4cb25431629e021a6, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  target: {fileID: 476799196}
+  transformTarget: {fileID: 476799196}
+  speed: 20
+  turnSpeed: 3
+  turnDst: 5
+  stoppingDst: 10
+  repathRate: 0.3
+  followingPath: 0
+  followingTarget: 0
+--- !u!114 &2059548127
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 2059548119}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ef525e2268852ec428663f675e394a20, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  attackDistance: 1
+  engageDistance: 5
+  freeMove: 0
+  thisBehaviour: 0
+  behaviourChangeTime: 0
 --- !u!1 &2065871313
 GameObject:
   m_ObjectHideFlags: 0

@@ -104,7 +104,7 @@ public class CameraControl : MonoBehaviour
     }
     void LateUpdate()
     {
-        if (player.currentInteractionState == interactionState.Normal)
+        if (player.currentInteractionState == interactionState.Normal || player.currentInteractionState == interactionState.Aiming)
         {
          
             HorizontalAxis = Input.GetAxis("Mouse X") + Input.GetAxis("RightStickHorizontal");
